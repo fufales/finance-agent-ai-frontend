@@ -1,2 +1,2 @@
-# finance-agent-ai---frontend
+# finance-agent-ai-frontend
 Smart finance, simplified by AI.
