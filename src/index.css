@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+  --color-money-green: #059669;
+  --color-money-green-light: #34D399;
+  --color-money-green-dark: #047857;
+}
+
+body {
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-900);
+}
