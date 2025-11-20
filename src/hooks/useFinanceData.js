@@ -13,7 +13,7 @@ const INITIAL_DATA = {
 export const useFinanceData = () => {
   const [data, setData] = useState(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : INITIAL_DATA;
+    return saved ? JSON.parse(saved) : { ...INITIAL_DATA, funds: [] };
   });
 
   useEffect(() => {
@@ -59,30 +59,58 @@ export const useFinanceData = () => {
     }));
   };
 
+  const addFund = (fund) => {
+    const newFund = { ...fund, id: crypto.randomUUID() };
+    setData(prev => ({
+      ...prev,
+      funds: [...(prev.funds || []), newFund],
+    }));
+  };
+
+  const deleteFund = (id) => {
+    setData(prev => ({
+      ...prev,
+      funds: (prev.funds || []).filter(f => f.id !== id),
+    }));
+  };
+
+  const editFund = (id, updatedFund) => {
+    setData(prev => ({
+      ...prev,
+      funds: (prev.funds || []).map(f => f.id === id ? { ...f, ...updatedFund } : f),
+    }));
+  };
+
   const totalIncome = data.income.period1 + data.income.period2;
+  const totalFunds = (data.funds || []).reduce((sum, item) => sum + item.amount, 0);
   
   const totalExpenses = data.expenses.reduce((sum, item) => sum + item.amount, 0);
   const paidExpenses = data.expenses.reduce((sum, item) => item.paid ? sum + item.amount : sum, 0);
   
-  const projectedBalance = totalIncome - totalExpenses;
-  const availableBalance = totalIncome - paidExpenses;
+  const projectedBalance = (totalIncome + totalFunds) - totalExpenses;
+  const availableBalance = (totalIncome + totalFunds) - paidExpenses;
   
   const debtExpenses = data.expenses
     .filter(e => e.category === 'Debts' || e.category === 'Credit cards')
     .reduce((sum, item) => sum + item.amount, 0);
     
-  const debtPercentage = totalIncome > 0 ? (debtExpenses / totalIncome) * 100 : 0;
+  const debtPercentage = (totalIncome + totalFunds) > 0 ? (debtExpenses / (totalIncome + totalFunds)) * 100 : 0;
 
   return {
     income: data.income,
     expenses: data.expenses,
+    funds: data.funds || [],
     updateIncome,
     addExpense,
     deleteExpense,
     editExpense,
     togglePaid,
+    addFund,
+    deleteFund,
+    editFund,
     totals: {
       totalIncome,
+      totalFunds,
       totalExpenses,
       paidExpenses,
       projectedBalance,

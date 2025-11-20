@@ -4,26 +4,38 @@ import SummaryCard from './SummaryCard';
 import IncomeInput from './IncomeInput';
 import ExpenseForm from './ExpenseForm';
 import ExpenseList from './ExpenseList';
-import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft } from 'lucide-react';
+import FundCard from './FundCard';
+import FundForm from './FundForm';
+import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard } from 'lucide-react';
 
 const Dashboard = () => {
   const {
     income,
     expenses,
+    funds,
     updateIncome,
     addExpense,
     deleteExpense,
     editExpense,
     togglePaid,
+    addFund,
+    deleteFund,
+    editFund,
     totals,
   } = useFinanceData();
 
   const [currentView, setCurrentView] = useState('dashboard');
   const [editingExpense, setEditingExpense] = useState(null);
+  const [editingFund, setEditingFund] = useState(null);
 
   const handleStartEdit = (expense) => {
     setEditingExpense(expense);
     setCurrentView('add-expense');
+  };
+
+  const handleStartEditFund = (fund) => {
+    setEditingFund(fund);
+    setCurrentView('add-fund');
   };
 
   const renderContent = () => {
@@ -75,6 +87,26 @@ const Dashboard = () => {
             />
           </div>
         );
+      case 'add-fund':
+        return (
+          <FundForm 
+            onAdd={(fund) => {
+              addFund(fund);
+              setCurrentView('dashboard');
+            }}
+            onUpdate={(updatedFund) => {
+              editFund(editingFund.id, updatedFund);
+              setEditingFund(null);
+              setCurrentView('dashboard');
+            }}
+            initialData={editingFund}
+            isEditing={!!editingFund}
+            onCancel={() => {
+              setEditingFund(null);
+              setCurrentView('dashboard');
+            }}
+          />
+        );
       default:
         return (
           <>
@@ -90,6 +122,40 @@ const Dashboard = () => {
 
             <SummaryCard totals={totals} />
             
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-4 px-1">
+                <h3 className="text-lg font-semibold text-gray-800">Current Funds</h3>
+                <button 
+                  onClick={() => setCurrentView('add-fund')}
+                  className="text-sm text-money-green font-medium hover:text-money-green-dark"
+                >
+                  + Add Fund
+                </button>
+              </div>
+              
+              {funds.length === 0 ? (
+                <div 
+                  onClick={() => setCurrentView('add-fund')}
+                  className="border-2 border-dashed border-gray-200 rounded-2xl p-6 flex flex-col items-center justify-center text-gray-400 cursor-pointer hover:border-money-green hover:text-money-green transition-colors"
+                >
+                  <CreditCard className="w-8 h-8 mb-2" />
+                  <p className="text-sm font-medium">Add your first card or account</p>
+                </div>
+              ) : (
+                <div className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 snap-x">
+                  {funds.map(fund => (
+                    <div key={fund.id} className="snap-center">
+                      <FundCard 
+                        fund={fund} 
+                        onDelete={deleteFund}
+                        onEdit={handleStartEditFund}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="mb-20">
               <ExpenseList 
                 expenses={expenses} 
@@ -110,12 +176,13 @@ const Dashboard = () => {
       </div>
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3 pb-safe">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3 pb-safe z-50">
         <div className="max-w-md mx-auto flex items-center justify-between">
           <button
             onClick={() => {
               setCurrentView('dashboard');
               setEditingExpense(null);
+              setEditingFund(null);
             }}
             className={`flex flex-col items-center gap-1 ${currentView === 'dashboard' ? 'text-money-green' : 'text-gray-400'}`}
           >
@@ -127,6 +194,7 @@ const Dashboard = () => {
             onClick={() => {
               setCurrentView('add-expense');
               setEditingExpense(null);
+              setEditingFund(null);
             }}
             className="flex flex-col items-center gap-1 text-money-green -mt-8"
           >
@@ -140,6 +208,7 @@ const Dashboard = () => {
             onClick={() => {
               setCurrentView('income');
               setEditingExpense(null);
+              setEditingFund(null);
             }}
             className={`flex flex-col items-center gap-1 ${currentView === 'income' ? 'text-money-green' : 'text-gray-400'}`}
           >

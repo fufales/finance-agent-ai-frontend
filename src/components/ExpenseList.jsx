@@ -14,7 +14,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid }) => {
 
   return (
     <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-gray-800 px-1">Recent Expenses</h3>
+      <h3 className="text-lg font-semibold text-gray-800 px-1">Expenses</h3>
       {expenses.slice().reverse().map((expense) => (
         <div key={expense.id} className={`p-4 rounded-xl shadow-sm border flex items-center justify-between group transition-colors ${expense.paid ? 'bg-gray-50 border-gray-200' : 'bg-white border-gray-100'}`}>
           <div className="flex items-center gap-3">
