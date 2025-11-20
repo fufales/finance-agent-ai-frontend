@@ -71,23 +71,25 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
             getIcon={getCategoryIcon}
           />
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-500">Assign to Period:</span>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setPeriod('1')}
-              className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${period === '1' ? 'bg-money-green text-white' : 'bg-gray-100 text-gray-600'}`}
-            >
-              Period 1
-            </button>
-            <button
-              type="button"
-              onClick={() => setPeriod('2')}
-              className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${period === '2' ? 'bg-money-green text-white' : 'bg-gray-100 text-gray-600'}`}
-            >
-              Period 2
-            </button>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-gray-500">Assign to Period:</span>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setPeriod('1')}
+                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${period === '1' ? 'bg-money-green text-white' : 'bg-gray-100 text-gray-600'}`}
+              >
+                Period 1
+              </button>
+              <button
+                type="button"
+                onClick={() => setPeriod('2')}
+                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${period === '2' ? 'bg-money-green text-white' : 'bg-gray-100 text-gray-600'}`}
+              >
+                Period 2
+              </button>
+            </div>
           </div>
         </div>
         <button

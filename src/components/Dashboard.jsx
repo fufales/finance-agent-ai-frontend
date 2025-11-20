@@ -14,6 +14,7 @@ const Dashboard = () => {
     addExpense,
     deleteExpense,
     editExpense,
+    togglePaid,
     totals,
   } = useFinanceData();
 
@@ -90,7 +91,12 @@ const Dashboard = () => {
             <SummaryCard totals={totals} />
             
             <div className="mb-20">
-              <ExpenseList expenses={expenses} onDelete={deleteExpense} onEdit={handleStartEdit} />
+              <ExpenseList 
+                expenses={expenses} 
+                onDelete={deleteExpense} 
+                onEdit={handleStartEdit}
+                onTogglePaid={togglePaid}
+              />
             </div>
           </>
         );

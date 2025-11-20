@@ -31,7 +31,7 @@ export const useFinanceData = () => {
   };
 
   const addExpense = (expense) => {
-    const newExpense = { ...expense, id: crypto.randomUUID() };
+    const newExpense = { ...expense, id: crypto.randomUUID(), paid: false };
     setData(prev => ({
       ...prev,
       expenses: [...prev.expenses, newExpense],
@@ -52,11 +52,20 @@ export const useFinanceData = () => {
     }));
   };
 
+  const togglePaid = (id) => {
+    setData(prev => ({
+      ...prev,
+      expenses: prev.expenses.map(e => e.id === id ? { ...e, paid: !e.paid } : e),
+    }));
+  };
+
   const totalIncome = data.income.period1 + data.income.period2;
   
   const totalExpenses = data.expenses.reduce((sum, item) => sum + item.amount, 0);
+  const paidExpenses = data.expenses.reduce((sum, item) => item.paid ? sum + item.amount : sum, 0);
   
-  const balance = totalIncome - totalExpenses;
+  const projectedBalance = totalIncome - totalExpenses;
+  const availableBalance = totalIncome - paidExpenses;
   
   const debtExpenses = data.expenses
     .filter(e => e.category === 'Debts' || e.category === 'Credit cards')
@@ -71,10 +80,13 @@ export const useFinanceData = () => {
     addExpense,
     deleteExpense,
     editExpense,
+    togglePaid,
     totals: {
       totalIncome,
       totalExpenses,
-      balance,
+      paidExpenses,
+      projectedBalance,
+      availableBalance,
       debtPercentage,
     },
   };

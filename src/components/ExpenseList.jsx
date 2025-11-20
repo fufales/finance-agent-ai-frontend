@@ -3,7 +3,7 @@ import { Trash2, Edit2 } from 'lucide-react';
 import { formatCurrency } from '../utils/format';
 import { getCategoryIcon } from '../utils/categories';
 
-const ExpenseList = ({ expenses, onDelete, onEdit }) => {
+const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid }) => {
   if (expenses.length === 0) {
     return (
       <div className="text-center py-8 text-gray-400">
@@ -16,19 +16,31 @@ const ExpenseList = ({ expenses, onDelete, onEdit }) => {
     <div className="space-y-3">
       <h3 className="text-lg font-semibold text-gray-800 px-1">Recent Expenses</h3>
       {expenses.slice().reverse().map((expense) => (
-        <div key={expense.id} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between group">
+        <div key={expense.id} className={`p-4 rounded-xl shadow-sm border flex items-center justify-between group transition-colors ${expense.paid ? 'bg-gray-50 border-gray-200' : 'bg-white border-gray-100'}`}>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => onTogglePaid(expense.id)}
+              className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
+                expense.paid 
+                  ? 'bg-money-green border-money-green text-white' 
+                  : 'border-gray-300 text-transparent hover:border-money-green'
+              }`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
             <div className={`w-2 h-10 rounded-full ${expense.period === 1 ? 'bg-blue-400' : 'bg-purple-400'}`} title={`Period ${expense.period}`}></div>
             <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
               {React.createElement(getCategoryIcon(expense.category), { size: 20 })}
             </div>
             <div>
-              <p className="font-medium text-gray-900">{expense.name}</p>
+              <p className={`font-medium ${expense.paid ? 'text-gray-500 line-through' : 'text-gray-900'}`}>{expense.name}</p>
               <p className="text-xs text-gray-500">{expense.category} • Period {expense.period}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-gray-900 mr-2">{formatCurrency(expense.amount)}</span>
+            <span className={`font-semibold mr-2 ${expense.paid ? 'text-gray-400' : 'text-gray-900'}`}>{formatCurrency(expense.amount)}</span>
             <button
               onClick={() => onEdit(expense)}
               className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
