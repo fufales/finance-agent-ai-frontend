@@ -123,6 +123,7 @@ export const useFinanceData = () => {
       projectedBalance,
       availableBalance,
       debtPercentage,
+      debtExpenses,
     },
   };
 };
