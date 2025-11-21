@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-const Dropdown = ({ value, onChange, options, placeholder = 'Select option', getIcon }) => {
+const Dropdown = ({ value, onChange, options, placeholder = 'Select option', getIcon, direction = 'down' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -54,6 +54,10 @@ const Dropdown = ({ value, onChange, options, placeholder = 'Select option', get
   // Find the full option object if value is selected and options are objects
   const selectedOption = options.find(opt => getOptionValue(opt) === value) || value;
 
+  const menuPositionClasses = direction === 'up' 
+    ? 'bottom-full mb-1' 
+    : 'mt-1';
+
   return (
     <div className="relative w-full" ref={dropdownRef}>
       <button
@@ -68,7 +72,7 @@ const Dropdown = ({ value, onChange, options, placeholder = 'Select option', get
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-100 rounded-xl shadow-lg max-h-60 overflow-auto py-1">
+        <div className={`absolute z-10 w-full bg-white border border-gray-100 rounded-xl shadow-lg max-h-60 overflow-auto py-1 ${menuPositionClasses}`}>
           {options.map((option) => {
             const optionValue = getOptionValue(option);
             const isSelected = value === optionValue;

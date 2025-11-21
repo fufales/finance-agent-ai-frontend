@@ -70,9 +70,9 @@ const DataControls = ({ data, onImport }) => {
           accept=".csv"
         />
         
-        <div className="w-32">
+        <div className="w-full">
             <Dropdown
-                placeholder="Data"
+                placeholder="Export / Import Data"
                 options={[
                     { value: 'export', label: 'Export CSV' },
                     { value: 'import', label: 'Import CSV' }

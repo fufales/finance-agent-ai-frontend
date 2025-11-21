@@ -7,7 +7,7 @@ import ExpenseList from './ExpenseList';
 import FundCard from './FundCard';
 import FundForm from './FundForm';
 import DataControls from './DataControls';
-import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard } from 'lucide-react';
+import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User } from 'lucide-react';
 
 const Dashboard = () => {
   const {
@@ -126,7 +126,9 @@ const Dashboard = () => {
                 <h1 className="text-2xl font-bold text-gray-900">PFinances AI</h1>
                 <p className="text-sm text-gray-500">Manage your budget</p>
               </div>
-              <DataControls data={data} onImport={importData} />
+              <button className="p-2 bg-white rounded-full shadow-sm border border-gray-100 text-gray-600">
+                <User className="w-6 h-6" />
+              </button>
             </header>
 
             <SummaryCard totals={totals} />
@@ -176,13 +178,18 @@ const Dashboard = () => {
               )}
             </div>
 
-            <div className="mb-20">
+            <div className="mb-8">
               <ExpenseList 
                 expenses={expenses} 
                 onDelete={deleteExpense} 
                 onEdit={handleStartEdit}
                 onTogglePaid={togglePaid}
               />
+            </div>
+
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">Data Management</h3>
+              <DataControls data={data} onImport={importData} />
             </div>
           </>
         );
