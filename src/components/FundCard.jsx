@@ -2,7 +2,7 @@ import React from 'react';
 import { CreditCard, Wallet, Trash2, Edit2 } from 'lucide-react';
 import { formatCurrency } from '../utils/format';
 
-const FundCard = ({ fund, onDelete, onEdit }) => {
+const FundCard = ({ fund, onDelete, onEdit, available, assignedPeriod }) => {
   const isCredit = fund.type === 'Credit Card';
   
   const getBgColor = () => {
@@ -40,9 +40,23 @@ const FundCard = ({ fund, onDelete, onEdit }) => {
       </div>
       
       <div>
-        <p className={`text-sm font-medium mb-1 ${isLight ? 'text-gray-500' : 'text-white/70'}`}>{fund.type}</p>
+        <div className="flex items-center justify-between mb-1">
+          <p className={`text-sm font-medium ${isLight ? 'text-gray-500' : 'text-white/70'}`}>{fund.type}</p>
+          {assignedPeriod && (
+            <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${isLight ? 'bg-gray-100 text-gray-600' : 'bg-white/20 text-white'}`}>
+              Period {assignedPeriod}
+            </span>
+          )}
+        </div>
         <h3 className="text-xl font-bold mb-1">{fund.name}</h3>
-        <p className="text-2xl font-bold tracking-tight">{formatCurrency(fund.amount)}</p>
+        <p className="text-2xl font-bold tracking-tight">
+          {assignedPeriod ? formatCurrency(available) : formatCurrency(fund.amount)}
+        </p>
+        {assignedPeriod && (
+          <p className={`text-xs mt-1 ${isLight ? 'text-gray-400' : 'text-white/50'}`}>
+            Limit: {formatCurrency(fund.amount)}
+          </p>
+        )}
       </div>
       
       <div className={`absolute bottom-4 right-4 ${isLight ? 'opacity-5 text-gray-900' : 'opacity-10 text-white'}`}>

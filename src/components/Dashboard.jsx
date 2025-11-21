@@ -108,6 +108,14 @@ const Dashboard = () => {
           />
         );
       default:
+        const unpaidExpensesPeriod1 = expenses
+          .filter(e => e.period === 1 && !e.paid)
+          .reduce((sum, e) => sum + e.amount, 0);
+          
+        const unpaidExpensesPeriod2 = expenses
+          .filter(e => e.period === 2 && !e.paid)
+          .reduce((sum, e) => sum + e.amount, 0);
+
         return (
           <>
             <header className="mb-6 flex items-center justify-between">
@@ -143,15 +151,26 @@ const Dashboard = () => {
                 </div>
               ) : (
                 <div className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 snap-x">
-                  {funds.map(fund => (
-                    <div key={fund.id} className="snap-center">
-                      <FundCard 
-                        fund={fund} 
-                        onDelete={deleteFund}
-                        onEdit={handleStartEditFund}
-                      />
-                    </div>
-                  ))}
+                  {funds.map(fund => {
+                    let available = fund.amount;
+                    if (fund.period === 1) {
+                      available = fund.amount - unpaidExpensesPeriod1;
+                    } else if (fund.period === 2) {
+                      available = fund.amount - unpaidExpensesPeriod2;
+                    }
+
+                    return (
+                      <div key={fund.id} className="snap-center">
+                        <FundCard 
+                          fund={fund} 
+                          onDelete={deleteFund}
+                          onEdit={handleStartEditFund}
+                          available={available}
+                          assignedPeriod={fund.period}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>

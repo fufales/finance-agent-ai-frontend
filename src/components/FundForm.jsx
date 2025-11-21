@@ -16,6 +16,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
   const [amount, setAmount] = useState('');
   const [type, setType] = useState(FUND_TYPES[0]);
   const [color, setColor] = useState(COLORS[0].id);
+  const [period, setPeriod] = useState('none');
 
   useEffect(() => {
     if (initialData) {
@@ -23,11 +24,13 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
       setAmount(initialData.amount.toString());
       setType(initialData.type);
       setColor(initialData.color || COLORS[0].id);
+      setPeriod(initialData.period ? initialData.period.toString() : 'none');
     } else {
       setName('');
       setAmount('');
       setType(FUND_TYPES[0]);
       setColor(COLORS[0].id);
+      setPeriod('none');
     }
   }, [initialData]);
 
@@ -40,6 +43,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
       amount: parseFloat(amount),
       type,
       color,
+      period: period === 'none' ? null : parseInt(period),
     };
 
     if (isEditing) {
@@ -98,6 +102,33 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
                 <option key={t} value={t}>{t}</option>
               ))}
             </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Assign to Period</label>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setPeriod('none')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${period === 'none' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600'}`}
+              >
+                None
+              </button>
+              <button
+                type="button"
+                onClick={() => setPeriod('1')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${period === '1' ? 'bg-money-green text-white' : 'bg-gray-100 text-gray-600'}`}
+              >
+                Period 1
+              </button>
+              <button
+                type="button"
+                onClick={() => setPeriod('2')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${period === '2' ? 'bg-money-green text-white' : 'bg-gray-100 text-gray-600'}`}
+              >
+                Period 2
+              </button>
+            </div>
           </div>
 
           <div>
