@@ -50,11 +50,17 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid }) => {
         </div>
       </div>
       {getSortedExpenses().map((expense) => (
-        <div key={expense.id} className={`p-4 rounded-xl shadow-sm border flex items-center justify-between group transition-colors ${expense.paid ? 'bg-gray-50 border-gray-200' : 'bg-white border-gray-100'}`}>
-          <div className="flex items-center gap-3">
+        <div 
+          key={expense.id} 
+          className={`p-4 rounded-xl shadow-sm border border-l-4 flex items-center justify-between group transition-colors 
+            ${expense.paid ? 'bg-gray-50 border-gray-200' : 'bg-white border-gray-100'}
+            ${expense.period === 1 ? 'border-l-blue-400' : 'border-l-purple-400'}
+          `}
+        >
+          <div className="flex items-center gap-3 flex-1 min-w-0">
             <button
               onClick={() => onTogglePaid(expense.id)}
-              className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
+              className={`w-6 h-6 shrink-0 rounded-full border-2 flex items-center justify-center transition-colors ${
                 expense.paid 
                   ? 'bg-money-green border-money-green text-white' 
                   : 'border-gray-300 text-transparent hover:border-money-green'
@@ -64,16 +70,17 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid }) => {
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
             </button>
-            <div className={`w-2 h-10 rounded-full ${expense.period === 1 ? 'bg-blue-400' : 'bg-purple-400'}`} title={`Period ${expense.period}`}></div>
-            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+            <div className="w-10 h-10 shrink-0 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
               {React.createElement(getCategoryIcon(expense.category), { size: 20 })}
             </div>
-            <div>
-              <p className={`font-medium ${expense.paid ? 'text-gray-500 line-through' : 'text-gray-900'}`}>{expense.name}</p>
+            <div className="min-w-0 flex-1">
+              <p className={`font-medium break-words ${expense.paid ? 'text-gray-500 line-through' : 'text-gray-900'}`}>
+                {expense.name}
+              </p>
               <p className="text-xs text-gray-500">{expense.category} • Period {expense.period}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0 ml-2">
             <span className={`font-semibold mr-2 ${expense.paid ? 'text-gray-400' : 'text-gray-900'}`}>{formatCurrency(expense.amount)}</span>
             <button
               onClick={() => onEdit(expense)}
