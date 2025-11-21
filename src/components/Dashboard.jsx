@@ -7,7 +7,8 @@ import ExpenseList from './ExpenseList';
 import FundCard from './FundCard';
 import FundForm from './FundForm';
 import DataControls from './DataControls';
-import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User } from 'lucide-react';
+import ConfigurationPage from './ConfigurationPage';
+import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings } from 'lucide-react';
 
 const Dashboard = () => {
   const {
@@ -30,6 +31,7 @@ const Dashboard = () => {
   const [currentView, setCurrentView] = useState('dashboard');
   const [editingExpense, setEditingExpense] = useState(null);
   const [editingFund, setEditingFund] = useState(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const handleStartEdit = (expense) => {
     setEditingExpense(expense);
@@ -43,6 +45,14 @@ const Dashboard = () => {
 
   const renderContent = () => {
     switch (currentView) {
+      case 'configuration':
+        return (
+          <ConfigurationPage 
+            onBack={() => setCurrentView('dashboard')}
+            data={data}
+            onImport={importData}
+          />
+        );
       case 'income':
         return (
           <div className="space-y-6">
@@ -126,9 +136,35 @@ const Dashboard = () => {
                 <h1 className="text-2xl font-bold text-gray-900">PFinances AI</h1>
                 <p className="text-sm text-gray-500">Manage your budget</p>
               </div>
-              <button className="p-2 bg-white rounded-full shadow-sm border border-gray-100 text-gray-600">
-                <User className="w-6 h-6" />
-              </button>
+              <div className="relative">
+                <button 
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className="p-2 bg-white rounded-full shadow-sm border border-gray-100 text-gray-600 hover:bg-gray-50 transition-colors"
+                >
+                  <User className="w-6 h-6" />
+                </button>
+
+                {showUserMenu && (
+                  <>
+                    <div 
+                      className="fixed inset-0 z-10" 
+                      onClick={() => setShowUserMenu(false)}
+                    />
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-20">
+                      <button
+                        onClick={() => {
+                          setCurrentView('configuration');
+                          setShowUserMenu(false);
+                        }}
+                        className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                      >
+                        <Settings className="w-4 h-4" />
+                        Configuration
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             </header>
 
             <SummaryCard totals={totals} />
@@ -185,11 +221,6 @@ const Dashboard = () => {
                 onEdit={handleStartEdit}
                 onTogglePaid={togglePaid}
               />
-            </div>
-
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold text-gray-800 mb-3">Data Management</h3>
-              <DataControls data={data} onImport={importData} />
             </div>
           </>
         );
