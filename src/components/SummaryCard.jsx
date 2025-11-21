@@ -1,10 +1,20 @@
 import React from 'react';
 import { formatCurrency, formatPercentage } from '../utils/format';
-import { Wallet, TrendingDown, PieChart } from 'lucide-react';
+import { Wallet, TrendingDown, PieChart, AlertTriangle } from 'lucide-react';
 
 const SummaryCard = ({ totals }) => {
   const { totalIncome, totalExpenses, paidExpenses, projectedBalance, availableBalance, debtPercentage, totalFunds, debtExpenses } = totals;
   const isDeficit = projectedBalance < 0;
+
+  const getDebtStatus = (percentage) => {
+    if (percentage > 50) return { color: 'text-red-600', showIcon: true };
+    if (percentage > 45) return { color: 'text-red-500', showIcon: false };
+    if (percentage > 40) return { color: 'text-orange-600', showIcon: false };
+    if (percentage > 30) return { color: 'text-orange-400', showIcon: false };
+    return { color: 'text-emerald-400', showIcon: false };
+  };
+
+  const { color: debtColor, showIcon: showDebtAlert } = getDebtStatus(debtPercentage);
 
   return (
     <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white p-6 rounded-3xl shadow-lg mb-6">
@@ -40,16 +50,17 @@ const SummaryCard = ({ totals }) => {
               <PieChart className="w-3 h-3" />
               Debt %
             </div>
-            <p className={`font-semibold ${debtPercentage > 30 ? 'text-yellow-400' : 'text-blue-300'}`}>
+            <div className={`flex items-center gap-1 font-semibold ${debtColor}`}>
               {formatPercentage(debtPercentage)}
-            </p>
+              {showDebtAlert && <AlertTriangle className="w-4 h-4" />}
+            </div>
           </div>
           <div>
             <div className="flex items-center gap-1 text-gray-400 text-xs mb-1">
               <TrendingDown className="w-3 h-3" />
               Debt Amount
             </div>
-            <p className="font-semibold text-white">{formatCurrency(debtExpenses)}</p>
+            <p className={`font-semibold ${debtColor}`}>{formatCurrency(debtExpenses)}</p>
           </div>
         </div>
       </div>
