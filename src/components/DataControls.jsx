@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { Download, Upload, MoreVertical, FileText } from 'lucide-react';
-import Dropdown from './Dropdown';
-import ConfirmationModal from './ConfirmationModal';
-import { exportToCSV, parseCSV } from '../utils/csvUtils';
+import React, { useState, useRef } from "react";
+import { Download, Upload, MoreVertical, FileText } from "lucide-react";
+import Dropdown from "./Dropdown";
+import ConfirmationModal from "./ConfirmationModal";
+import { exportToCSV, parseCSV } from "../utils/csvUtils";
 
 const DataControls = ({ data, onImport }) => {
   const [showModal, setShowModal] = useState(false);
@@ -11,11 +11,13 @@ const DataControls = ({ data, onImport }) => {
 
   const handleExport = () => {
     const csv = exportToCSV(data);
-    const blob = new Blob([csv], { type: 'text/csv' });
+    const blob = new Blob([csv], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `pfinances_backup_${new Date().toISOString().split('T')[0]}.csv`;
+    a.download = `pfinances_backup_${
+      new Date().toISOString().split("T")[0]
+    }.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -29,7 +31,7 @@ const DataControls = ({ data, onImport }) => {
       setShowModal(true);
     }
     // Reset input so same file can be selected again if needed
-    event.target.value = '';
+    event.target.value = "";
   };
 
   const handleConfirmImport = () => {
@@ -44,17 +46,19 @@ const DataControls = ({ data, onImport }) => {
         setShowModal(false);
         setPendingFile(null);
       } catch (error) {
-        console.error('Error parsing CSV:', error);
-        alert('Failed to parse CSV file. Please ensure it is a valid export file.');
+        console.error("Error parsing CSV:", error);
+        alert(
+          "Failed to parse CSV file. Please ensure it is a valid export file."
+        );
       }
     };
     reader.readAsText(pendingFile);
   };
 
   const handleAction = (action) => {
-    if (action === 'export') {
+    if (action === "export") {
       handleExport();
-    } else if (action === 'import') {
+    } else if (action === "import") {
       fileInputRef.current?.click();
     }
   };
@@ -69,22 +73,25 @@ const DataControls = ({ data, onImport }) => {
           className="hidden"
           accept=".csv"
         />
-        
+
         <div className="w-full">
-            <Dropdown
-                placeholder="Export / Import Data"
-                options={[
-                    { value: 'export', label: 'Export CSV' },
-                    { value: 'import', label: 'Import CSV' }
-                ]}
-                onChange={handleAction}
-                getIcon={(value) => {
-                    if (value === 'export') return Download;
-                    if (value === 'import') return Upload;
-                    return FileText;
-                }}
-            />
+          <Dropdown
+            placeholder="Export / Import Data"
+            options={[
+              { value: "export", label: "Export CSV" },
+              { value: "import", label: "Import CSV" },
+            ]}
+            onChange={handleAction}
+            getIcon={(value) => {
+              if (value === "export") return Download;
+              if (value === "import") return Upload;
+              return FileText;
+            }}
+          />
         </div>
+        <br />
+        <br />
+        <br />
       </div>
 
       <ConfirmationModal
