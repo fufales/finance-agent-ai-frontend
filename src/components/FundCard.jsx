@@ -23,7 +23,7 @@ const FundCard = ({ fund, onDelete, onEdit, available, assignedPeriod }) => {
         <div className={`p-2 rounded-lg backdrop-blur-sm ${isLight ? 'bg-gray-100 text-gray-900' : 'bg-white/10 text-white'}`}>
           {isCredit ? <CreditCard className="w-6 h-6" /> : <Wallet className="w-6 h-6" />}
         </div>
-        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="flex gap-2">
           <button 
             onClick={() => onEdit(fund)}
             className={`p-1.5 rounded-lg backdrop-blur-sm transition-colors ${isLight ? 'bg-gray-100 hover:bg-gray-200 text-gray-600' : 'bg-white/20 hover:bg-white/30 text-white'}`}
