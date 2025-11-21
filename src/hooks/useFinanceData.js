@@ -88,7 +88,7 @@ export const useFinanceData = () => {
   const paidExpenses = data.expenses.reduce((sum, item) => item.paid ? sum + item.amount : sum, 0);
   const unpaidExpenses = totalExpenses - paidExpenses;
   
-  const projectedBalance = totalIncome - totalExpenses;
+  const projectedBalance = totalFunds - unpaidExpenses;
   const availableBalance = totalFunds - unpaidExpenses;
   
   const debtExpenses = data.expenses
