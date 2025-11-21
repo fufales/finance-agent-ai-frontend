@@ -97,7 +97,12 @@ export const useFinanceData = () => {
     
   const debtPercentage = totalIncome > 0 ? (debtExpenses / totalIncome) * 100 : 0;
 
+  const importData = (newData) => {
+    setData(newData);
+  };
+
   return {
+    data, // Expose full data for export
     income: data.income,
     expenses: data.expenses,
     funds: data.funds || [],
@@ -109,6 +114,7 @@ export const useFinanceData = () => {
     addFund,
     deleteFund,
     editFund,
+    importData,
     totals: {
       totalIncome,
       totalFunds,
