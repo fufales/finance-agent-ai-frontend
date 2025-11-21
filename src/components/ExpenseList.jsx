@@ -1,9 +1,26 @@
-import React from 'react';
-import { Trash2, Edit2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Trash2, Edit2, ArrowUpDown } from 'lucide-react';
 import { formatCurrency } from '../utils/format';
 import { getCategoryIcon } from '../utils/categories';
 
 const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid }) => {
+  const [sortBy, setSortBy] = useState('default');
+
+  const getSortedExpenses = () => {
+    const sorted = [...expenses];
+    switch (sortBy) {
+      case 'date':
+        return sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+      case 'amount':
+        return sorted.sort((a, b) => b.amount - a.amount);
+      default:
+        return sorted.sort((a, b) => {
+          if (a.period !== b.period) return a.period - b.period;
+          return a.category.localeCompare(b.category);
+        });
+    }
+  };
+
   if (expenses.length === 0) {
     return (
       <div className="text-center py-8 text-gray-400">
@@ -14,8 +31,22 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid }) => {
 
   return (
     <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-gray-800 px-1">Expenses</h3>
-      {expenses.slice().reverse().map((expense) => (
+      <div className="flex items-center justify-between px-1 mb-2">
+        <h3 className="text-lg font-semibold text-gray-800">Expenses</h3>
+        <div className="flex items-center gap-2">
+          <ArrowUpDown className="w-4 h-4 text-gray-400" />
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="text-sm bg-transparent border-none text-gray-600 font-medium focus:ring-0 cursor-pointer"
+          >
+            <option value="default">Default (Period)</option>
+            <option value="date">Date (Newest)</option>
+            <option value="amount">Amount (Highest)</option>
+          </select>
+        </div>
+      </div>
+      {getSortedExpenses().map((expense) => (
         <div key={expense.id} className={`p-4 rounded-xl shadow-sm border flex items-center justify-between group transition-colors ${expense.paid ? 'bg-gray-50 border-gray-200' : 'bg-white border-gray-100'}`}>
           <div className="flex items-center gap-3">
             <button
