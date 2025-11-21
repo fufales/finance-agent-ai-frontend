@@ -93,15 +93,12 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-            <select
+            <Dropdown
               value={type}
-              onChange={(e) => setType(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent appearance-none"
-            >
-              {FUND_TYPES.map(t => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
+              onChange={setType}
+              options={FUND_TYPES}
+              placeholder="Select Type"
+            />
           </div>
 
           <div>

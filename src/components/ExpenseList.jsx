@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Trash2, Edit2, ArrowUpDown } from 'lucide-react';
 import { formatCurrency } from '../utils/format';
 import { getCategoryIcon } from '../utils/categories';
+import Dropdown from './Dropdown';
 
 const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid }) => {
   const [sortBy, setSortBy] = useState('default');
@@ -35,15 +36,17 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid }) => {
         <h3 className="text-lg font-semibold text-gray-800">Expenses</h3>
         <div className="flex items-center gap-2">
           <ArrowUpDown className="w-4 h-4 text-gray-400" />
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="text-sm bg-transparent border-none text-gray-600 font-medium focus:ring-0 cursor-pointer"
-          >
-            <option value="default">Default (Period)</option>
-            <option value="date">Date (Newest)</option>
-            <option value="amount">Amount (Highest)</option>
-          </select>
+          <div className="w-48">
+            <Dropdown
+              value={sortBy}
+              onChange={setSortBy}
+              options={[
+                { value: 'default', label: 'Default (Period)' },
+                { value: 'date', label: 'Date (Newest)' },
+                { value: 'amount', label: 'Amount (Highest)' }
+              ]}
+            />
+          </div>
         </div>
       </div>
       {getSortedExpenses().map((expense) => (
