@@ -89,9 +89,6 @@ const DataControls = ({ data, onImport }) => {
             }}
           />
         </div>
-        <br />
-        <br />
-        <br />
       </div>
 
       <ConfirmationModal
