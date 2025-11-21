@@ -4,20 +4,30 @@ import Dropdown from './Dropdown';
 
 const FUND_TYPES = ['Debit Card', 'Credit Card', 'Cash', 'Savings', 'Investment'];
 
+const COLORS = [
+  { id: 'blue', label: 'Blue', class: 'bg-blue-600' },
+  { id: 'red', label: 'Red', class: 'bg-red-600' },
+  { id: 'gray', label: 'Gray', class: 'bg-gray-700' },
+  { id: 'white', label: 'White', class: 'bg-white border border-gray-200' },
+];
+
 const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [type, setType] = useState(FUND_TYPES[0]);
+  const [color, setColor] = useState(COLORS[0].id);
 
   useEffect(() => {
     if (initialData) {
       setName(initialData.name);
       setAmount(initialData.amount.toString());
       setType(initialData.type);
+      setColor(initialData.color || COLORS[0].id);
     } else {
       setName('');
       setAmount('');
       setType(FUND_TYPES[0]);
+      setColor(COLORS[0].id);
     }
   }, [initialData]);
 
@@ -29,6 +39,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
       name,
       amount: parseFloat(amount),
       type,
+      color,
     };
 
     if (isEditing) {
@@ -87,6 +98,21 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
                 <option key={t} value={t}>{t}</option>
               ))}
             </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Card Color</label>
+            <div className="flex gap-3">
+              {COLORS.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => setColor(c.id)}
+                  className={`w-10 h-10 rounded-full ${c.class} transition-transform ${color === c.id ? 'ring-2 ring-offset-2 ring-gray-400 scale-110' : 'hover:scale-105'}`}
+                  title={c.label}
+                />
+              ))}
+            </div>
           </div>
 
           <button

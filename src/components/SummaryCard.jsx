@@ -3,7 +3,7 @@ import { formatCurrency, formatPercentage } from '../utils/format';
 import { Wallet, TrendingDown, PieChart } from 'lucide-react';
 
 const SummaryCard = ({ totals }) => {
-  const { totalIncome, totalExpenses, paidExpenses, projectedBalance, availableBalance, debtPercentage } = totals;
+  const { totalIncome, totalExpenses, paidExpenses, projectedBalance, availableBalance, debtPercentage, totalFunds } = totals;
   const isDeficit = availableBalance < 0;
 
   return (
@@ -14,6 +14,9 @@ const SummaryCard = ({ totals }) => {
           <h1 className={`text-4xl font-bold ${isDeficit ? 'text-red-400' : 'text-white'}`}>
             {formatCurrency(availableBalance)}
           </h1>
+          <p className="text-gray-500 text-xs mt-1">
+            Funds: {formatCurrency(totalFunds)}
+          </p>
         </div>
         
         <div className="grid grid-cols-2 gap-4 border-t border-gray-700 pt-4">

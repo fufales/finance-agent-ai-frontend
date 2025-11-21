@@ -86,15 +86,16 @@ export const useFinanceData = () => {
   
   const totalExpenses = data.expenses.reduce((sum, item) => sum + item.amount, 0);
   const paidExpenses = data.expenses.reduce((sum, item) => item.paid ? sum + item.amount : sum, 0);
+  const unpaidExpenses = totalExpenses - paidExpenses;
   
-  const projectedBalance = (totalIncome + totalFunds) - totalExpenses;
-  const availableBalance = (totalIncome + totalFunds) - paidExpenses;
+  const projectedBalance = totalIncome - totalExpenses;
+  const availableBalance = totalFunds - unpaidExpenses;
   
   const debtExpenses = data.expenses
     .filter(e => e.category === 'Debts' || e.category === 'Credit cards')
     .reduce((sum, item) => sum + item.amount, 0);
     
-  const debtPercentage = (totalIncome + totalFunds) > 0 ? (debtExpenses / (totalIncome + totalFunds)) * 100 : 0;
+  const debtPercentage = totalIncome > 0 ? (debtExpenses / totalIncome) * 100 : 0;
 
   return {
     income: data.income,
