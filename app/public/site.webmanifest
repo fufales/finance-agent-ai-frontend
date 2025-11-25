@@ -1,6 +1,6 @@
 {
-  "name": "finnanceapp",
-  "short_name": "finnanceapp",
+  "name": "PFinance",
+  "short_name": "PFinance",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
