@@ -24,18 +24,22 @@ const FundCard = ({ fund, onDelete, onEdit, available, assignedPeriod }) => {
           {isCredit ? <CreditCard className="w-6 h-6" /> : <Wallet className="w-6 h-6" />}
         </div>
         <div className="flex gap-2">
-          <button 
-            onClick={() => onEdit(fund)}
-            className={`p-1.5 rounded-lg backdrop-blur-sm transition-colors ${isLight ? 'bg-gray-100 hover:bg-gray-200 text-gray-600' : 'bg-white/20 hover:bg-white/30 text-white'}`}
-          >
-            <Edit2 className="w-4 h-4" />
-          </button>
-          <button 
-            onClick={() => onDelete(fund.id)}
-            className={`p-1.5 rounded-lg backdrop-blur-sm transition-colors ${isLight ? 'bg-gray-100 hover:bg-red-100 text-gray-600 hover:text-red-500' : 'bg-white/20 hover:bg-red-500/50 text-white'}`}
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
+          {onEdit && (
+            <button 
+              onClick={() => onEdit(fund)}
+              className={`p-1.5 rounded-lg backdrop-blur-sm transition-colors ${isLight ? 'bg-gray-100 hover:bg-gray-200 text-gray-600' : 'bg-white/20 hover:bg-white/30 text-white'}`}
+            >
+              <Edit2 className="w-4 h-4" />
+            </button>
+          )}
+          {onDelete && (
+            <button 
+              onClick={() => onDelete(fund.id)}
+              className={`p-1.5 rounded-lg backdrop-blur-sm transition-colors ${isLight ? 'bg-gray-100 hover:bg-red-100 text-gray-600 hover:text-red-500' : 'bg-white/20 hover:bg-red-500/50 text-white'}`}
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          )}
         </div>
       </div>
       

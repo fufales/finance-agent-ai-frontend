@@ -9,7 +9,7 @@ import FundCard from './FundCard';
 import FundForm from './FundForm';
 import DataControls from './DataControls';
 import ConfigurationPage from './ConfigurationPage';
-import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid } from 'lucide-react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -225,6 +225,16 @@ const Dashboard = () => {
                     );
                   })}
                 </div>
+              )}
+              
+              {funds.length > 0 && (
+                <button 
+                  onClick={() => navigate('/all-funds')}
+                  className="w-full mt-4 py-3 flex items-center justify-center gap-2 text-gray-500 font-medium hover:text-gray-700 hover:bg-gray-100 rounded-xl transition-colors border border-transparent hover:border-gray-200"
+                >
+                  <LayoutGrid className="w-4 h-4" />
+                  View all cards
+                </button>
               )}
             </div>
 
