@@ -9,7 +9,7 @@ import FundCard from './FundCard';
 import FundForm from './FundForm';
 import DataControls from './DataControls';
 import ConfigurationPage from './ConfigurationPage';
-import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid } from 'lucide-react';
+import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid, Crown } from 'lucide-react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -140,7 +140,10 @@ const Dashboard = () => {
           <>
             <header className="mb-6 flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Manage your budget</p>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-amber-200 to-yellow-400 rounded-full shadow-sm border border-yellow-200">
+                  <Crown className="w-4 h-4 text-yellow-800" fill="currentColor" />
+                  <span className="text-xs font-bold text-yellow-900 tracking-wide">PRO USER</span>
+                </div>
               </div>
               <div className="relative">
                 <button 
