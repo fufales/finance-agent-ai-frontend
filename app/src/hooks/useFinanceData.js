@@ -82,7 +82,11 @@ export const useFinanceData = () => {
   };
 
   const totalIncome = data.income.period1 + data.income.period2;
-  const totalFunds = (data.funds || []).reduce((sum, item) => sum + item.amount, 0);
+  const totalFunds = (data.funds || []).reduce((sum, item) => {
+    // Default to true if affectsBalance is undefined (backward compatibility)
+    const affectsBalance = item.affectsBalance !== false;
+    return affectsBalance ? sum + item.amount : sum;
+  }, 0);
   
   const totalExpenses = data.expenses.reduce((sum, item) => sum + item.amount, 0);
   const paidExpenses = data.expenses.reduce((sum, item) => item.paid ? sum + item.amount : sum, 0);

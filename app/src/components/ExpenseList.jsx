@@ -71,7 +71,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid }) => {
               </svg>
             </button>
             <div className="w-10 h-10 shrink-0 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
-              {React.createElement(getCategoryIcon(expense.category), { size: 20 })}
+              {React.createElement(getCategoryIcon(expense.category), { size: 24 })}
             </div>
             <div className="min-w-0 flex-1">
               <p className={`font-medium break-words ${expense.paid ? 'text-gray-500 line-through' : 'text-gray-900'}`}>

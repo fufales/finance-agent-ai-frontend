@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreditCard, Wallet, Trash2, Edit2 } from 'lucide-react';
+import { CreditCard, Wallet, Trash2, Edit2, EyeOff } from 'lucide-react';
 import { formatCurrency } from '../utils/format';
 
 const FundCard = ({ fund, onDelete, onEdit, available, assignedPeriod }) => {
@@ -48,7 +48,15 @@ const FundCard = ({ fund, onDelete, onEdit, available, assignedPeriod }) => {
             </span>
           )}
         </div>
-        <h3 className="text-xl font-bold mb-1">{fund.name}</h3>
+
+        <div className="flex items-center gap-2 mb-1">
+          <h3 className="text-xl font-bold">{fund.name}</h3>
+          {fund.affectsBalance === false && (
+            <div className={`p-1 rounded-full ${isLight ? 'bg-gray-100 text-gray-500' : 'bg-white/20 text-white/70'}`} title="Visual Only (Does not affect total balance)">
+              <EyeOff className="w-4 h-4" />
+            </div>
+          )}
+        </div>
         <p className="text-2xl font-bold tracking-tight">
           {assignedPeriod ? formatCurrency(available) : formatCurrency(fund.amount)}
         </p>

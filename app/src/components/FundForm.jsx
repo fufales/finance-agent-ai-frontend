@@ -17,6 +17,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
   const [type, setType] = useState(FUND_TYPES[0]);
   const [color, setColor] = useState(COLORS[0].id);
   const [period, setPeriod] = useState('none');
+  const [affectsBalance, setAffectsBalance] = useState(true);
 
   useEffect(() => {
     if (initialData) {
@@ -25,12 +26,14 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
       setType(initialData.type);
       setColor(initialData.color || COLORS[0].id);
       setPeriod(initialData.period ? initialData.period.toString() : 'none');
+      setAffectsBalance(initialData.affectsBalance !== false);
     } else {
       setName('');
       setAmount('');
       setType(FUND_TYPES[0]);
       setColor(COLORS[0].id);
       setPeriod('none');
+      setAffectsBalance(true);
     }
   }, [initialData]);
 
@@ -44,6 +47,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
       type,
       color,
       period: period === 'none' ? null : parseInt(period),
+      affectsBalance,
     };
 
     if (isEditing) {
@@ -89,6 +93,26 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
               placeholder="0.00"
               className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent"
             />
+          </div>
+          
+          <div className="flex items-center justify-between py-2">
+            <div className="flex flex-col">
+              <span className="text-sm font-medium text-gray-700">Affects Total Balance</span>
+              <span className="text-xs text-gray-500">Include this fund in your total available funds</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setAffectsBalance(!affectsBalance)}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-money-green focus:ring-offset-2 ${
+                affectsBalance ? 'bg-money-green' : 'bg-gray-200'
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  affectsBalance ? 'translate-x-6' : 'translate-x-1'
+                }`}
+              />
+            </button>
           </div>
 
           <div>
