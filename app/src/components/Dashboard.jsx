@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useFinanceData } from '../hooks/useFinanceData';
 import SummaryCard from './SummaryCard';
 import IncomeInput from './IncomeInput';
@@ -8,9 +9,10 @@ import FundCard from './FundCard';
 import FundForm from './FundForm';
 import DataControls from './DataControls';
 import ConfigurationPage from './ConfigurationPage';
-import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings } from 'lucide-react';
+import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut } from 'lucide-react';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const {
     income,
     expenses,
@@ -41,6 +43,11 @@ const Dashboard = () => {
   const handleStartEditFund = (fund) => {
     setEditingFund(fund);
     setCurrentView('add-fund');
+  };
+
+  const handleLogout = () => {
+    // In the future, clear auth tokens here
+    navigate('/');
   };
 
   const renderContent = () => {
@@ -160,6 +167,13 @@ const Dashboard = () => {
                       >
                         <Settings className="w-4 h-4" />
                         Configuration
+                      </button>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Log Out
                       </button>
                     </div>
                   </>
