@@ -173,6 +173,16 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
+  const getDaysLeft = (expense) => {
+    if (!expense.paymentDay) return Infinity;
+    const now = new Date();
+    let dueDate = new Date(now.getFullYear(), now.getMonth(), expense.paymentDay);
+    const cleanDue = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
+    const cleanNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const diffTime = cleanDue - cleanNow;
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
   const getSortedExpenses = () => {
     const sorted = [...expenses];
     switch (sortBy) {
@@ -182,6 +192,8 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
         return sorted.sort((a, b) => b.amount - a.amount);
       case 'priority':
         return expenses; // Return original order
+      case 'payment_date':
+        return sorted.sort((a, b) => getDaysLeft(a) - getDaysLeft(b));
       default:
         return sorted.sort((a, b) => {
           if (a.period !== b.period) return a.period - b.period;
@@ -255,6 +267,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
               options={[
                 { value: 'default', label: 'Default (Period)' },
                 { value: 'priority', label: 'Priority (Custom)' },
+                { value: 'payment_date', label: 'Payment Date (Closest)' },
                 { value: 'date', label: 'Date (Newest)' },
                 { value: 'amount', label: 'Amount (Highest)' }
               ]}
