@@ -8,33 +8,61 @@ import { getCategoryIcon } from '../utils/categories';
 import Dropdown from './Dropdown';
 
 const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOverlay = false, dragHandleProps = {} }) => {
-  // Calculate progress if paymentDay exists
   let progress = 0;
   let daysLeft = null;
   let isOverdue = false;
+  let isPaymentPeriod = false;
   let dueDate = null;
   
   if (expense.paymentDay) {
     const now = new Date();
-    dueDate = new Date(now.getFullYear(), now.getMonth(), expense.paymentDay);
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    // Default to this month
+    let targetDate = new Date(now.getFullYear(), now.getMonth(), expense.paymentDay);
     
-    // Reset hours to start of day for accurate day calculation
-    const cleanDue = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
     const cleanNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     
-    const totalDuration = cleanDue - startOfMonth;
-    const elapsed = cleanNow - startOfMonth;
+    // Initial check with current month
+    let cleanDue = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+    let diffTime = cleanDue - cleanNow;
+    let initialDaysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (!expense.paid) {
+      if (initialDaysLeft === -1 || initialDaysLeft === -2) {
+        isPaymentPeriod = true;
+        dueDate = targetDate;
+        daysLeft = initialDaysLeft;
+      } else if (initialDaysLeft <= -3) {
+        // Move to next month
+        targetDate = new Date(now.getFullYear(), now.getMonth() + 1, expense.paymentDay);
+        dueDate = targetDate;
+        
+        // Recalculate for next month
+        cleanDue = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+        diffTime = cleanDue - cleanNow;
+        daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      } else {
+        // Not overdue enough, or is future
+        dueDate = targetDate;
+        daysLeft = initialDaysLeft;
+        isOverdue = daysLeft < 0;
+      }
+    } else {
+      // Paid
+      dueDate = targetDate;
+      daysLeft = initialDaysLeft;
+      isOverdue = daysLeft < 0;
+    }
+
+    // Progress Calculation
+    const startOfPeriod = new Date(dueDate.getFullYear(), dueDate.getMonth(), 1);
+    const totalDuration = cleanDue - startOfPeriod;
+    const elapsed = cleanNow - startOfPeriod;
     
     if (totalDuration > 0) {
       progress = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
     } else {
-      progress = 100; 
+      progress = 100;
     }
-
-    const diffTime = cleanDue - cleanNow;
-    daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    isOverdue = daysLeft < 0;
   }
 
   return (
@@ -110,8 +138,8 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
       {!isEditMode && expense.paymentDay && !expense.paid && (
         <div className={`w-full ${isEditMode ? 'pl-[5.5rem]' : 'pl-[3.25rem]'}`}>
           <div className="flex justify-between items-center mb-1">
-            <span className={`text-xs font-medium ${isOverdue ? 'text-red-500' : 'text-gray-500 dark:text-gray-400'}`}>
-               {isOverdue ? 'Overdue' : 'Due'}: {dueDate ? dueDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : `Day ${expense.paymentDay}`}
+            <span className={`text-xs font-medium ${isPaymentPeriod ? 'text-orange-500' : isOverdue ? 'text-red-500' : 'text-gray-500 dark:text-gray-400'}`}>
+               {isPaymentPeriod ? 'Payment Period' : isOverdue ? 'Overdue' : 'Due'}: {dueDate ? dueDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : `Day ${expense.paymentDay}`}
             </span>
             <span className="text-xs text-gray-400">
                {isOverdue 
@@ -124,7 +152,7 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
           </div>
           <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
             <div 
-              className={`h-full rounded-full transition-all duration-500 ${isOverdue ? 'bg-red-400' : 'bg-money-green'}`} 
+              className={`h-full rounded-full transition-all duration-500 ${isPaymentPeriod ? 'bg-orange-400' : isOverdue ? 'bg-red-400' : 'bg-money-green'}`} 
               style={{ width: `${progress}%` }}
             ></div>
           </div>
