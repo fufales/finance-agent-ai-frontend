@@ -54,7 +54,7 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
     }
 
     // Progress Calculation
-    const startOfPeriod = new Date(dueDate.getFullYear(), dueDate.getMonth(), 1);
+    const startOfPeriod = new Date(dueDate.getFullYear(), dueDate.getMonth() - 1, expense.paymentDay);
     const totalDuration = cleanDue - startOfPeriod;
     const elapsed = cleanNow - startOfPeriod;
     
