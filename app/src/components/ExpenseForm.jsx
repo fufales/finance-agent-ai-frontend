@@ -68,6 +68,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Amount"
             className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent"
+            inputMode="numeric"
           />
           <Dropdown
             value={category}
@@ -94,6 +95,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
               }}
               placeholder="Day of month (e.g. 5)"
               className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent text-gray-700 placeholder-gray-400"
+              inputMode="numeric"
             />
           </div>
         </div>

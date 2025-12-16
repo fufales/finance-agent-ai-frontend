@@ -16,6 +16,7 @@ const IncomeInput = ({ income, onUpdate }) => {
               onChange={(e) => onUpdate('period1', e.target.value)}
               placeholder="0"
               className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent transition-all"
+              inputMode="numeric"
             />
           </div>
         </div>
@@ -29,6 +30,7 @@ const IncomeInput = ({ income, onUpdate }) => {
               onChange={(e) => onUpdate('period2', e.target.value)}
               placeholder="0"
               className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent transition-all"
+              inputMode="numeric"
             />
           </div>
         </div>

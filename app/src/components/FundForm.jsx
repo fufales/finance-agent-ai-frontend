@@ -92,6 +92,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
               className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent"
+              inputMode="numeric"
             />
           </div>
           
