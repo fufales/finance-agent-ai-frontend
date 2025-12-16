@@ -182,23 +182,23 @@ const Dashboard = () => {
                       className="fixed inset-0 z-10" 
                       onClick={() => setShowUserMenu(false)}
                     />
-                    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 py-1 z-20">
+                    <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 py-2 z-20">
                       <button
                         onClick={() => {
                           saveScrollPosition();
                           setCurrentView('configuration');
                           setShowUserMenu(false);
                         }}
-                        className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-2"
+                        className="w-full px-5 py-3.5 text-left text-base text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-3"
                       >
-                        <Settings className="w-4 h-4" />
+                        <Settings className="w-5 h-5" />
                         Configuration
                       </button>
                       <button
                         onClick={handleLogout}
-                        className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2"
+                        className="w-full px-5 py-3.5 text-left text-base text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-3"
                       >
-                        <LogOut className="w-4 h-4" />
+                        <LogOut className="w-5 h-5" />
                         Log Out
                       </button>
                     </div>
