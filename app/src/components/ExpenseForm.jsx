@@ -51,15 +51,15 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-4">
-      <h2 className="text-lg font-semibold text-gray-800 mb-3">{isEditing ? 'Update Expense' : 'Add Expense'}</h2>
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 mb-4">
+      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">{isEditing ? 'Update Expense' : 'Add Expense'}</h2>
       <div className="space-y-3">
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Expense Name"
-          className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent"
+          className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
         />
         <div className="grid grid-cols-2 gap-3">
           <input
@@ -67,7 +67,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Amount"
-            className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent"
+            className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
             inputMode="numeric"
           />
           <Dropdown
@@ -80,7 +80,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
         
         {/* Payment Day Selector - Day Only */}
         <div className="relative">
-          <label className="text-xs text-gray-500 ml-1 mb-1 block">Payment Day (Optional)</label>
+          <label className="text-xs text-gray-500 dark:text-gray-400 ml-1 mb-1 block">Payment Day (Optional)</label>
           <div className="relative">
             <input
               type="number"
@@ -94,7 +94,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
                 }
               }}
               placeholder="Day of month (e.g. 5)"
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent text-gray-700 placeholder-gray-400"
+              className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent text-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
               inputMode="numeric"
             />
           </div>
@@ -102,19 +102,19 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-500">Assign to Period:</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400">Assign to Period:</span>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => setPeriod('1')}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${period === '1' ? 'bg-money-green text-white' : 'bg-gray-100 text-gray-600'}`}
+                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${period === '1' ? 'bg-money-green text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}`}
               >
                 Period 1
               </button>
               <button
                 type="button"
                 onClick={() => setPeriod('2')}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${period === '2' ? 'bg-money-green text-white' : 'bg-gray-100 text-gray-600'}`}
+                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${period === '2' ? 'bg-money-green text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}`}
               >
                 Period 2
               </button>
@@ -123,7 +123,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
         </div>
         <button
           type="submit"
-          className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-xl font-semibold hover:bg-gray-800 transition-colors"
+          className="w-full flex items-center justify-center gap-2 bg-gray-900 dark:bg-gray-950 text-white py-3 rounded-xl font-semibold hover:bg-gray-800 dark:hover:bg-gray-900 transition-colors"
         >
           {isEditing ? <Save className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
           {isEditing ? 'Update Expense' : 'Add Expense'}

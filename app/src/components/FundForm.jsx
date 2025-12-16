@@ -62,50 +62,50 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
       <div className="flex items-center gap-4 mb-6">
         <button 
           onClick={onCancel}
-          className="p-2 -ml-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+          className="p-2 -ml-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
-        <h2 className="text-xl font-bold text-gray-900">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
           {isEditing ? 'Update Fund' : 'Add Fund'}
         </h2>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Fund Name</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fund Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Main Debit Card"
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent"
+              className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white"
             />
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Current Balance</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Current Balance</label>
             <input
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent"
+              className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white"
               inputMode="numeric"
             />
           </div>
           
           <div className="flex items-center justify-between py-2">
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-gray-700">Affects Total Balance</span>
-              <span className="text-xs text-gray-500">Include this fund in your total available funds</span>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Affects Total Balance</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">Include this fund in your total available funds</span>
             </div>
             <button
               type="button"
               onClick={() => setAffectsBalance(!affectsBalance)}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-money-green focus:ring-offset-2 ${
-                affectsBalance ? 'bg-money-green' : 'bg-gray-200'
+                affectsBalance ? 'bg-money-green' : 'bg-gray-200 dark:bg-gray-600'
               }`}
             >
               <span
@@ -117,7 +117,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type</label>
             <Dropdown
               value={type}
               onChange={setType}
@@ -127,26 +127,26 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Assign to Period</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Assign to Period</label>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => setPeriod('none')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${period === 'none' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600'}`}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${period === 'none' ? 'bg-gray-900 dark:bg-gray-950 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}`}
               >
                 None
               </button>
               <button
                 type="button"
                 onClick={() => setPeriod('1')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${period === '1' ? 'bg-money-green text-white' : 'bg-gray-100 text-gray-600'}`}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${period === '1' ? 'bg-money-green text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}`}
               >
                 Period 1
               </button>
               <button
                 type="button"
                 onClick={() => setPeriod('2')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${period === '2' ? 'bg-money-green text-white' : 'bg-gray-100 text-gray-600'}`}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${period === '2' ? 'bg-money-green text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}`}
               >
                 Period 2
               </button>
@@ -154,7 +154,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Card Color</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Card Color</label>
             <div className="flex gap-3">
               {COLORS.map((c) => (
                 <button
@@ -170,7 +170,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
 
           <button
             type="submit"
-            className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-xl font-semibold hover:bg-gray-800 transition-colors mt-4"
+            className="w-full flex items-center justify-center gap-2 bg-gray-900 dark:bg-gray-950 text-white py-3 rounded-xl font-semibold hover:bg-gray-800 dark:hover:bg-gray-900 transition-colors mt-4"
           >
             {isEditing ? <Save className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
             {isEditing ? 'Update Fund' : 'Add Fund'}

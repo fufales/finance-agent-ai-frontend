@@ -39,8 +39,8 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
 
   return (
     <div 
-      className={`p-4 rounded-xl shadow-sm border border-l-4 group transition-colors flex flex-col gap-3 touch-manipulation bg-white
-        ${expense.paid ? 'bg-gray-50 border-gray-200' : 'bg-white border-gray-100'}
+      className={`p-4 rounded-xl shadow-sm border border-l-4 group transition-colors flex flex-col gap-3 touch-manipulation bg-white dark:bg-gray-800
+        ${expense.paid ? 'bg-gray-50 dark:bg-gray-900/50 border-gray-200 dark:border-gray-700' : 'bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700'}
         ${expense.period === 1 ? 'border-l-blue-400' : 'border-l-purple-400'}
         ${isOverlay ? 'shadow-xl ring-2 ring-money-green ring-opacity-50 opacity-95 scale-105 cursor-grabbing z-50' : ''}
       `}
@@ -62,25 +62,25 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
             className={`w-6 h-6 shrink-0 rounded-full border-2 flex items-center justify-center transition-colors ${
               expense.paid 
                 ? 'bg-money-green border-money-green text-white' 
-                : 'border-gray-300 text-transparent hover:border-money-green'
+                : 'border-gray-300 dark:border-gray-600 text-transparent hover:border-money-green'
             } ${isEditMode ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             <Check size={14} strokeWidth={3} />
           </button>
-          <div className="w-10 h-10 shrink-0 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+          <div className="w-10 h-10 shrink-0 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300">
             {React.createElement(getCategoryIcon(expense.category), { size: 24 })}
           </div>
           <div className="min-w-0 flex-1">
-            <p className={`font-medium break-words ${expense.paid ? 'text-gray-500 line-through' : 'text-gray-900'}`}>
+            <p className={`font-medium break-words ${expense.paid ? 'text-gray-500 dark:text-gray-500 line-through' : 'text-gray-900 dark:text-white'}`}>
               {expense.name}
             </p>
-            <div className="flex items-center gap-2 text-xs text-gray-500">
+            <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                <span>{expense.category} • Period {expense.period}</span>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0 ml-2">
-          <span className={`font-semibold mr-2 ${expense.paid ? 'text-gray-400' : 'text-gray-900'}`}>{formatCurrency(expense.amount)}</span>
+          <span className={`font-semibold mr-2 ${expense.paid ? 'text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>{formatCurrency(expense.amount)}</span>
           <button
             onClick={() => onEdit(expense)}
             disabled={isEditMode}
@@ -101,7 +101,7 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
       {expense.paymentDay && !expense.paid && (
         <div className={`w-full ${isEditMode ? 'pl-[5.5rem]' : 'pl-[3.25rem]'}`}>
           <div className="flex justify-between items-center mb-1">
-            <span className={`text-xs font-medium ${isOverdue ? 'text-red-500' : 'text-gray-500'}`}>
+            <span className={`text-xs font-medium ${isOverdue ? 'text-red-500' : 'text-gray-500 dark:text-gray-400'}`}>
                {isOverdue ? 'Overdue' : 'Due'}: {dueDate ? dueDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : `Day ${expense.paymentDay}`}
             </span>
             <span className="text-xs text-gray-400">
@@ -113,7 +113,7 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
                }
             </span>
           </div>
-          <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+          <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5 overflow-hidden">
             <div 
               className={`h-full rounded-full transition-all duration-500 ${isOverdue ? 'bg-red-400' : 'bg-money-green'}`} 
               style={{ width: `${progress}%` }}
@@ -235,7 +235,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
 
   if (expenses.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-400">
+      <div className="text-center py-8 text-gray-400 dark:text-gray-500">
         <p>No expenses yet.</p>
       </div>
     );
@@ -244,7 +244,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between px-1 mb-2">
-        <h3 className="text-lg font-semibold text-gray-800">Expenses</h3>
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Expenses</h3>
         <div className="flex items-center gap-2">
           {sortBy === 'priority' && (
             <button
@@ -252,7 +252,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
               className={`p-1.5 rounded-lg transition-colors flex items-center gap-1 text-xs font-medium ${
                 isEditMode 
                   ? 'bg-money-green text-white hover:bg-money-green-dark' 
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
               {isEditMode ? <Check size={14} /> : <GripVertical size={14} />}

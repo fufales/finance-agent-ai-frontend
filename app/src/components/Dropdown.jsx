@@ -63,16 +63,16 @@ const Dropdown = ({ value, onChange, options, placeholder = 'Select option', get
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent transition-all"
+        className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent transition-all"
       >
-        <span className={`block truncate ${!value ? 'text-gray-400' : 'text-gray-900'}`}>
+        <span className={`block truncate ${!value ? 'text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-white'}`}>
           {value ? renderOptionContent(selectedOption) : placeholder}
         </span>
         <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
-        <div className={`absolute z-10 w-full bg-white border border-gray-100 rounded-xl shadow-lg max-h-60 overflow-auto py-1 ${menuPositionClasses}`}>
+        <div className={`absolute z-10 w-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-auto py-1 ${menuPositionClasses}`}>
           {options.map((option) => {
             const optionValue = getOptionValue(option);
             const isSelected = value === optionValue;
@@ -82,8 +82,8 @@ const Dropdown = ({ value, onChange, options, placeholder = 'Select option', get
                 key={optionValue}
                 type="button"
                 onClick={() => handleSelect(option)}
-                className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-50 transition-colors ${
-                  isSelected ? 'text-money-green font-medium bg-green-50' : 'text-gray-700'
+                className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
+                  isSelected ? 'text-money-green font-medium bg-green-50 dark:bg-green-900/20' : 'text-gray-700 dark:text-gray-300'
                 }`}
               >
                 {renderOptionContent(option)}
