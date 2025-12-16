@@ -49,7 +49,7 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
         {isEditMode && (
           <div 
             {...dragHandleProps}
-            className="mr-3 cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 p-1"
+            className="mr-3 cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 p-1 touch-none"
           >
             <GripVertical size={20} />
           </div>
@@ -140,7 +140,7 @@ const SortableExpenseItem = (props) => {
     transition,
     opacity: isDragging ? 0.3 : 1, // Fade out the original item while dragging
     position: 'relative',
-    touchAction: 'none', // Prevent scrolling while dragging
+    // touchAction: 'none', // Removed to allow scrolling
   };
 
   return (
@@ -168,9 +168,11 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
   }, [sortBy]);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }), // Increased distance slightly to prevent accidental drags
-    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+    useSensor(PointerSensor, { 
+      activationConstraint: { 
+        distance: 5 // Activate drag after 5px movement
+      } 
+    })
   );
 
   const getDaysLeft = (expense) => {
