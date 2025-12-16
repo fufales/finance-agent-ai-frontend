@@ -28,6 +28,7 @@ const Dashboard = () => {
     totals,
     data,
     importData,
+    reorderExpenses,
   } = useFinanceData();
 
   const [currentView, setCurrentView] = useState('dashboard');
@@ -246,6 +247,7 @@ const Dashboard = () => {
                 onDelete={deleteExpense} 
                 onEdit={handleStartEdit}
                 onTogglePaid={togglePaid}
+                onReorder={reorderExpenses}
               />
             </div>
           </>

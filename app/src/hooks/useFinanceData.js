@@ -81,6 +81,13 @@ export const useFinanceData = () => {
     }));
   };
 
+  const reorderExpenses = (newExpenses) => {
+    setData(prev => ({
+      ...prev,
+      expenses: newExpenses,
+    }));
+  };
+
   const totalIncome = data.income.period1 + data.income.period2;
   const totalFunds = (data.funds || []).reduce((sum, item) => {
     // Default to true if affectsBalance is undefined (backward compatibility)
@@ -129,5 +136,6 @@ export const useFinanceData = () => {
       debtPercentage,
       debtExpenses,
     },
+    reorderExpenses,
   };
 };
