@@ -36,7 +36,7 @@ export default defineConfig({
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
-        version: 'dev-0.6.0',
+        version: 'dev-0.6.5',
         icons: [
           {
             src: 'web-app-manifest-192x192.png',
