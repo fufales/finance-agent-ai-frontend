@@ -7,7 +7,6 @@ import ExpenseForm from './ExpenseForm';
 import ExpenseList from './ExpenseList';
 import FundCard from './FundCard';
 import FundForm from './FundForm';
-import FundForm from './FundForm';
 import ConfigurationPage from './ConfigurationPage';
 import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid, Crown } from 'lucide-react';
 
