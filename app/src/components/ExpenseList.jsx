@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Edit2, ArrowUpDown, GripVertical, Check } from 'lucide-react';
+import { Trash2, Edit2, ArrowUpDown, GripVertical, Check, ListFilter } from 'lucide-react';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, TouchSensor, DragOverlay, defaultDropAnimationSideEffects } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -194,6 +194,9 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
   const [sortBy, setSortBy] = useState(() => {
     return localStorage.getItem('expense_sort_option') || 'default';
   });
+  const [hidePaid, setHidePaid] = useState(() => {
+    return localStorage.getItem('expense_hide_paid') === 'true';
+  });
   const [isEditMode, setIsEditMode] = useState(false);
   const [activeId, setActiveId] = useState(null);
 
@@ -203,6 +206,10 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
       setIsEditMode(false);
     }
   }, [sortBy]);
+
+  useEffect(() => {
+    localStorage.setItem('expense_hide_paid', hidePaid);
+  }, [hidePaid]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { 
@@ -223,14 +230,21 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
   };
 
   const getSortedExpenses = () => {
-    const sorted = [...expenses];
+    let sorted = [...expenses];
+    
+    if (hidePaid) {
+      sorted = sorted.filter(e => !e.paid);
+    }
+
     switch (sortBy) {
       case 'date':
         return sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
       case 'amount':
         return sorted.sort((a, b) => b.amount - a.amount);
       case 'priority':
-        return expenses; // Return original order
+        // For priority, we rely on the order in the props, which should be the saved order
+        // Filtering maintains the relative order of the remaining items
+        return sorted; 
       case 'payment_date':
         return sorted.sort((a, b) => getDaysLeft(a) - getDaysLeft(b));
       default:
@@ -282,36 +296,59 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between px-1 mb-2">
-        {sortBy === 'priority' ? (
-          <button
-            onClick={() => setIsEditMode(!isEditMode)}
-            className={`p-1.5 rounded-lg transition-colors flex items-center gap-1 text-xs font-medium ${
-              isEditMode 
-                ? 'bg-money-green text-white hover:bg-money-green-dark' 
-                : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-            }`}
-          >
-            {isEditMode ? <Check size={14} /> : <GripVertical size={14} />}
-            {isEditMode ? 'Done' : 'Order'}
-          </button>
-        ) : (
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Expenses</h3>
-        )}
-        <div className="flex items-center gap-2">
-          <ArrowUpDown className="w-4 h-4 text-gray-400" />
-          <div className="w-48">
-            <Dropdown
-              value={sortBy}
-              onChange={setSortBy}
-              options={[
-                { value: 'default', label: 'Default (Period)' },
-                { value: 'priority', label: 'Priority (Custom)' },
-                { value: 'payment_date', label: 'Payment Date (Closest)' },
-                { value: 'date', label: 'Date (Newest)' },
-                { value: 'amount', label: 'Amount (Highest)' }
-              ]}
-            />
+      {/* Header Controls */}
+      {/* Header Controls */}
+      <div className="mb-2">
+        <div className="flex items-center justify-between pb-2 mb-2 border-b border-gray-100 dark:border-gray-800">
+           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Expenses</h3>
+        </div>
+        
+        <div className="flex items-center justify-between h-9">
+          {/* Left: Priority/Order Button */}
+          <div className="flex-1 flex items-center justify-start">
+            {sortBy === 'priority' && (
+              <button
+                onClick={() => setIsEditMode(!isEditMode)}
+                className={`px-4 py-2 rounded-xl border transition-all flex items-center gap-2 text-sm font-medium ${
+                  isEditMode 
+                    ? 'bg-money-green border-transparent text-white shadow-sm hover:bg-money-green-dark' 
+                    : 'bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'
+                }`}
+              >
+                {isEditMode ? <Check size={16} /> : <GripVertical size={16} />}
+                {isEditMode ? 'Done' : 'Order'}
+              </button>
+            )}
+          </div>
+
+          {/* Right: Controls (Hide Paid + Sort) */}
+          <div className="flex-1 flex items-center justify-end gap-3">
+              <button
+              onClick={() => setHidePaid(!hidePaid)}
+              className={`px-4 py-2 rounded-xl border transition-all flex items-center justify-center ${
+                hidePaid
+                ? 'bg-money-green border-transparent text-white shadow-sm'
+                : 'bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'
+              }`}
+              title={hidePaid ? "Show all expenses" : "Show what's left"}
+              >
+              <ListFilter size={18} />
+              </button>
+              <div className="flex items-center gap-1">
+              <div className="w-32">
+                  <Dropdown
+                  value={sortBy}
+                  onChange={setSortBy}
+                  options={[
+                      { value: 'default', label: 'Default' },
+                      { value: 'priority', label: 'Priority' },
+                      { value: 'payment_date', label: 'Due Date' },
+                      { value: 'date', label: 'Added Date' },
+                      { value: 'amount', label: 'Amount' }
+                  ]}
+                  />
+              </div>
+              </div>
           </div>
         </div>
       </div>
