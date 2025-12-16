@@ -79,7 +79,7 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
                 {expense.category} • Period {expense.period}
               </span>
               {!isEditMode && (
-                <span className={`text-sm font-bold ${expense.paid ? 'text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>
+                <span className={`font-bold ${expense.paid ? 'text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>
                   {formatCurrency(expense.amount)}
                 </span>
               )}
