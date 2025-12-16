@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Download, Upload, MoreVertical, FileText } from "lucide-react";
+import { Download, Upload, FileText } from "lucide-react";
 import Dropdown from "./Dropdown";
 import ConfirmationModal from "./ConfirmationModal";
 import { exportToCSV, parseCSV } from "../utils/csvUtils";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Edit2, ArrowUpDown, GripVertical, Check, ListFilter } from 'lucide-react';
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, TouchSensor, DragOverlay, defaultDropAnimationSideEffects } from '@dnd-kit/core';
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
+import { Trash2, Edit2, GripVertical, Check, ListFilter } from 'lucide-react';
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragOverlay, defaultDropAnimationSideEffects } from '@dnd-kit/core';
+import { arrayMove, SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { formatCurrency } from '../utils/format';
 import { getCategoryIcon } from '../utils/categories';
@@ -24,7 +24,7 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
     // Initial check with current month
     let cleanDue = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
     let diffTime = cleanDue - cleanNow;
-    let initialDaysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const initialDaysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     if (!expense.paid) {
       if (initialDaysLeft === -1 || initialDaysLeft === -2) {
@@ -200,11 +200,15 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
   const [isEditMode, setIsEditMode] = useState(false);
   const [activeId, setActiveId] = useState(null);
 
-  useEffect(() => {
-    localStorage.setItem('expense_sort_option', sortBy);
-    if (sortBy !== 'priority') {
+  const handleSortChange = (value) => {
+    setSortBy(value);
+    if (value !== 'priority') {
       setIsEditMode(false);
     }
+  };
+
+  useEffect(() => {
+    localStorage.setItem('expense_sort_option', sortBy);
   }, [sortBy]);
 
   useEffect(() => {
@@ -222,7 +226,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
   const getDaysLeft = (expense) => {
     if (!expense.paymentDay) return Infinity;
     const now = new Date();
-    let dueDate = new Date(now.getFullYear(), now.getMonth(), expense.paymentDay);
+    const dueDate = new Date(now.getFullYear(), now.getMonth(), expense.paymentDay);
     const cleanDue = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
     const cleanNow = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const diffTime = cleanDue - cleanNow;
@@ -337,9 +341,9 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
               <div className="flex items-center gap-1">
               <div className="w-32">
                   <Dropdown
-                  value={sortBy}
-                  onChange={setSortBy}
-                  options={[
+                value={sortBy}
+                onChange={handleSortChange}
+                options={[
                       { value: 'default', label: 'Default' },
                       { value: 'priority', label: 'Priority' },
                       { value: 'payment_date', label: 'Due Date' },

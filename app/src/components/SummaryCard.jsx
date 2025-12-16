@@ -3,7 +3,7 @@ import { formatCurrency, formatPercentage } from '../utils/format';
 import { Wallet, TrendingDown, PieChart, AlertTriangle } from 'lucide-react';
 
 const SummaryCard = ({ totals }) => {
-  const { totalIncome, totalExpenses, paidExpenses, projectedBalance, availableBalance, debtPercentage, totalFunds, debtExpenses } = totals;
+  const { totalIncome, paidExpenses, projectedBalance, debtPercentage, totalFunds, debtExpenses } = totals;
   const isDeficit = projectedBalance < 0;
 
   const getDebtStatus = (percentage) => {

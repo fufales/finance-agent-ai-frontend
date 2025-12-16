@@ -21,6 +21,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
 
   useEffect(() => {
     if (initialData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setName(initialData.name);
       setAmount(initialData.amount.toString());
       setType(initialData.type);

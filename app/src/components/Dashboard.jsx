@@ -7,7 +7,7 @@ import ExpenseForm from './ExpenseForm';
 import ExpenseList from './ExpenseList';
 import FundCard from './FundCard';
 import FundForm from './FundForm';
-import DataControls from './DataControls';
+import FundForm from './FundForm';
 import ConfigurationPage from './ConfigurationPage';
 import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid, Crown } from 'lucide-react';
 
@@ -151,7 +151,7 @@ const Dashboard = () => {
             }}
           />
         );
-      default:
+      default: {
         const unpaidExpensesPeriod1 = expenses
           .filter(e => e.period === 1 && !e.paid)
           .reduce((sum, e) => sum + e.amount, 0);
@@ -285,6 +285,7 @@ const Dashboard = () => {
             </div>
           </>
         );
+      }
     }
   };
 

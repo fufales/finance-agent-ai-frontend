@@ -12,6 +12,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
 
   useEffect(() => {
     if (initialData) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAmount(initialData.amount.toString());
       setName(initialData.name);
       setCategory(initialData.category);
