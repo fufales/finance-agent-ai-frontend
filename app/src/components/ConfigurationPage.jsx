@@ -44,7 +44,7 @@ const ConfigurationPage = ({ onBack, data, onImport }) => {
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">App Info</h3>
          <div className="flex flex-col gap-2">
-            <p className="text-gray-600 dark:text-gray-400">Version: <span className="font-mono font-medium text-gray-900 dark:text-white">dev-0.6.5</span></p>
+            <p className="text-gray-600 dark:text-gray-400">Version: <span className="font-mono font-medium text-gray-900 dark:text-white">dev-0.6.8</span></p>
             {needRefresh && (
               <div className="mt-2 p-4 bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-lg flex flex-col gap-2">
                  <p className="text-sm">A new version of the app is available.</p>
