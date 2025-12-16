@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFinanceData } from '../hooks/useFinanceData';
 import SummaryCard from './SummaryCard';
@@ -36,12 +36,35 @@ const Dashboard = () => {
   const [editingFund, setEditingFund] = useState(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
+  // Scroll persistence logic
+  useEffect(() => {
+    const SCROLL_KEY = 'dashboard_scroll_position';
+    
+    if (currentView === 'dashboard') {
+      const savedScroll = sessionStorage.getItem(SCROLL_KEY);
+      if (savedScroll) {
+        // Use a small timeout to ensure the DOM is fully rendered
+        setTimeout(() => {
+          window.scrollTo(0, parseInt(savedScroll));
+        }, 0);
+      }
+    }
+  }, [currentView]);
+
+  const saveScrollPosition = () => {
+    if (currentView === 'dashboard') {
+      sessionStorage.setItem('dashboard_scroll_position', window.scrollY);
+    }
+  };
+
   const handleStartEdit = (expense) => {
+    saveScrollPosition();
     setEditingExpense(expense);
     setCurrentView('add-expense');
   };
 
   const handleStartEditFund = (fund) => {
+    saveScrollPosition();
     setEditingFund(fund);
     setCurrentView('add-fund');
   };
@@ -163,6 +186,7 @@ const Dashboard = () => {
                     <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 py-1 z-20">
                       <button
                         onClick={() => {
+                          saveScrollPosition();
                           setCurrentView('configuration');
                           setShowUserMenu(false);
                         }}
@@ -190,7 +214,10 @@ const Dashboard = () => {
               <div className="flex items-center justify-between mb-4 px-1">
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Current Funds</h3>
                 <button 
-                  onClick={() => setCurrentView('add-fund')}
+                  onClick={() => {
+                    saveScrollPosition();
+                    setCurrentView('add-fund');
+                  }}
                   className="text-sm text-money-green font-medium hover:text-money-green-dark"
                 >
                   + Add Fund
@@ -199,7 +226,10 @@ const Dashboard = () => {
               
               {funds.length === 0 ? (
                 <div 
-                  onClick={() => setCurrentView('add-fund')}
+                  onClick={() => {
+                    saveScrollPosition();
+                    setCurrentView('add-fund');
+                  }}
                   className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl p-6 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 cursor-pointer hover:border-money-green hover:text-money-green transition-colors"
                 >
                   <CreditCard className="w-8 h-8 mb-2" />
@@ -232,7 +262,10 @@ const Dashboard = () => {
               
               {funds.length > 0 && (
                 <button 
-                  onClick={() => navigate('/all-funds')}
+                  onClick={() => {
+                    saveScrollPosition();
+                    navigate('/all-funds');
+                  }}
                   className="w-full mt-4 py-3 flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400 font-medium hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors border border-transparent hover:border-gray-200 dark:hover:border-gray-700"
                 >
                   <LayoutGrid className="w-4 h-4" />
@@ -266,6 +299,8 @@ const Dashboard = () => {
         <div className="max-w-md mx-auto flex items-center justify-between">
           <button
             onClick={() => {
+              sessionStorage.removeItem('dashboard_scroll_position');
+              window.scrollTo(0, 0);
               setCurrentView('dashboard');
               setEditingExpense(null);
               setEditingFund(null);
@@ -278,6 +313,7 @@ const Dashboard = () => {
           
           <button
             onClick={() => {
+              saveScrollPosition();
               setCurrentView('add-expense');
               setEditingExpense(null);
               setEditingFund(null);
@@ -292,6 +328,7 @@ const Dashboard = () => {
 
           <button
             onClick={() => {
+              saveScrollPosition();
               setCurrentView('income');
               setEditingExpense(null);
               setEditingFund(null);
