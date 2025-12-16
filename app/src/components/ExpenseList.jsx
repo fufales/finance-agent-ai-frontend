@@ -80,25 +80,30 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0 ml-2">
-          <span className={`font-semibold mr-2 ${expense.paid ? 'text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>{formatCurrency(expense.amount)}</span>
-          <button
-            onClick={() => onEdit(expense)}
-            disabled={isEditMode}
-            className={`p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors ${isEditMode ? 'opacity-30 cursor-not-allowed' : ''}`}
-          >
-            <Edit2 className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => onDelete(expense.id)}
-            disabled={isEditMode}
-            className={`p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors ${isEditMode ? 'opacity-30 cursor-not-allowed' : ''}`}
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
+          {!isEditMode && (
+            <span className={`font-semibold mr-2 ${expense.paid ? 'text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>{formatCurrency(expense.amount)}</span>
+          )}
+          {!isEditMode && (
+            <>
+              <button
+                onClick={() => onEdit(expense)}
+                className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
+              >
+                <Edit2 className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => onDelete(expense.id)}
+                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </>
+          )}
         </div>
       </div>
       
-      {expense.paymentDay && !expense.paid && (
+      
+      {!isEditMode && expense.paymentDay && !expense.paid && (
         <div className={`w-full ${isEditMode ? 'pl-[5.5rem]' : 'pl-[3.25rem]'}`}>
           <div className="flex justify-between items-center mb-1">
             <span className={`text-xs font-medium ${isOverdue ? 'text-red-500' : 'text-gray-500 dark:text-gray-400'}`}>
@@ -246,21 +251,22 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between px-1 mb-2">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Expenses</h3>
+        {sortBy === 'priority' ? (
+          <button
+            onClick={() => setIsEditMode(!isEditMode)}
+            className={`p-1.5 rounded-lg transition-colors flex items-center gap-1 text-xs font-medium ${
+              isEditMode 
+                ? 'bg-money-green text-white hover:bg-money-green-dark' 
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+            }`}
+          >
+            {isEditMode ? <Check size={14} /> : <GripVertical size={14} />}
+            {isEditMode ? 'Done' : 'Order'}
+          </button>
+        ) : (
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Expenses</h3>
+        )}
         <div className="flex items-center gap-2">
-          {sortBy === 'priority' && (
-            <button
-              onClick={() => setIsEditMode(!isEditMode)}
-              className={`p-1.5 rounded-lg transition-colors flex items-center gap-1 text-xs font-medium ${
-                isEditMode 
-                  ? 'bg-money-green text-white hover:bg-money-green-dark' 
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-              }`}
-            >
-              {isEditMode ? <Check size={14} /> : <GripVertical size={14} />}
-              {isEditMode ? 'Done' : 'Order'}
-            </button>
-          )}
           <ArrowUpDown className="w-4 h-4 text-gray-400" />
           <div className="w-48">
             <Dropdown
