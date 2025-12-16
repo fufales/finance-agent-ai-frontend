@@ -45,21 +45,21 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
         ${isOverlay ? 'shadow-xl ring-2 ring-money-green ring-opacity-50 opacity-95 scale-105 cursor-grabbing z-50' : ''}
       `}
     >
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-start justify-between w-full">
         {isEditMode && (
           <div 
             {...dragHandleProps}
-            className="mr-3 cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 p-1 touch-none"
+            className="mr-3 cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 p-1 touch-none self-center"
           >
             <GripVertical size={20} />
           </div>
         )}
         
-        <div className="flex items-center gap-3 flex-1 min-w-0">
+        <div className="flex items-start gap-3 flex-1 min-w-0">
           <button
             onClick={() => !isEditMode && onTogglePaid(expense.id)}
             disabled={isEditMode}
-            className={`w-6 h-6 shrink-0 rounded-full border-2 flex items-center justify-center transition-colors ${
+            className={`w-6 h-6 shrink-0 rounded-full border-2 flex items-center justify-center transition-colors mt-1 ${
               expense.paid 
                 ? 'bg-money-green border-money-green text-white' 
                 : 'border-gray-300 dark:border-gray-600 text-transparent hover:border-money-green'
@@ -70,30 +70,34 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
           <div className="w-10 h-10 shrink-0 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300">
             {React.createElement(getCategoryIcon(expense.category), { size: 24 })}
           </div>
-          <div className="min-w-0 flex-1">
-            <p className={`font-medium break-words ${expense.paid ? 'text-gray-500 dark:text-gray-500 line-through' : 'text-gray-900 dark:text-white'}`}>
+          <div className="min-w-0 flex-1 flex flex-col gap-0.5">
+            <p className={`font-medium break-words leading-tight ${expense.paid ? 'text-gray-500 dark:text-gray-500 line-through' : 'text-gray-900 dark:text-white'}`}>
               {expense.name}
             </p>
-            <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-               <span>{expense.category} • Period {expense.period}</span>
+            <div className="flex flex-col">
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {expense.category} • Period {expense.period}
+              </span>
+              {!isEditMode && (
+                <span className={`text-sm font-bold ${expense.paid ? 'text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>
+                  {formatCurrency(expense.amount)}
+                </span>
+              )}
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2 shrink-0 ml-2">
-          {!isEditMode && (
-            <span className={`font-semibold mr-2 ${expense.paid ? 'text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>{formatCurrency(expense.amount)}</span>
-          )}
+        <div className="flex items-center gap-1 shrink-0 ml-2 self-start mt-0.5">
           {!isEditMode && (
             <>
               <button
                 onClick={() => onEdit(expense)}
-                className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
+                className="p-1.5 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
               >
                 <Edit2 className="w-4 h-4" />
               </button>
               <button
                 onClick={() => onDelete(expense.id)}
-                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
