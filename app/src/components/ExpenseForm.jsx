@@ -8,6 +8,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
   const [name, setName] = useState('');
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [period, setPeriod] = useState('1');
+  const [paymentDay, setPaymentDay] = useState('');
 
   useEffect(() => {
     if (initialData) {
@@ -15,11 +16,13 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
       setName(initialData.name);
       setCategory(initialData.category);
       setPeriod(initialData.period.toString());
+      setPaymentDay(initialData.paymentDay || '');
     } else {
       setAmount('');
       setName('');
       setCategory(CATEGORIES[0]);
       setPeriod('1');
+      setPaymentDay('');
     }
   }, [initialData]);
 
@@ -33,6 +36,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
       category,
       period: parseInt(period),
       date: new Date().toISOString(),
+      paymentDay: paymentDay ? parseInt(paymentDay) : null,
     };
 
     if (isEditing) {
@@ -42,6 +46,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
       setAmount('');
       setName('');
       setCategory(CATEGORIES[0]);
+      setPaymentDay('');
     }
   };
 
@@ -71,6 +76,28 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
             getIcon={getCategoryIcon}
           />
         </div>
+        
+        {/* Payment Day Selector - Day Only */}
+        <div className="relative">
+          <label className="text-xs text-gray-500 ml-1 mb-1 block">Payment Day (Optional)</label>
+          <div className="relative">
+            <input
+              type="number"
+              min="1"
+              max="31"
+              value={paymentDay}
+              onChange={(e) => {
+                const val = parseInt(e.target.value);
+                if (!e.target.value || (val >= 1 && val <= 31)) {
+                  setPaymentDay(e.target.value);
+                }
+              }}
+              placeholder="Day of month (e.g. 5)"
+              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent text-gray-700 placeholder-gray-400"
+            />
+          </div>
+        </div>
+
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <span className="text-sm text-gray-500">Assign to Period:</span>
