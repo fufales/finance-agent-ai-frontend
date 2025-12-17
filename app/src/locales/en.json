@@ -42,6 +42,8 @@
   "confirmPaidMessage": "Are you sure you want to mark this expense as paid?",
   "confirmLogoutTitle": "Log Out",
   "confirmLogoutMessage": "Are you sure you want to log out of your account?",
+  "confirmUnpaidTitle": "Mark as Unpaid",
+  "confirmUnpaidMessage": "Are you sure you want to mark this expense as unpaid?",
   "confirmDeleteFundTitle": "Delete Fund",
   "confirmDeleteFundMessage": "Are you sure you want to delete this fund? This action cannot be undone.",
   "accept": "Accept",

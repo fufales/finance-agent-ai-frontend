@@ -42,6 +42,8 @@
   "confirmPaidMessage": "¿Estás seguro de que quieres marcar este gasto como pagado?",
   "confirmLogoutTitle": "Cerrar Sesión",
   "confirmLogoutMessage": "¿Estás seguro de que quieres cerrar sesión?",
+  "confirmUnpaidTitle": "Marcar como No Pagado",
+  "confirmUnpaidMessage": "¿Estás seguro de que quieres marcar este gasto como no pagado?",
   "confirmDeleteFundTitle": "Eliminar Fondo",
   "confirmDeleteFundMessage": "¿Estás seguro de que quieres eliminar este fondo? Esta acción no se puede deshacer.",
   "accept": "Aceptar",

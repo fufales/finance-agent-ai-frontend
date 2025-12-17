@@ -215,13 +215,20 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
   };
 
   const requestTogglePaid = (id) => {
-    setConfirmationState({ isOpen: true, type: 'pay', id });
+    const expense = expenses.find(e => e.id === id);
+    if (expense) {
+      setConfirmationState({ 
+        isOpen: true, 
+        type: expense.paid ? 'unpay' : 'pay', 
+        id 
+      });
+    }
   };
 
   const handleConfirmAction = () => {
     if (confirmationState.type === 'delete') {
       onDelete(confirmationState.id);
-    } else if (confirmationState.type === 'pay') {
+    } else if (confirmationState.type === 'pay' || confirmationState.type === 'unpay') {
       onTogglePaid(confirmationState.id);
     }
     setConfirmationState({ isOpen: false, type: null, id: null });
@@ -429,8 +436,16 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
         isOpen={confirmationState.isOpen}
         onClose={() => setConfirmationState({ ...confirmationState, isOpen: false })}
         onConfirm={handleConfirmAction}
-        title={confirmationState.type === 'delete' ? t('confirmDeleteTitle') : t('confirmPaidTitle')}
-        message={confirmationState.type === 'delete' ? t('confirmDeleteMessage') : t('confirmPaidMessage')}
+        title={
+          confirmationState.type === 'delete' ? t('confirmDeleteTitle') : 
+          confirmationState.type === 'unpay' ? t('confirmUnpaidTitle') :
+          t('confirmPaidTitle')
+        }
+        message={
+          confirmationState.type === 'delete' ? t('confirmDeleteMessage') : 
+          confirmationState.type === 'unpay' ? t('confirmUnpaidMessage') :
+          t('confirmPaidMessage')
+        }
         confirmText={t('accept')}
         cancelText={t('decline')}
         type={confirmationState.type === 'delete' ? 'danger' : 'primary'}
