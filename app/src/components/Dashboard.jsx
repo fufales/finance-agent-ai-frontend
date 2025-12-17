@@ -462,7 +462,7 @@ const Dashboard = () => {
 
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-3 pb-safe z-50">
-        <div className="max-w-md mx-auto flex items-center justify-between">
+        <div className="max-w-md mx-auto grid grid-cols-3 items-end justify-items-center">
           <button
             onClick={() => {
               sessionStorage.removeItem('dashboard_scroll_position');
@@ -484,11 +484,13 @@ const Dashboard = () => {
               setEditingExpense(null);
               setEditingFund(null);
             }}
-            className="flex flex-col items-center gap-1 text-money-green -mt-8"
+            className="flex flex-col items-center gap-1 text-money-green relative"
           >
-            <div className="w-14 h-14 bg-money-green rounded-full flex items-center justify-center shadow-lg shadow-money-green/30 text-white transform transition-transform active:scale-95">
+            <div className="absolute bottom-6 w-14 h-14 bg-money-green rounded-full flex items-center justify-center shadow-lg shadow-money-green/30 text-white transform transition-transform active:scale-95">
               <PlusCircle className="w-8 h-8" />
             </div>
+            {/* Invisble placeholder to maintain height/width flow if needed, or just let absolute positioning handle the circle */}
+            <div className="w-14 h-8" /> 
             <span className="text-xs font-medium text-gray-600 dark:text-gray-400">{t('add')}</span>
           </button>
 
