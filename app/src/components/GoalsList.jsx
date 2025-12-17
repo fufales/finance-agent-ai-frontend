@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Edit2, Trash2, Building, Plane, AlertCircle, HelpCircle, PlusCircle, Target, ArrowLeft } from 'lucide-react';
+import { Edit2, Trash2, Building, Plane, AlertCircle, HelpCircle, Target, ArrowLeft } from 'lucide-react';
 import ConfirmationModal from './ConfirmationModal';
 
 const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
@@ -103,18 +103,18 @@ const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
               </div>
             );
           })}
+
+          <div 
+            onClick={onAdd}
+            className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl p-6 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 cursor-pointer hover:border-money-green hover:text-money-green transition-colors"
+          >
+            <Target className="w-8 h-8 mb-2 opacity-50" />
+            <p className="font-medium text-sm">{t('addGoal')}</p>
+          </div>
         </div>
       )}
 
-      {/* Floating Add Button for Goals (if not empty) */}
-      {goals.length > 0 && (
-        <button
-          onClick={onAdd}
-          className="fixed bottom-24 right-6 w-14 h-14 bg-money-green text-white rounded-full shadow-lg shadow-money-green/30 flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40"
-        >
-          <PlusCircle className="w-8 h-8" />
-        </button>
-      )}
+
 
       <ConfirmationModal
         isOpen={!!goalToDelete}
