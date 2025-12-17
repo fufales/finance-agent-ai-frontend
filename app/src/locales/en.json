@@ -120,7 +120,7 @@
   "fund_Investment": "Investment",
   "fund_Loan": "Loan",
   "devNotes": "Dev Notes",
-  "latestUpdate": "• Added Goals feature to track financial goals.\n• Moved 'Account' icon to the bottom navigation bar for better accessibility.\n• Updated Account menu to a bottom sheet design.\n• Improved bottom navigation layout.\n• Updated check paid modal with context-aware messages (Paid vs Unpaid).\n• Improved Goal Form UI with better layout and labels.\n• Added new Goal Categories with icons.\n• Fixed UI issues in dropdowns.",
+  "latestUpdate": "• Updated input forms with labels and Costa Rican Colones symbol.\n• Added Goals feature to track financial goals.\n• Moved 'Account' icon to the bottom navigation bar for better accessibility.\n• Updated Account menu to a bottom sheet design.\n• Improved bottom navigation layout.\n• Updated check paid modal with context-aware messages (Paid vs Unpaid).\n• Improved Goal Form UI with better layout and labels.\n• Added new Goal Categories with icons.\n• Fixed UI issues in dropdowns.",
   "goals": "Goals",
   "addGoal": "Add Goal",
   "editGoal": "Edit Goal",

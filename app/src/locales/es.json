@@ -120,7 +120,7 @@
   "fund_Investment": "Inversión",
   "fund_Loan": "Préstamo",
   "devNotes": "Notas del Desarrollador",
-  "latestUpdate": "• Se agregó la función de Metas para rastrear objetivos financieros.\n• Se movió el ícono de 'Cuenta' a la barra de navegación inferior para mejor accesibilidad.\n• Se actualizó el menú de Cuenta a un diseño de hoja inferior.\n• Se mejoró el diseño de la navegación inferior.\n• Se actualizó el modal de confirmar pago con mensajes contextuales.\n• Mejora en la interfaz del formulario de Metas con mejor diseño y etiquetas.\n• Nuevas categorías de Metas con íconos.\n• Corrección de problemas de interfaz en menús desplegables.",
+  "latestUpdate": "• Se actualizaron los formularios con etiquetas y el símbolo de Colones.\n• Se agregó la función de Metas para rastrear objetivos financieros.\n• Se movió el ícono de 'Cuenta' a la barra de navegación inferior para mejor accesibilidad.\n• Se actualizó el menú de Cuenta a un diseño de hoja inferior.\n• Se mejoró el diseño de la navegación inferior.\n• Se actualizó el modal de confirmar pago con mensajes contextuales.\n• Mejora en la interfaz del formulario de Metas con mejor diseño y etiquetas.\n• Nuevas categorías de Metas con íconos.\n• Corrección de problemas de interfaz en menús desplegables.",
   "goals": "Metas",
   "addGoal": "Agregar Meta",
   "editGoal": "Editar Meta",
