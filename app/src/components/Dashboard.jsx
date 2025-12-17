@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 import { useFinanceData } from '../hooks/useFinanceData';
 import SummaryCard from './SummaryCard';
@@ -12,6 +13,7 @@ import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Setti
 import { usePWA } from '../usePWA';
 
 const Dashboard = () => {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const {
     income,
@@ -117,7 +119,7 @@ const Dashboard = () => {
               >
                 <ArrowLeft className="w-6 h-6" />
               </button>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">Manage Income</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('manageIncome')}</h2>
             </div>
             <IncomeInput income={income} onUpdate={updateIncome} />
           </div>
@@ -136,7 +138,7 @@ const Dashboard = () => {
                 <ArrowLeft className="w-6 h-6" />
               </button>
               <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                {editingExpense ? 'Update Expense' : 'Add Expense'}
+                {editingExpense ? t('updateExpense') : t('addExpense')}
               </h2>
             </div>
             <ExpenseForm 
@@ -189,7 +191,7 @@ const Dashboard = () => {
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-amber-200 to-yellow-400 rounded-full shadow-sm border border-yellow-200">
                   <Crown className="w-4 h-4 text-yellow-800" fill="currentColor" />
-                  <span className="text-xs font-bold text-yellow-900 tracking-wide">PRO USER</span>
+                  <span className="text-xs font-bold text-yellow-900 tracking-wide">{t('proUser')}</span>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -212,7 +214,9 @@ const Dashboard = () => {
                       />
                       <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden z-20">
                         <div className="px-5 py-3 border-b border-gray-100 dark:border-gray-700">
-                          <h3 className="font-semibold text-gray-900 dark:text-white">Notifications</h3>
+                          <div className="px-5 py-3 border-b border-gray-100 dark:border-gray-700">
+                            <h3 className="font-semibold text-gray-900 dark:text-white">{t('notifications')}</h3>
+                          </div>
                         </div>
                         
                         <div className="max-h-[60vh] overflow-y-auto">
@@ -224,8 +228,8 @@ const Dashboard = () => {
                                   <RefreshCw className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                                 </div>
                                 <div>
-                                  <p className="text-sm font-medium text-gray-900 dark:text-white">Update Available</p>
-                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">A new version of the app is available.</p>
+                                  <p className="text-sm font-medium text-gray-900 dark:text-white">{t('updateAvailable')}</p>
+                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{t('newVersionAvailable')}</p>
                                   <button
                                     onClick={() => {
                                       setShowNotifications(false);
@@ -234,7 +238,7 @@ const Dashboard = () => {
                                     }}
                                     className="mt-2 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
                                   >
-                                    Update Now
+                                    {t('updateNow')}
                                   </button>
                                 </div>
                               </div>
@@ -243,14 +247,14 @@ const Dashboard = () => {
 
                           {/* Upcoming Payments */}
                           <div className="p-4">
-                            <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
-                              Upcoming Payments (3 Days)
-                            </p>
-                            
-                            {upcomingPayments.length === 0 ? (
-                              <p className="text-sm text-gray-500 dark:text-gray-400 py-2">
-                                No upcoming payments.
+                              <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+                                {t('upcomingPayments')}
                               </p>
+                              
+                              {upcomingPayments.length === 0 ? (
+                                <p className="text-sm text-gray-500 dark:text-gray-400 py-2">
+                                  {t('noUpcomingPayments')}
+                                </p>
                             ) : (
                               <div className="space-y-3">
                                 {upcomingPayments.map(expense => (
@@ -262,7 +266,7 @@ const Dashboard = () => {
                                     <div className="flex-1">
                                       <p className="text-sm font-medium text-gray-900 dark:text-white">{expense.name}</p>
                                       <p className="text-xs text-gray-500 dark:text-gray-400">
-                                        Due day: {expense.paymentDay}
+                                        {t('dueDay')}: {expense.paymentDay}
                                       </p>
                                     </div>
                                     <span className="text-sm font-semibold text-gray-900 dark:text-white">
@@ -303,14 +307,14 @@ const Dashboard = () => {
                         className="w-full px-5 py-3.5 text-left text-base text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center gap-3"
                       >
                         <Settings className="w-5 h-5" />
-                        Configuration
+                        {t('configuration')}
                       </button>
                       <button
                         onClick={handleLogout}
                         className="w-full px-5 py-3.5 text-left text-base text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-3"
                       >
                         <LogOut className="w-5 h-5" />
-                        Log Out
+                        {t('logOut')}
                       </button>
                     </div>
                   </>
@@ -323,7 +327,7 @@ const Dashboard = () => {
             
             <div className="mb-8">
               <div className="flex items-center justify-between mb-4 px-1">
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Current Funds</h3>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{t('currentFunds')}</h3>
                 <button 
                   onClick={() => {
                     saveScrollPosition();
@@ -331,7 +335,7 @@ const Dashboard = () => {
                   }}
                   className="text-sm text-money-green font-medium hover:text-money-green-dark"
                 >
-                  + Add Fund
+                  + {t('addFund')}
                 </button>
               </div>
               
@@ -344,7 +348,7 @@ const Dashboard = () => {
                   className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl p-6 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 cursor-pointer hover:border-money-green hover:text-money-green transition-colors"
                 >
                   <CreditCard className="w-8 h-8 mb-2" />
-                  <p className="text-sm font-medium">Add your first card or account</p>
+                  <p className="text-sm font-medium">{t('addFirstFund')}</p>
                 </div>
               ) : (
                 <div className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 snap-x">
@@ -380,7 +384,7 @@ const Dashboard = () => {
                   className="w-full mt-4 py-3 flex items-center justify-center gap-2 text-gray-500 dark:text-gray-400 font-medium hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors border border-transparent hover:border-gray-200 dark:hover:border-gray-700"
                 >
                   <LayoutGrid className="w-4 h-4" />
-                  View all cards
+                  {t('viewAllCards')}
                 </button>
               )}
             </div>
@@ -420,7 +424,7 @@ const Dashboard = () => {
             className={`flex flex-col items-center gap-1 ${currentView === 'dashboard' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
           >
             <LayoutDashboard className="w-6 h-6" />
-            <span className="text-xs font-medium">Dashboard</span>
+            <span className="text-xs font-medium">{t('dashboard')}</span>
           </button>
           
           <button
@@ -435,7 +439,7 @@ const Dashboard = () => {
             <div className="w-14 h-14 bg-money-green rounded-full flex items-center justify-center shadow-lg shadow-money-green/30 text-white transform transition-transform active:scale-95">
               <PlusCircle className="w-8 h-8" />
             </div>
-            <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Add</span>
+            <span className="text-xs font-medium text-gray-600 dark:text-gray-400">{t('add')}</span>
           </button>
 
           <button
@@ -448,7 +452,7 @@ const Dashboard = () => {
             className={`flex flex-col items-center gap-1 ${currentView === 'income' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
           >
             <Wallet className="w-6 h-6" />
-            <span className="text-xs font-medium">Income</span>
+            <span className="text-xs font-medium">{t('income')}</span>
           </button>
         </div>
       </div>

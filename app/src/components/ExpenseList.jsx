@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { Trash2, Edit2, GripVertical, Check, ListFilter } from 'lucide-react';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragOverlay, defaultDropAnimationSideEffects } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
@@ -8,6 +9,7 @@ import { getCategoryIcon } from '../utils/categories';
 import Dropdown from './Dropdown';
 
 const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOverlay = false, dragHandleProps = {} }) => {
+  const { t } = useLanguage();
   let progress = 0;
   let daysLeft = null;
   let isOverdue = false;
@@ -139,14 +141,14 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
         <div className={`w-full ${isEditMode ? 'pl-[5.5rem]' : 'pl-[3.25rem]'}`}>
           <div className="flex justify-between items-center mb-1">
             <span className={`text-xs font-medium ${isPaymentPeriod ? 'text-orange-500' : isOverdue ? 'text-red-500' : 'text-gray-500 dark:text-gray-400'}`}>
-               {isPaymentPeriod ? 'Payment Period' : isOverdue ? 'Overdue' : 'Due'}: {dueDate ? dueDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : `Day ${expense.paymentDay}`}
+               {isPaymentPeriod ? t('paymentPeriod') : isOverdue ? t('overdue') : t('due')}: {dueDate ? dueDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : `Day ${expense.paymentDay}`}
             </span>
             <span className="text-xs text-gray-400">
                {isOverdue 
-                 ? `${Math.abs(daysLeft)} days late` 
+                 ? `${Math.abs(daysLeft)} ${t('daysLate')}` 
                  : daysLeft === 0 
-                   ? 'Due today' 
-                   : `${daysLeft} days left`
+                   ? t('dueToday') 
+                   : `${daysLeft} ${t('daysLeft')}`
                }
             </span>
           </div>
@@ -191,6 +193,7 @@ const SortableExpenseItem = (props) => {
 };
 
 const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) => {
+  const { t } = useLanguage();
   const [sortBy, setSortBy] = useState(() => {
     return localStorage.getItem('expense_sort_option') || 'default';
   });
@@ -293,7 +296,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
   if (expenses.length === 0) {
     return (
       <div className="text-center py-8 text-gray-400 dark:text-gray-500">
-        <p>No expenses yet.</p>
+        <p>{t('noExpensesYet')}</p>
       </div>
     );
   }
@@ -304,7 +307,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
       {/* Header Controls */}
       <div className="mb-2">
         <div className="flex items-center justify-between pb-2 mb-2 border-b border-gray-100 dark:border-gray-800">
-           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Expenses</h3>
+           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{t('expenses')}</h3>
         </div>
         
         <div className="flex items-center justify-between h-9">
@@ -320,7 +323,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
                 }`}
               >
                 {isEditMode ? <Check size={16} /> : <GripVertical size={16} />}
-                {isEditMode ? 'Done' : 'Order'}
+                {isEditMode ? t('done') : t('order')}
               </button>
             )}
           </div>
@@ -334,7 +337,7 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
                 ? 'bg-money-green border-transparent text-white shadow-sm'
                 : 'bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600'
               }`}
-              title={hidePaid ? "Show all expenses" : "Show what's left"}
+              title={hidePaid ? t('showAllExpenses') : t('showWhatsLeft')}
               >
               <ListFilter size={18} />
               </button>
@@ -344,11 +347,11 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
                 value={sortBy}
                 onChange={handleSortChange}
                 options={[
-                      { value: 'default', label: 'Default' },
-                      { value: 'priority', label: 'Priority' },
-                      { value: 'payment_date', label: 'Due Date' },
-                      { value: 'date', label: 'Added Date' },
-                      { value: 'amount', label: 'Amount' }
+                      { value: 'default', label: t('default') },
+                      { value: 'priority', label: t('priority') },
+                      { value: 'payment_date', label: t('dueDate') },
+                      { value: 'date', label: t('addedDate') },
+                      { value: 'amount', label: t('amount') }
                   ]}
                   />
               </div>

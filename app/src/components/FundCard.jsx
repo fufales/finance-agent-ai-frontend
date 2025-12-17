@@ -1,8 +1,10 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { CreditCard, Wallet, Trash2, Edit2, EyeOff } from 'lucide-react';
 import { formatCurrency } from '../utils/format';
 
 const FundCard = ({ fund, onDelete, onEdit, available, assignedPeriod }) => {
+  const { t } = useLanguage();
   const isCredit = fund.type === 'Credit Card';
   
   const getBgColor = () => {
@@ -48,7 +50,7 @@ const FundCard = ({ fund, onDelete, onEdit, available, assignedPeriod }) => {
           <p className={`text-sm font-medium ${isLight ? 'text-gray-500 dark:text-gray-400' : 'text-white/70'}`}>{fund.type}</p>
           {assignedPeriod && (
             <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${isLight ? 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300' : 'bg-white/20 text-white'}`}>
-              Period {assignedPeriod}
+              {t('period')} {assignedPeriod}
             </span>
           )}
         </div>
@@ -56,7 +58,7 @@ const FundCard = ({ fund, onDelete, onEdit, available, assignedPeriod }) => {
         <div className="flex items-center gap-2 mb-1">
           <h3 className="text-xl font-bold">{fund.name}</h3>
           {fund.affectsBalance === false && (
-            <div className={`p-1 rounded-full ${isLight ? 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400' : 'bg-white/20 text-white/70'}`} title="Visual Only (Does not affect total balance)">
+            <div className={`p-1 rounded-full ${isLight ? 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400' : 'bg-white/20 text-white/70'}`} title={t('visualOnly')}>
               <EyeOff className="w-4 h-4" />
             </div>
           )}
@@ -66,7 +68,7 @@ const FundCard = ({ fund, onDelete, onEdit, available, assignedPeriod }) => {
         </p>
         {assignedPeriod && (
           <p className={`text-xs mt-1 ${isLight ? 'text-gray-400 dark:text-gray-500' : 'text-white/50'}`}>
-            Limit: {formatCurrency(fund.amount)}
+            {t('limit')}: {formatCurrency(fund.amount)}
           </p>
         )}
       </div>

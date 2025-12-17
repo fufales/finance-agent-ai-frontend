@@ -10,7 +10,15 @@ const translations = {
 };
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState(() => {
+    const saved = localStorage.getItem('language');
+    return saved || 'en';
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem('language', language);
+  }, [language]);
+
 
   const t = (key) => {
     const keys = key.split('.');

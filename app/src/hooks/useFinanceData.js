@@ -88,7 +88,7 @@ export const useFinanceData = () => {
     }));
   };
 
-  const totalIncome = data.income.period1 + data.income.period2;
+  const totalIncome = (data.income?.period1 || 0) + (data.income?.period2 || 0);
   const totalFunds = (data.funds || []).reduce((sum, item) => {
     // Default to true if affectsBalance is undefined (backward compatibility)
     const affectsBalance = item.affectsBalance !== false;

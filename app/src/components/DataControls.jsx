@@ -1,10 +1,12 @@
 import React, { useState, useRef } from "react";
+import { useLanguage } from '../context/LanguageContext';
 import { Download, Upload, FileText } from "lucide-react";
 import Dropdown from "./Dropdown";
 import ConfirmationModal from "./ConfirmationModal";
 import { exportToCSV, parseCSV } from "../utils/csvUtils";
 
 const DataControls = ({ data, onImport }) => {
+  const { t } = useLanguage();
   const [showModal, setShowModal] = useState(false);
   const [pendingFile, setPendingFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -48,7 +50,7 @@ const DataControls = ({ data, onImport }) => {
       } catch (error) {
         console.error("Error parsing CSV:", error);
         alert(
-          "Failed to parse CSV file. Please ensure it is a valid export file."
+          t('csvParseError')
         );
       }
     };
@@ -76,10 +78,10 @@ const DataControls = ({ data, onImport }) => {
 
         <div className="w-full">
           <Dropdown
-            placeholder="Export / Import Data"
+            placeholder={t('exportImportData')}
             options={[
-              { value: "export", label: "Export CSV" },
-              { value: "import", label: "Import CSV" },
+              { value: "export", label: t('exportCSV') },
+              { value: "import", label: t('importCSV') },
             ]}
             onChange={handleAction}
             getIcon={(value) => {
@@ -98,9 +100,9 @@ const DataControls = ({ data, onImport }) => {
           setPendingFile(null);
         }}
         onConfirm={handleConfirmImport}
-        title="Import Data?"
-        message="This action will replace all your current data with the data from the selected file. This cannot be undone. Are you sure you want to proceed?"
-        confirmText="Import & Replace"
+        title={t('importDataTitle')}
+        message={t('importDataMessage')}
+        confirmText={t('importReplace')}
         type="danger"
       />
     </>
