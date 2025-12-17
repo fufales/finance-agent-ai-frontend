@@ -106,7 +106,7 @@ const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOv
             </p>
             <div className="flex flex-col">
               <span className="text-xs text-gray-500 dark:text-gray-400">
-                {expense.category} • Period {expense.period}
+                {t(`cat_${expense.category}`)} • {t('period')} {expense.period}
               </span>
               {!isEditMode && (
                 <span className={`font-bold ${expense.paid ? 'text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-gray-100'}`}>
