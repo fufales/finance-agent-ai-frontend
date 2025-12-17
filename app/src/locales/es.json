@@ -1,5 +1,6 @@
 {
   "configuration": "Configuración",
+  "account": "Cuenta",
   "dataManagement": "Gestión de Datos",
   "language": "Idioma",
   "selectLanguage": "Seleccionar Idioma",
@@ -64,6 +65,7 @@
   "isPaid": "¿Está Pagado?",
   "delete": "Eliminar",
   "cancel": "Cancelar",
+  "close": "Cerrar",
   "save": "Guardar",
   "update": "Actualizar",
   "type": "Tipo",

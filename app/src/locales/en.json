@@ -1,5 +1,6 @@
 {
   "configuration": "Configuration",
+  "account": "Account",
   "dataManagement": "Data Management",
   "language": "Language",
   "selectLanguage": "Select Language",
@@ -64,6 +65,7 @@
   "isPaid": "Is Paid?",
   "delete": "Delete",
   "cancel": "Cancel",
+  "close": "Close",
   "save": "Save",
   "update": "Update",
   "type": "Type",
