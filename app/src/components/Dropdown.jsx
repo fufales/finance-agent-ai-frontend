@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-const Dropdown = ({ value, onChange, options, placeholder = 'Select option', getIcon, direction = 'down' }) => {
+const Dropdown = ({ value, onChange, options, placeholder = 'Select option', getIcon, getLabel, direction = 'down' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -26,6 +26,7 @@ const Dropdown = ({ value, onChange, options, placeholder = 'Select option', get
   };
 
   const getOptionLabel = (option) => {
+    if (getLabel) return getLabel(typeof option === 'object' ? option.value : option);
     if (typeof option === 'object') return option.label;
     return option;
   };

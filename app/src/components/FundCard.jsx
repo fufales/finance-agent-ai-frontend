@@ -47,7 +47,7 @@ const FundCard = ({ fund, onDelete, onEdit, available, assignedPeriod }) => {
       
       <div>
         <div className="flex items-center justify-between mb-1">
-          <p className={`text-sm font-medium ${isLight ? 'text-gray-500 dark:text-gray-400' : 'text-white/70'}`}>{fund.type}</p>
+          <p className={`text-sm font-medium ${isLight ? 'text-gray-500 dark:text-gray-400' : 'text-white/70'}`}>{t(`fund_${fund.type}`)}</p>
           {assignedPeriod && (
             <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${isLight ? 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300' : 'bg-white/20 text-white'}`}>
               {t('period')} {assignedPeriod}

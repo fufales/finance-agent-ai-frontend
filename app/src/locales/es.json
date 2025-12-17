@@ -88,5 +88,21 @@
   "importDataTitle": "¿Importar Datos?",
   "importDataMessage": "Esta acción reemplazará todos tus datos actuales con los datos del archivo seleccionado. Esto no se puede deshacer. ¿Estás seguro de que deseas continuar?",
   "importReplace": "Importar y Reemplazar",
-  "csvParseError": "Error al analizar el archivo CSV. Asegúrate de que sea un archivo de exportación válido."
+  "csvParseError": "Error al analizar el archivo CSV. Asegúrate de que sea un archivo de exportación válido.",
+  "allFunds": "Todos los Fondos",
+  "cat_Extra Expenses": "Gastos Extra",
+  "cat_Life Style": "Estilo de Vida",
+  "cat_Debts": "Deudas",
+  "cat_Subscriptions": "Suscripciones",
+  "cat_Food": "Comida",
+  "cat_Credit cards": "Tarjetas de Crédito",
+  "cat_Home Expenses": "Gastos del Hogar",
+  "cat_Health": "Salud",
+  "cat_Car": "Auto",
+  "fund_Debit Card": "Tarjeta de Débito",
+  "fund_Credit Card": "Tarjeta de Crédito",
+  "fund_Cash": "Efectivo",
+  "fund_Savings": "Ahorros",
+  "fund_Investment": "Inversión",
+  "fund_Loan": "Préstamo"
 }

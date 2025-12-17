@@ -3,7 +3,9 @@ import { useLanguage } from '../context/LanguageContext';
 import { Save, Plus, ArrowLeft } from 'lucide-react';
 import Dropdown from './Dropdown';
 
-const FUND_TYPES = ['Debit Card', 'Credit Card', 'Cash', 'Savings', 'Investment'];
+const FUND_TYPES = [
+  'Debit Card', 'Credit Card', 'Cash', 'Savings', 'Investment', 'Loan'
+];
 
 const COLORS = [
   { id: 'blue', label: 'Blue', class: 'bg-blue-600' },
@@ -125,6 +127,7 @@ const FundForm = ({ onAdd, onUpdate, initialData, isEditing, onCancel }) => {
               value={type}
               onChange={setType}
               options={FUND_TYPES}
+              getLabel={(type) => t(`fund_${type}`)}
               placeholder={t('selectType')}
             />
           </div>

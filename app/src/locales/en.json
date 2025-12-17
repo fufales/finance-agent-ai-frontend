@@ -88,5 +88,21 @@
   "importDataTitle": "Import Data?",
   "importDataMessage": "This action will replace all your current data with the data from the selected file. This cannot be undone. Are you sure you want to proceed?",
   "importReplace": "Import & Replace",
-  "csvParseError": "Failed to parse CSV file. Please ensure it is a valid export file."
+  "csvParseError": "Failed to parse CSV file. Please ensure it is a valid export file.",
+  "allFunds": "All Funds",
+  "cat_Extra Expenses": "Extra Expenses",
+  "cat_Life Style": "Life Style",
+  "cat_Debts": "Debts",
+  "cat_Subscriptions": "Subscriptions",
+  "cat_Food": "Food",
+  "cat_Credit cards": "Credit cards",
+  "cat_Home Expenses": "Home Expenses",
+  "cat_Health": "Health",
+  "cat_Car": "Car",
+  "fund_Debit Card": "Debit Card",
+  "fund_Credit Card": "Credit Card",
+  "fund_Cash": "Cash",
+  "fund_Savings": "Savings",
+  "fund_Investment": "Investment",
+  "fund_Loan": "Loan"
 }

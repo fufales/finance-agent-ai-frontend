@@ -77,6 +77,7 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
             value={category}
             onChange={setCategory}
             options={CATEGORIES}
+            getLabel={(cat) => t(`cat_${cat}`)}
             getIcon={getCategoryIcon}
           />
         </div>

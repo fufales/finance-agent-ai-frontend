@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useFinanceData } from '../hooks/useFinanceData';
 import FundCard from './FundCard';
+import { useLanguage } from '../context/LanguageContext';
 
 const AllFundsPage = () => {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const { funds, expenses } = useFinanceData();
 
@@ -26,7 +28,7 @@ const AllFundsPage = () => {
           >
             <ArrowLeft className="w-6 h-6" />
           </button>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">All Funds</h2>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('allFunds')}</h2>
         </div>
 
         <div className="grid grid-cols-1 gap-4">
