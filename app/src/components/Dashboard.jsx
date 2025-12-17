@@ -49,6 +49,7 @@ const Dashboard = () => {
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const [fundToDelete, setFundToDelete] = useState(null);
   const { needRefresh } = usePWA();
+  const [goalReturnView, setGoalReturnView] = useState('goals');
 
   const [showAddMenu, setShowAddMenu] = useState(false);
 
@@ -202,11 +203,13 @@ const Dashboard = () => {
             onAdd={() => {
                 saveScrollPosition();
                 setEditingGoal(null);
+                setGoalReturnView('goals');
                 setCurrentView('add-goal');
             }}
             onEdit={(goal) => {
                 saveScrollPosition();
                 setEditingGoal(goal);
+                setGoalReturnView('goals');
                 setCurrentView('add-goal');
             }}
             onDelete={deleteGoal}
@@ -219,7 +222,7 @@ const Dashboard = () => {
             <div className="flex items-center gap-4 mb-6">
               <button 
                 onClick={() => {
-                  setCurrentView('goals');
+                  setCurrentView(goalReturnView);
                   setEditingGoal(null);
                 }}
                 className="p-2 -ml-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
@@ -244,7 +247,7 @@ const Dashboard = () => {
               isEditing={!!editingGoal}
               onCancel={() => {
                 setEditingGoal(null);
-                setCurrentView('goals');
+                setCurrentView(goalReturnView);
               }}
             />
           </div>
@@ -496,6 +499,21 @@ const Dashboard = () => {
                             <Wallet className="w-6 h-6" />
                         </div>
                         <span className="text-lg font-medium text-gray-900 dark:text-white">{t('addFund')}</span>
+                    </button>
+                    <button
+                        onClick={() => {
+                            saveScrollPosition();
+                            setCurrentView('add-goal');
+                            setShowAddMenu(false);
+                            setEditingGoal(null);
+                            setGoalReturnView('dashboard');
+                        }}
+                        className="w-full p-4 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-xl transition-colors group"
+                    >
+                        <div className="p-3 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full group-hover:scale-110 transition-transform">
+                            <Target className="w-6 h-6" />
+                        </div>
+                        <span className="text-lg font-medium text-gray-900 dark:text-white">{t('addGoal')}</span>
                     </button>
                 </div>
             </div>
