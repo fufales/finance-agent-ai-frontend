@@ -116,5 +116,7 @@
   "fund_Cash": "Cash",
   "fund_Savings": "Savings",
   "fund_Investment": "Investment",
-  "fund_Loan": "Loan"
+  "fund_Loan": "Loan",
+  "devNotes": "Dev Notes",
+  "latestUpdate": "Moved 'Add Fund' button to the bottom 'Add' menu for easier access. Improved UI with a new action sheet."
 }

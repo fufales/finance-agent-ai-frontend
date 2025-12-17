@@ -116,5 +116,7 @@
   "fund_Cash": "Efectivo",
   "fund_Savings": "Ahorros",
   "fund_Investment": "Inversión",
-  "fund_Loan": "Préstamo"
+  "fund_Loan": "Préstamo",
+  "devNotes": "Notas del Desarrollador",
+  "latestUpdate": "Se movió el botón 'Agregar Fondo' al menú 'Agregar' inferior para facilitar el acceso. UI mejorada con un nuevo menú de acciones."
 }
