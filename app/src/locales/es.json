@@ -120,5 +120,5 @@
   "fund_Investment": "Inversión",
   "fund_Loan": "Préstamo",
   "devNotes": "Notas del Desarrollador",
-  "latestUpdate": "Se movió el botón 'Agregar Fondo' al menú 'Agregar' inferior para facilitar el acceso. UI mejorada con un nuevo menú de acciones."
+  "latestUpdate": "Se actualizó el modal de confirmar pago con mensajes contextuales (Pagado vs No pagado) y se mejoraron las traducciones."
 }

@@ -120,5 +120,5 @@
   "fund_Investment": "Investment",
   "fund_Loan": "Loan",
   "devNotes": "Dev Notes",
-  "latestUpdate": "Moved 'Add Fund' button to the bottom 'Add' menu for easier access. Improved UI with a new action sheet."
+  "latestUpdate": "Updated check paid modal with context-aware messages (Paid vs Unpaid) and improved translations."
 }
