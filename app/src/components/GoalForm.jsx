@@ -96,6 +96,7 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
             <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('totalAmount')}</label>
                 <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">₡</span>
                     <input
                         type="number"
                         required
@@ -103,14 +104,15 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
                         min="0"
                         value={formData.totalAmount}
                         onChange={(e) => setFormData(prev => ({ ...prev, totalAmount: e.target.value }))}
-                        className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                        placeholder={t('totalAmount')}
+                        className="w-full pl-9 pr-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                        placeholder="0.00"
                     />
                 </div>
             </div>
             <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('savedAmount')}</label>
                 <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">₡</span>
                     <input
                         type="number"
                         required
@@ -118,8 +120,8 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
                         min="0"
                         value={formData.savedAmount}
                         onChange={(e) => setFormData(prev => ({ ...prev, savedAmount: e.target.value }))}
-                        className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                        placeholder={t('savedAmount')}
+                        className="w-full pl-9 pr-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                        placeholder="0.00"
                     />
                 </div>
             </div>
