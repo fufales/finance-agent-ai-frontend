@@ -64,23 +64,21 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
           placeholder={t('expenseName')}
           className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
         />
-        <div className="grid grid-cols-2 gap-3">
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder={t('amount')}
-            className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-            inputMode="numeric"
-          />
-          <Dropdown
-            value={category}
-            onChange={setCategory}
-            options={CATEGORIES}
-            getLabel={(cat) => t(`cat_${cat}`)}
-            getIcon={getCategoryIcon}
-          />
-        </div>
+        <input
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder={t('amount')}
+          className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+          inputMode="numeric"
+        />
+        <Dropdown
+          value={category}
+          onChange={setCategory}
+          options={CATEGORIES}
+          getLabel={(cat) => t(`cat_${cat}`)}
+          getIcon={getCategoryIcon}
+        />
         
         {/* Payment Day Selector - Day Only */}
         <div className="relative">
