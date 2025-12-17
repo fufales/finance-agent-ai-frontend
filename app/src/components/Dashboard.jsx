@@ -6,10 +6,12 @@ import SummaryCard from './SummaryCard';
 import IncomeInput from './IncomeInput';
 import ExpenseForm from './ExpenseForm';
 import ExpenseList from './ExpenseList';
+import GoalsList from './GoalsList';
+import GoalForm from './GoalForm';
 import FundCard from './FundCard';
 import FundForm from './FundForm';
 import ConfigurationPage from './ConfigurationPage';
-import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid, Crown, Bell, RefreshCw } from 'lucide-react';
+import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid, Crown, Bell, RefreshCw, Target } from 'lucide-react';
 import { usePWA } from '../usePWA';
 import ConfirmationModal from './ConfirmationModal';
 
@@ -32,11 +34,16 @@ const Dashboard = () => {
     data,
     importData,
     reorderExpenses,
+    goals,
+    addGoal,
+    deleteGoal,
+    editGoal,
   } = useFinanceData();
 
   const [currentView, setCurrentView] = useState('dashboard');
   const [editingExpense, setEditingExpense] = useState(null);
   const [editingFund, setEditingFund] = useState(null);
+  const [editingGoal, setEditingGoal] = useState(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
@@ -187,6 +194,60 @@ const Dashboard = () => {
               setCurrentView('dashboard');
             }}
           />
+        );
+      case 'goals':
+        return (
+          <GoalsList 
+            goals={goals}
+            onAdd={() => {
+                saveScrollPosition();
+                setEditingGoal(null);
+                setCurrentView('add-goal');
+            }}
+            onEdit={(goal) => {
+                saveScrollPosition();
+                setEditingGoal(goal);
+                setCurrentView('add-goal');
+            }}
+            onDelete={deleteGoal}
+            onBack={() => setCurrentView('dashboard')}
+          />
+        );
+      case 'add-goal':
+        return (
+          <div className="space-y-6">
+            <div className="flex items-center gap-4 mb-6">
+              <button 
+                onClick={() => {
+                  setCurrentView('goals');
+                  setEditingGoal(null);
+                }}
+                className="p-2 -ml-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </button>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                {editingGoal ? t('editGoal') : t('addGoal')}
+              </h2>
+            </div>
+            <GoalForm 
+              onAdd={(goal) => {
+                addGoal(goal);
+                setCurrentView('goals');
+              }}
+              onUpdate={(updatedGoal) => {
+                editGoal(editingGoal.id, updatedGoal);
+                setEditingGoal(null);
+                setCurrentView('goals');
+              }}
+              initialData={editingGoal}
+              isEditing={!!editingGoal}
+              onCancel={() => {
+                setEditingGoal(null);
+                setCurrentView('goals');
+              }}
+            />
+          </div>
         );
       default: {
         const unpaidExpensesPeriod1 = expenses
@@ -483,8 +544,8 @@ const Dashboard = () => {
       )}
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-3 pb-safe z-50">
-        <div className="max-w-md mx-auto grid grid-cols-4 items-end justify-items-center">
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-2 py-3 pb-safe z-50">
+        <div className="max-w-md mx-auto grid grid-cols-5 items-end justify-items-center">
           <button
             onClick={() => {
               sessionStorage.removeItem('dashboard_scroll_position');
@@ -498,7 +559,7 @@ const Dashboard = () => {
             className={`flex flex-col items-center gap-1 ${currentView === 'dashboard' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
           >
             <LayoutDashboard className="w-6 h-6" />
-            <span className="text-xs font-medium">{t('dashboard')}</span>
+            <span className="text-[10px] font-medium">{t('dashboard')}</span>
           </button>
           
           <button
@@ -513,7 +574,7 @@ const Dashboard = () => {
             className={`flex flex-col items-center gap-1 ${currentView === 'income' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
           >
             <Wallet className="w-6 h-6" />
-            <span className="text-xs font-medium">{t('income')}</span>
+            <span className="text-[10px] font-medium">{t('income')}</span>
           </button>
 
           <button
@@ -536,7 +597,22 @@ const Dashboard = () => {
             </div>
             {/* Invisble placeholder to maintain height/width flow */}
             <div className="w-14 h-8" /> 
-            <span className="text-xs font-medium text-gray-600 dark:text-gray-400">{t('add')}</span>
+            <span className="text-[10px] font-medium text-gray-600 dark:text-gray-400">{t('add')}</span>
+          </button>
+
+          <button
+            onClick={() => {
+              saveScrollPosition();
+              setCurrentView('goals');
+              setEditingExpense(null);
+              setEditingFund(null);
+              setShowAddMenu(false);
+              setShowUserMenu(false);
+            }}
+            className={`flex flex-col items-center gap-1 ${currentView === 'goals' || currentView === 'add-goal' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
+          >
+            <Target className="w-6 h-6" />
+            <span className="text-[10px] font-medium">{t('goals')}</span>
           </button>
 
           <button
@@ -555,7 +631,7 @@ const Dashboard = () => {
             className={`flex flex-col items-center gap-1 ${showUserMenu ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
           >
             <User className="w-6 h-6" />
-            <span className="text-xs font-medium">{t('account')}</span>
+            <span className="text-[10px] font-medium">{t('account')}</span>
           </button>
         </div>
       </div>

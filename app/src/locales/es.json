@@ -120,5 +120,18 @@
   "fund_Investment": "Inversión",
   "fund_Loan": "Préstamo",
   "devNotes": "Notas del Desarrollador",
-  "latestUpdate": "• Se movió el ícono de 'Cuenta' a la barra de navegación inferior para mejor accesibilidad.\n• Se actualizó el menú de Cuenta a un diseño de hoja inferior.\n• Se mejoró el diseño de la navegación inferior.\n• Se actualizó el modal de confirmar pago con mensajes contextuales."
+  "latestUpdate": "• Se agregó la función de Metas para rastrear objetivos financieros.\n• Se movió el ícono de 'Cuenta' a la barra de navegación inferior para mejor accesibilidad.\n• Se actualizó el menú de Cuenta a un diseño de hoja inferior.\n• Se mejoró el diseño de la navegación inferior.\n• Se actualizó el modal de confirmar pago con mensajes contextuales.",
+  "goals": "Metas",
+  "addGoal": "Agregar Meta",
+  "editGoal": "Editar Meta",
+  "totalAmount": "Monto Total",
+  "savedAmount": "Monto Ahorrado",
+  "goalName": "Nombre de la Meta",
+  "goalCategory": "Categoría",
+  "cat_Emergency": "Emergencia",
+  "cat_House": "Casa",
+  "cat_Vacation": "Vacaciones",
+  "cat_Other": "Otro",
+  "confirmDeleteGoalTitle": "Eliminar Meta",
+  "confirmDeleteGoalMessage": "¿Estás seguro de que quieres eliminar esta meta? Esta acción no se puede deshacer."
 }

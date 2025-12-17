@@ -8,12 +8,13 @@ const INITIAL_DATA = {
     period2: 0,
   },
   expenses: [],
+  goals: [],
 };
 
 export const useFinanceData = () => {
   const [data, setData] = useState(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : { ...INITIAL_DATA, funds: [] };
+    return saved ? JSON.parse(saved) : { ...INITIAL_DATA, funds: [], goals: [] };
   });
 
   useEffect(() => {
@@ -81,6 +82,28 @@ export const useFinanceData = () => {
     }));
   };
 
+  const addGoal = (goal) => {
+    const newGoal = { ...goal, id: crypto.randomUUID(), savedAmount: parseFloat(goal.savedAmount) || 0, totalAmount: parseFloat(goal.totalAmount) || 0 };
+    setData(prev => ({
+      ...prev,
+      goals: [...(prev.goals || []), newGoal],
+    }));
+  };
+
+  const deleteGoal = (id) => {
+    setData(prev => ({
+      ...prev,
+      goals: (prev.goals || []).filter(g => g.id !== id),
+    }));
+  };
+
+  const editGoal = (id, updatedGoal) => {
+    setData(prev => ({
+      ...prev,
+      goals: (prev.goals || []).map(g => g.id === id ? { ...g, ...updatedGoal } : g),
+    }));
+  };
+
   const reorderExpenses = (newExpenses) => {
     setData(prev => ({
       ...prev,
@@ -117,6 +140,7 @@ export const useFinanceData = () => {
     income: data.income,
     expenses: data.expenses,
     funds: data.funds || [],
+    goals: data.goals || [],
     updateIncome,
     addExpense,
     deleteExpense,
@@ -125,6 +149,9 @@ export const useFinanceData = () => {
     addFund,
     deleteFund,
     editFund,
+    addGoal,
+    deleteGoal,
+    editGoal,
     importData,
     totals: {
       totalIncome,

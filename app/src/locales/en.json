@@ -120,5 +120,18 @@
   "fund_Investment": "Investment",
   "fund_Loan": "Loan",
   "devNotes": "Dev Notes",
-  "latestUpdate": "• Moved 'Account' icon to the bottom navigation bar for better accessibility.\n• Updated Account menu to a bottom sheet design.\n• Improved bottom navigation layout.\n• Updated check paid modal with context-aware messages (Paid vs Unpaid)."
+  "latestUpdate": "• Added Goals feature to track financial goals.\n• Moved 'Account' icon to the bottom navigation bar for better accessibility.\n• Updated Account menu to a bottom sheet design.\n• Improved bottom navigation layout.\n• Updated check paid modal with context-aware messages (Paid vs Unpaid).",
+  "goals": "Goals",
+  "addGoal": "Add Goal",
+  "editGoal": "Edit Goal",
+  "totalAmount": "Total Amount",
+  "savedAmount": "Saved Amount",
+  "goalName": "Goal Name",
+  "goalCategory": "Category",
+  "cat_Emergency": "Emergency",
+  "cat_House": "House",
+  "cat_Vacation": "Vacation",
+  "cat_Other": "Other",
+  "confirmDeleteGoalTitle": "Delete Goal",
+  "confirmDeleteGoalMessage": "Are you sure you want to delete this goal? This action cannot be undone."
 }

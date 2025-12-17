@@ -1,0 +1,138 @@
+import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
+import { Edit2, Trash2, Building, Plane, AlertCircle, HelpCircle, PlusCircle, Target, ArrowLeft } from 'lucide-react';
+import ConfirmationModal from './ConfirmationModal';
+
+const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
+  const { t } = useLanguage();
+  const [goalToDelete, setGoalToDelete] = React.useState(null);
+
+  const getCategoryIcon = (category) => {
+    switch (category) {
+      case 'Emergency': return { icon: AlertCircle, color: 'text-red-500', bg: 'bg-red-100 dark:bg-red-900/30' };
+      case 'House': return { icon: Building, color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30' };
+      case 'Vacation': return { icon: Plane, color: 'text-sky-500', bg: 'bg-sky-100 dark:bg-sky-900/30' };
+      default: return { icon: HelpCircle, color: 'text-purple-500', bg: 'bg-purple-100 dark:bg-purple-900/30' };
+    }
+  };
+
+  const calculateProgress = (saved, total) => {
+    if (!total || total === 0) return 0;
+    return Math.min(Math.round((saved / total) * 100), 100);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-4 mb-6">
+        <button 
+          onClick={onBack}
+          className="p-2 -ml-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+        >
+          <ArrowLeft className="w-6 h-6" />
+        </button>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('goals')}</h2>
+      </div>
+
+      {goals.length === 0 ? (
+        <div 
+          onClick={onAdd}
+          className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl p-8 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 cursor-pointer hover:border-money-green hover:text-money-green transition-colors text-center"
+        >
+          <Target className="w-12 h-12 mb-3 opacity-50" />
+          <p className="font-medium text-lg mb-1">{t('addGoal')}</p>
+          <p className="text-sm opacity-70">Start tracking your financial goals</p>
+        </div>
+      ) : (
+        <div className="grid gap-4">
+          {goals.map(goal => {
+            const { icon: Icon, color, bg } = getCategoryIcon(goal.category);
+            const progress = calculateProgress(goal.savedAmount, goal.totalAmount);
+            
+            return (
+              <div key={goal.id} className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 relative overflow-hidden">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className={`p-3 rounded-full ${bg} ${color}`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-gray-900 dark:text-white text-lg">{goal.name}</h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{t(`cat_${goal.category}`)}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button 
+                      onClick={() => onEdit(goal)}
+                      className="p-2 text-gray-400 hover:text-blue-500 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                    >
+                      <Edit2 className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={() => setGoalToDelete(goal)}
+                      className="p-2 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm font-medium">
+                    <span className="text-gray-600 dark:text-gray-300">
+                      ${goal.savedAmount?.toLocaleString()}
+                    </span>
+                    <span className="text-gray-900 dark:text-white opacity-70">
+                      ${goal.totalAmount?.toLocaleString()}
+                    </span>
+                  </div>
+                  
+                  {/* Progress Bar */}
+                  <div className="h-3 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div 
+                      className={`h-full rounded-full transition-all duration-500 ${
+                        progress >= 100 ? 'bg-green-500' : 'bg-money-green'
+                      }`}
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  
+                  <div className="text-right">
+                    <span className="text-xs font-bold text-money-green">{progress}%</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Floating Add Button for Goals (if not empty) */}
+      {goals.length > 0 && (
+        <button
+          onClick={onAdd}
+          className="fixed bottom-24 right-6 w-14 h-14 bg-money-green text-white rounded-full shadow-lg shadow-money-green/30 flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40"
+        >
+          <PlusCircle className="w-8 h-8" />
+        </button>
+      )}
+
+      <ConfirmationModal
+        isOpen={!!goalToDelete}
+        onClose={() => setGoalToDelete(null)}
+        onConfirm={() => {
+            if (goalToDelete) {
+                onDelete(goalToDelete.id);
+                setGoalToDelete(null);
+            }
+        }}
+        title={t('confirmDeleteGoalTitle')}
+        message={t('confirmDeleteGoalMessage')}
+        confirmText={t('accept')}
+        cancelText={t('decline')}
+        type="danger"
+      />
+    </div>
+  );
+};
+
+export default GoalsList;
