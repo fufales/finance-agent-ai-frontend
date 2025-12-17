@@ -48,7 +48,7 @@ const ConfigurationPage = ({ onBack, data, onImport }) => {
             
             <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-100 dark:border-gray-700">
                 <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">{t('devNotes')}</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                     {t('latestUpdate')}
                 </p>
             </div>

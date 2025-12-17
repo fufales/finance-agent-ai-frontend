@@ -120,5 +120,5 @@
   "fund_Investment": "Investment",
   "fund_Loan": "Loan",
   "devNotes": "Dev Notes",
-  "latestUpdate": "Updated check paid modal with context-aware messages (Paid vs Unpaid) and improved translations."
+  "latestUpdate": "• Moved 'Account' icon to the bottom navigation bar for better accessibility.\n• Updated Account menu to a bottom sheet design.\n• Improved bottom navigation layout.\n• Updated check paid modal with context-aware messages (Paid vs Unpaid)."
 }
