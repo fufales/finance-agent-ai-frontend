@@ -230,29 +230,11 @@ const Dashboard = () => {
                     )}
                   </button>
 
-                  <button 
-                    onClick={() => {
-                      if (showUserMenu) {
-                        setShowUserMenu(false);
-                      } else {
-                        setShowUserMenu(true);
-                        setShowNotifications(false);
-                        setShowAddMenu(false);
-                      }
-                    }}
-                    className={`p-2 rounded-full shadow-sm border transition-colors ${
-                      showUserMenu
-                        ? 'bg-blue-50 border-blue-200 text-blue-600 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-400'
-                        : 'bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
-                    }`}
-                  >
-                    <User className="w-6 h-6" />
-                  </button>
                 </div>
               </div>
 
               {/* Expandable Data Area */}
-              <div className={`overflow-hidden transition-all duration-300 ease-in-out ${showNotifications || showUserMenu ? 'max-h-[800px] opacity-100 mb-6' : 'max-h-0 opacity-0'}`}>
+              <div className={`overflow-hidden transition-all duration-300 ease-in-out ${showNotifications ? 'max-h-[800px] opacity-100 mb-6' : 'max-h-0 opacity-0'}`}>
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
                   
                   {/* Notifications Content */}
@@ -332,47 +314,7 @@ const Dashboard = () => {
                     </div>
                   )}
 
-                  {/* User Menu Content */}
-                  {showUserMenu && (
-                    <div className="w-full animate-fadeIn">
-                       <div className="px-5 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center bg-gray-50/50 dark:bg-gray-800/50">
-                        <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                          <User className="w-4 h-4" />
-                          {t('account')}
-                        </h3>
-                        <button 
-                          onClick={() => setShowUserMenu(false)}
-                          className="text-xs font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                        >
-                          {t('close')}
-                        </button>
-                      </div>
-                      <div className="p-2">
-                        <button
-                          onClick={() => {
-                            saveScrollPosition();
-                            setCurrentView('configuration');
-                            setShowUserMenu(false);
-                          }}
-                          className="w-full px-4 py-3 text-left text-base text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-xl flex items-center gap-3 transition-colors"
-                        >
-                          <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-full">
-                            <Settings className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-                          </div>
-                          <span className="font-medium">{t('configuration')}</span>
-                        </button>
-                          <button
-                            onClick={() => setShowLogoutConfirmation(true)}
-                            className="w-full px-4 py-3 text-left text-base text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl flex items-center gap-3 transition-colors mt-1"
-                          >
-                            <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded-full">
-                              <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
-                            </div>
-                            <span className="font-medium">{t('logOut')}</span>
-                          </button>
-                      </div>
-                    </div>
-                  )}
+
                 </div>
               </div>
             </header>
@@ -499,9 +441,50 @@ const Dashboard = () => {
         </>
       )}
 
+      {/* Account Menu Action Sheet */}
+      {showUserMenu && (
+        <>
+            {/* Backdrop */}
+            <div 
+                className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity"
+                onClick={() => setShowUserMenu(false)}
+            />
+            {/* Menu */}
+            <div className="fixed bottom-[85px] left-4 right-4 max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl z-50 overflow-hidden transform transition-all duration-200 ease-out origin-bottom animate-slideUp">
+                <div className="p-2 space-y-1">
+                    <button
+                        onClick={() => {
+                            saveScrollPosition();
+                            setCurrentView('configuration');
+                            setShowUserMenu(false);
+                        }}
+                        className="w-full p-4 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-xl transition-colors group"
+                    >
+                        <div className="p-3 bg-gray-100 dark:bg-gray-700 rounded-full group-hover:scale-110 transition-transform">
+                            <Settings className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+                        </div>
+                        <span className="text-lg font-medium text-gray-900 dark:text-white">{t('configuration')}</span>
+                    </button>
+                    <button
+                        onClick={() => {
+                            setShowLogoutConfirmation(true);
+                            setShowUserMenu(false);
+                        }}
+                        className="w-full p-4 flex items-center gap-4 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-colors group"
+                    >
+                        <div className="p-3 bg-red-100 dark:bg-red-900/20 rounded-full group-hover:scale-110 transition-transform">
+                            <LogOut className="w-6 h-6 text-red-600 dark:text-red-400" />
+                        </div>
+                        <span className="text-lg font-medium text-red-600 dark:text-red-400">{t('logOut')}</span>
+                    </button>
+                </div>
+            </div>
+        </>
+      )}
+
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-3 pb-safe z-50">
-        <div className="max-w-md mx-auto grid grid-cols-3 items-end justify-items-center">
+        <div className="max-w-md mx-auto grid grid-cols-4 items-end justify-items-center">
           <button
             onClick={() => {
               sessionStorage.removeItem('dashboard_scroll_position');
@@ -510,6 +493,7 @@ const Dashboard = () => {
               setEditingExpense(null);
               setEditingFund(null);
               setShowAddMenu(false);
+              setShowUserMenu(false);
             }}
             className={`flex flex-col items-center gap-1 ${currentView === 'dashboard' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
           >
@@ -517,6 +501,21 @@ const Dashboard = () => {
             <span className="text-xs font-medium">{t('dashboard')}</span>
           </button>
           
+          <button
+            onClick={() => {
+              saveScrollPosition();
+              setCurrentView('income');
+              setEditingExpense(null);
+              setEditingFund(null);
+              setShowAddMenu(false);
+              setShowUserMenu(false);
+            }}
+            className={`flex flex-col items-center gap-1 ${currentView === 'income' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
+          >
+            <Wallet className="w-6 h-6" />
+            <span className="text-xs font-medium">{t('income')}</span>
+          </button>
+
           <button
             onClick={() => {
                if (showAddMenu) {
@@ -542,16 +541,21 @@ const Dashboard = () => {
 
           <button
             onClick={() => {
-              saveScrollPosition();
-              setCurrentView('income');
-              setEditingExpense(null);
-              setEditingFund(null);
-              setShowAddMenu(false);
+               if (showUserMenu) {
+                   setShowUserMenu(false);
+               } else {
+                   setShowUserMenu(true);
+                   setEditingExpense(null);
+                   setEditingFund(null);
+                   // Close other menus
+                   setShowNotifications(false);
+                   setShowAddMenu(false);
+               }
             }}
-            className={`flex flex-col items-center gap-1 ${currentView === 'income' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
+            className={`flex flex-col items-center gap-1 ${showUserMenu ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
           >
-            <Wallet className="w-6 h-6" />
-            <span className="text-xs font-medium">{t('income')}</span>
+            <User className="w-6 h-6" />
+            <span className="text-xs font-medium">{t('account')}</span>
           </button>
         </div>
       </div>
