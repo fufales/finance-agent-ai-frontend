@@ -43,6 +43,8 @@ const Dashboard = () => {
   const [fundToDelete, setFundToDelete] = useState(null);
   const { needRefresh } = usePWA();
 
+  const [showAddMenu, setShowAddMenu] = useState(false);
+
   const getUpcomingPayments = () => {
     const today = new Date();
     const currentDay = today.getDate();
@@ -213,6 +215,7 @@ const Dashboard = () => {
                       } else {
                         setShowNotifications(true);
                         setShowUserMenu(false);
+                        setShowAddMenu(false);
                       }
                     }}
                     className={`p-2 rounded-full shadow-sm border transition-colors relative ${
@@ -234,6 +237,7 @@ const Dashboard = () => {
                       } else {
                         setShowUserMenu(true);
                         setShowNotifications(false);
+                        setShowAddMenu(false);
                       }
                     }}
                     className={`p-2 rounded-full shadow-sm border transition-colors ${
@@ -378,15 +382,6 @@ const Dashboard = () => {
             <div className="mb-8">
               <div className="flex items-center justify-between mb-4 px-1">
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">{t('currentFunds')}</h3>
-                <button 
-                  onClick={() => {
-                    saveScrollPosition();
-                    setCurrentView('add-fund');
-                  }}
-                  className="text-sm text-money-green font-medium hover:text-money-green-dark"
-                >
-                  + {t('addFund')}
-                </button>
               </div>
               
               {funds.length === 0 ? (
@@ -460,6 +455,50 @@ const Dashboard = () => {
         {renderContent()}
       </div>
 
+      {/* Add Menu Action Sheet */}
+      {showAddMenu && (
+        <>
+            {/* Backdrop */}
+            <div 
+                className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity"
+                onClick={() => setShowAddMenu(false)}
+            />
+            {/* Menu */}
+            <div className="fixed bottom-[85px] left-4 right-4 max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl z-50 overflow-hidden transform transition-all duration-200 ease-out origin-bottom animate-slideUp">
+                <div className="p-2 space-y-1">
+                    <button
+                        onClick={() => {
+                            saveScrollPosition();
+                            setCurrentView('add-expense');
+                            setShowAddMenu(false);
+                            setEditingExpense(null);
+                        }}
+                        className="w-full p-4 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-xl transition-colors group"
+                    >
+                        <div className="p-3 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full group-hover:scale-110 transition-transform">
+                            <CreditCard className="w-6 h-6" />
+                        </div>
+                        <span className="text-lg font-medium text-gray-900 dark:text-white">{t('addExpense')}</span>
+                    </button>
+                    <button
+                        onClick={() => {
+                            saveScrollPosition();
+                            setCurrentView('add-fund');
+                            setShowAddMenu(false);
+                            setEditingFund(null);
+                        }}
+                        className="w-full p-4 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-xl transition-colors group"
+                    >
+                        <div className="p-3 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full group-hover:scale-110 transition-transform">
+                            <Wallet className="w-6 h-6" />
+                        </div>
+                        <span className="text-lg font-medium text-gray-900 dark:text-white">{t('addFund')}</span>
+                    </button>
+                </div>
+            </div>
+        </>
+      )}
+
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-6 py-3 pb-safe z-50">
         <div className="max-w-md mx-auto grid grid-cols-3 items-end justify-items-center">
@@ -470,6 +509,7 @@ const Dashboard = () => {
               setCurrentView('dashboard');
               setEditingExpense(null);
               setEditingFund(null);
+              setShowAddMenu(false);
             }}
             className={`flex flex-col items-center gap-1 ${currentView === 'dashboard' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
           >
@@ -479,17 +519,23 @@ const Dashboard = () => {
           
           <button
             onClick={() => {
-              saveScrollPosition();
-              setCurrentView('add-expense');
-              setEditingExpense(null);
-              setEditingFund(null);
+               if (showAddMenu) {
+                   setShowAddMenu(false);
+               } else {
+                   setShowAddMenu(true);
+                   setEditingExpense(null);
+                   setEditingFund(null);
+                   // Close other menus
+                   setShowNotifications(false);
+                   setShowUserMenu(false);
+               }
             }}
-            className="flex flex-col items-center gap-1 text-money-green relative"
+            className={`flex flex-col items-center gap-1 relative ${showAddMenu ? 'text-money-green' : 'text-money-green'}`}
           >
-            <div className="absolute bottom-6 w-14 h-14 bg-money-green rounded-full flex items-center justify-center shadow-lg shadow-money-green/30 text-white transform transition-transform active:scale-95">
+            <div className={`absolute bottom-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transform transition-all duration-300 ${showAddMenu ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 rotate-45' : 'bg-money-green text-white hover:scale-105 active:scale-95 shadow-money-green/30'}`}>
               <PlusCircle className="w-8 h-8" />
             </div>
-            {/* Invisble placeholder to maintain height/width flow if needed, or just let absolute positioning handle the circle */}
+            {/* Invisble placeholder to maintain height/width flow */}
             <div className="w-14 h-8" /> 
             <span className="text-xs font-medium text-gray-600 dark:text-gray-400">{t('add')}</span>
           </button>
@@ -500,6 +546,7 @@ const Dashboard = () => {
               setCurrentView('income');
               setEditingExpense(null);
               setEditingFund(null);
+              setShowAddMenu(false);
             }}
             className={`flex flex-col items-center gap-1 ${currentView === 'income' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
           >
@@ -508,6 +555,7 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
+
 
       <ConfirmationModal
         isOpen={showLogoutConfirmation}
