@@ -40,6 +40,7 @@ const Dashboard = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
+  const [fundToDelete, setFundToDelete] = useState(null);
   const { needRefresh } = usePWA();
 
   const getUpcomingPayments = () => {
@@ -99,6 +100,13 @@ const Dashboard = () => {
   const handleLogout = () => {
     // In the future, clear auth tokens here
     navigate('/');
+  };
+
+  const handleConfirmDeleteFund = () => {
+    if (fundToDelete) {
+      deleteFund(fundToDelete);
+      setFundToDelete(null);
+    }
   };
 
   const renderContent = () => {
@@ -406,7 +414,7 @@ const Dashboard = () => {
                       <div key={fund.id} className="snap-center">
                         <FundCard 
                           fund={fund} 
-                          onDelete={deleteFund}
+                          onDelete={setFundToDelete}
                           onEdit={handleStartEditFund}
                           available={available}
                           assignedPeriod={fund.period}
@@ -505,6 +513,16 @@ const Dashboard = () => {
         onConfirm={handleLogout}
         title={t('confirmLogoutTitle')}
         message={t('confirmLogoutMessage')}
+        confirmText={t('accept')}
+        cancelText={t('decline')}
+        type="danger"
+      />
+      <ConfirmationModal
+        isOpen={!!fundToDelete}
+        onClose={() => setFundToDelete(null)}
+        onConfirm={handleConfirmDeleteFund}
+        title={t('confirmDeleteFundTitle')}
+        message={t('confirmDeleteFundMessage')}
         confirmText={t('accept')}
         cancelText={t('decline')}
         type="danger"
