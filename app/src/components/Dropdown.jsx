@@ -73,7 +73,7 @@ const Dropdown = ({ value, onChange, options, placeholder = 'Select option', get
       </button>
 
       {isOpen && (
-        <div className={`absolute z-10 w-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-auto py-1 ${menuPositionClasses}`}>
+        <div className={`absolute z-50 w-full bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-auto py-1 ${menuPositionClasses}`}>
           {options.map((option) => {
             const optionValue = getOptionValue(option);
             const isSelected = value === optionValue;

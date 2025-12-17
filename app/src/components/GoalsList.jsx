@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Edit2, Trash2, Building, Plane, AlertCircle, HelpCircle, Target, ArrowLeft } from 'lucide-react';
+import { Edit2, Trash2, Plane, AlertTriangle, HelpCircle, Target, ArrowLeft, CreditCard, Banknote, Smartphone, FileText, Car, Home } from 'lucide-react';
 import ConfirmationModal from './ConfirmationModal';
 
 const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
@@ -9,9 +9,14 @@ const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
 
   const getCategoryIcon = (category) => {
     switch (category) {
-      case 'Emergency': return { icon: AlertCircle, color: 'text-red-500', bg: 'bg-red-100 dark:bg-red-900/30' };
-      case 'House': return { icon: Building, color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30' };
+      case 'Emergency': return { icon: AlertTriangle, color: 'text-red-500', bg: 'bg-red-100 dark:bg-red-900/30' };
+      case 'CreditCardDebt': return { icon: CreditCard, color: 'text-orange-500', bg: 'bg-orange-100 dark:bg-orange-900/30' };
+      case 'Debts': return { icon: Banknote, color: 'text-red-600', bg: 'bg-red-100 dark:bg-red-900/30' };
       case 'Vacation': return { icon: Plane, color: 'text-sky-500', bg: 'bg-sky-100 dark:bg-sky-900/30' };
+      case 'Gadgets': return { icon: Smartphone, color: 'text-gray-500', bg: 'bg-gray-100 dark:bg-gray-900/30' };
+      case 'Tax': return { icon: FileText, color: 'text-amber-500', bg: 'bg-amber-100 dark:bg-amber-900/30' };
+      case 'Car': return { icon: Car, color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30' };
+      case 'Home': return { icon: Home, color: 'text-indigo-500', bg: 'bg-indigo-100 dark:bg-indigo-900/30' };
       default: return { icon: HelpCircle, color: 'text-purple-500', bg: 'bg-purple-100 dark:bg-purple-900/30' };
     }
   };
@@ -57,7 +62,7 @@ const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
                     </div>
                     <div>
                       <h3 className="font-bold text-gray-900 dark:text-white text-lg">{goal.name}</h3>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">{t(`cat_${goal.category}`)}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{t(`goal_cat_${goal.category}`)}</p>
                     </div>
                   </div>
                   <div className="flex gap-2">
