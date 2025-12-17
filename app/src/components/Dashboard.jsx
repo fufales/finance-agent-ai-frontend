@@ -11,6 +11,7 @@ import FundForm from './FundForm';
 import ConfigurationPage from './ConfigurationPage';
 import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid, Crown, Bell, RefreshCw } from 'lucide-react';
 import { usePWA } from '../usePWA';
+import ConfirmationModal from './ConfirmationModal';
 
 const Dashboard = () => {
   const { t } = useLanguage();
@@ -38,6 +39,7 @@ const Dashboard = () => {
   const [editingFund, setEditingFund] = useState(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
   const { needRefresh } = usePWA();
 
   const getUpcomingPayments = () => {
@@ -347,15 +349,15 @@ const Dashboard = () => {
                           </div>
                           <span className="font-medium">{t('configuration')}</span>
                         </button>
-                        <button
-                          onClick={handleLogout}
-                          className="w-full px-4 py-3 text-left text-base text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl flex items-center gap-3 transition-colors mt-1"
-                        >
-                          <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded-full">
-                            <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
-                          </div>
-                          <span className="font-medium">{t('logOut')}</span>
-                        </button>
+                          <button
+                            onClick={() => setShowLogoutConfirmation(true)}
+                            className="w-full px-4 py-3 text-left text-base text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl flex items-center gap-3 transition-colors mt-1"
+                          >
+                            <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded-full">
+                              <LogOut className="w-5 h-5 text-red-600 dark:text-red-400" />
+                            </div>
+                            <span className="font-medium">{t('logOut')}</span>
+                          </button>
                       </div>
                     </div>
                   )}
@@ -496,6 +498,17 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={showLogoutConfirmation}
+        onClose={() => setShowLogoutConfirmation(false)}
+        onConfirm={handleLogout}
+        title={t('confirmLogoutTitle')}
+        message={t('confirmLogoutMessage')}
+        confirmText={t('accept')}
+        cancelText={t('decline')}
+        type="danger"
+      />
     </div>
   );
 };

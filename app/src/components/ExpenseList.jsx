@@ -7,6 +7,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { formatCurrency } from '../utils/format';
 import { getCategoryIcon } from '../utils/categories';
 import Dropdown from './Dropdown';
+import ConfirmationModal from './ConfirmationModal';
 
 const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOverlay = false, dragHandleProps = {} }) => {
   const { t } = useLanguage();
@@ -201,7 +202,30 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
     return localStorage.getItem('expense_hide_paid') === 'true';
   });
   const [isEditMode, setIsEditMode] = useState(false);
+
   const [activeId, setActiveId] = useState(null);
+  const [confirmationState, setConfirmationState] = useState({
+    isOpen: false,
+    type: null, // 'delete' | 'pay'
+    id: null
+  });
+
+  const requestDelete = (id) => {
+    setConfirmationState({ isOpen: true, type: 'delete', id });
+  };
+
+  const requestTogglePaid = (id) => {
+    setConfirmationState({ isOpen: true, type: 'pay', id });
+  };
+
+  const handleConfirmAction = () => {
+    if (confirmationState.type === 'delete') {
+      onDelete(confirmationState.id);
+    } else if (confirmationState.type === 'pay') {
+      onTogglePaid(confirmationState.id);
+    }
+    setConfirmationState({ isOpen: false, type: null, id: null });
+  };
 
   const handleSortChange = (value) => {
     setSortBy(value);
@@ -377,9 +401,9 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
               <SortableExpenseItem
                 key={expense.id}
                 expense={expense}
-                onDelete={onDelete}
+                onDelete={requestDelete}
                 onEdit={onEdit}
-                onTogglePaid={onTogglePaid}
+                onTogglePaid={requestTogglePaid}
                 isEditMode={isEditMode}
               />
             ))}
@@ -399,6 +423,18 @@ const ExpenseList = ({ expenses, onDelete, onEdit, onTogglePaid, onReorder }) =>
           ) : null}
         </DragOverlay>
       </DndContext>
+
+      
+      <ConfirmationModal
+        isOpen={confirmationState.isOpen}
+        onClose={() => setConfirmationState({ ...confirmationState, isOpen: false })}
+        onConfirm={handleConfirmAction}
+        title={confirmationState.type === 'delete' ? t('confirmDeleteTitle') : t('confirmPaidTitle')}
+        message={confirmationState.type === 'delete' ? t('confirmDeleteMessage') : t('confirmPaidMessage')}
+        confirmText={t('accept')}
+        cancelText={t('decline')}
+        type={confirmationState.type === 'delete' ? 'danger' : 'primary'}
+      />
     </div>
   );
 };
