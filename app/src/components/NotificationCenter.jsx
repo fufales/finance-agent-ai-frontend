@@ -57,7 +57,7 @@ const NotificationCenter = () => {
   const totalCount = unreadCount + (needRefresh ? 1 : 0) + upcomingPayments.length;
 
   return (
-    <div className="absolute top-0 left-0 w-full z-50 pointer-events-none" ref={containerRef}>
+    <div className="absolute top-0 left-0 w-full z-40 pointer-events-none" ref={containerRef}>
       <div className="max-w-md mx-auto px-4 pt-4 flex flex-col items-end">
       {/* Trigger Button - Matches Dashboard Style but independent */}
       <button
