@@ -17,6 +17,18 @@ const ConfigurationPage = ({ onBack, data, onImport, dashboardConfig, updateDash
     { label: t('spanish'), value: 'es' }
   ];
 
+  // Scroll to section if hash matches
+  React.useEffect(() => {
+    if (window.location.hash === '#app-version') {
+      setTimeout(() => {
+        const element = document.getElementById('app-version');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, []);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4 mb-6">
@@ -91,7 +103,7 @@ const ConfigurationPage = ({ onBack, data, onImport, dashboardConfig, updateDash
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+      <div id="app-version" className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">{t('appInfo')}</h3>
          <div className="flex flex-col gap-2">
             <p className="text-gray-600 dark:text-gray-400">{t('version')}: <span className="font-mono font-medium text-gray-900 dark:text-white">dev-0.9.6</span></p>

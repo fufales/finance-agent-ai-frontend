@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useFinanceData } from '../../hooks/useFinanceData';
 import SummaryCard from './SummaryCard';
 import IncomeInput from './IncomeInput';
@@ -17,6 +17,7 @@ import ConfirmationModal from '../../components/ConfirmationModal';
 const Dashboard = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     income,
     expenses,
@@ -68,6 +69,15 @@ const Dashboard = () => {
       }
     }
   }, [currentView]);
+
+  // Handle hash navigation for configuration
+  useEffect(() => {
+    if (location.hash === '#app-version' && currentView !== 'configuration') {
+      setTimeout(() => {
+        setCurrentView('configuration');
+      }, 0);
+    }
+  }, [location, currentView]);
 
   const saveScrollPosition = () => {
     if (currentView === 'dashboard') {

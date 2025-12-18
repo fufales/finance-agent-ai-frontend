@@ -26,7 +26,7 @@ export const NotificationProvider = ({ children }) => {
 
   const playSound = () => {
     try {
-      const audio = new Audio('/mixkit-confirmation-tone-2867.wav');
+      const audio = new Audio('mixkit-confirmation-tone-2867.wav');
       audio.play().catch(e => console.error("Error playing sound:", e));
     } catch (error) {
       console.error("Error initializing audio:", error);
@@ -120,6 +120,7 @@ export const NotificationProvider = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useNotification = () => {
   const context = useContext(NotificationContext);
   if (!context) {

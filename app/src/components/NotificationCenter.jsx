@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Bell, X, Check, Trash2, RefreshCw, CreditCard } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../context/NotificationContext';
 import { useLanguage } from '../context/LanguageContext';
 import { usePWA } from '../usePWA';
@@ -11,9 +12,10 @@ const NotificationCenter = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { notifications, unreadCount, markAsRead, removeNotification, clearAll, markAllAsRead } = useNotification();
   const { t } = useLanguage();
-  const { needRefresh, updateServiceWorker } = usePWA();
+  const { needRefresh } = usePWA();
   const { expenses } = useFinanceData();
   const containerRef = useRef(null);
+  const navigate = useNavigate();
 
   // Close when clicking outside
   useEffect(() => {
@@ -132,7 +134,10 @@ const NotificationCenter = () => {
                                     <p className="text-sm font-bold text-gray-900 dark:text-white">{t('updateAvailable')}</p>
                                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-relaxed">{t('newVersionAvailable')}</p>
                                     <button
-                                        onClick={() => updateServiceWorker(true)}
+                                        onClick={() => {
+                                            setIsOpen(false);
+                                            navigate('/dashboard#app-version');
+                                        }}
                                         className="mt-3 w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-xl text-xs font-bold hover:bg-blue-700 transition-colors shadow-sm"
                                     >
                                         {t('updateNow')}
