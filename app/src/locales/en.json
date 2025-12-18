@@ -147,5 +147,7 @@
   "testNotification": "Test Notification",
   "testNotificationMessage": "This is a test notification!",
   "expenseAdded": "Expense added successfully",
-  "expenseUpdated": "Expense updated successfully"
+  "expenseUpdated": "Expense updated successfully",
+  "markAllAsRead": "Mark all as read",
+  "enableBrowserNotifications": "Enable Browser Notifications"
 }

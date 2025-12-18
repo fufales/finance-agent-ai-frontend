@@ -1,10 +1,28 @@
-import React, { createContext, useState, useContext, useCallback } from 'react';
-import NotificationToast from '../components/NotificationToast';
+import React, { createContext, useState, useContext, useCallback, useEffect } from 'react';
+// NotificationToast is removed as per user request to remove "green floating box"
 
 const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
-  const [notification, setNotification] = useState(null);
+  const [notifications, setNotifications] = useState(() => {
+    const saved = localStorage.getItem('notifications_history');
+    return saved ? JSON.parse(saved) : [];
+  });
+  
+  const [settings, setSettings] = useState(() => {
+    const saved = localStorage.getItem('notification_settings');
+    return saved ? JSON.parse(saved) : {
+      browserNotifications: false
+    };
+  });
+
+  useEffect(() => {
+    localStorage.setItem('notifications_history', JSON.stringify(notifications));
+  }, [notifications]);
+
+  useEffect(() => {
+    localStorage.setItem('notification_settings', JSON.stringify(settings));
+  }, [settings]);
 
   const playSound = () => {
     try {
@@ -15,7 +33,9 @@ export const NotificationProvider = ({ children }) => {
     }
   };
 
-  const showBrowserNotification = (message) => {
+  const showBrowserNotification = useCallback((message) => {
+    if (!settings.browserNotifications) return;
+
     if (!("Notification" in window)) {
       console.log("This browser does not support desktop notification");
       return;
@@ -30,38 +50,72 @@ export const NotificationProvider = ({ children }) => {
         }
       });
     }
-  };
+  }, [settings.browserNotifications]);
 
-  const showNotification = useCallback((message, type = 'info') => {
-    // 1. Play Sound
+  const addNotification = useCallback((message, type = 'info') => {
+    const newNotification = {
+      id: Date.now(),
+      message,
+      type,
+      date: new Date().toISOString(),
+      read: false
+    };
+
+    // 1. Update History
+    setNotifications(prev => [newNotification, ...prev]);
+
+    // 2. Play Sound
     playSound();
 
-    // 2. Show In-App Toast
-    setNotification({ message, type });
-
-    // 3. Show Browser Notification (optional, maybe check a config or just do it for now as requested)
+    // 3. Show Browser Notification
     showBrowserNotification(message);
 
-    // Auto dismiss toast after 3 seconds
-    setTimeout(() => {
-      setNotification(null);
-    }, 3000);
-  }, []);
+    // 4. No Toast (removed)
+  }, [showBrowserNotification]);
 
-  const closeNotification = () => {
-    setNotification(null);
+  const markAsRead = (id) => {
+    setNotifications(prev => prev.map(n => 
+      n.id === id ? { ...n, read: true } : n
+    ));
   };
 
+  const removeNotification = (id) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
+
+  const clearAll = () => {
+    setNotifications([]);
+  };
+
+  const markAllAsRead = () => {
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  };
+
+  const toggleBrowserNotifications = (enabled) => {
+    setSettings(prev => ({ ...prev, browserNotifications: enabled }));
+    if (enabled && "Notification" in window && Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+  };
+
+  // Alias for backward compatibility
+  const showNotification = addNotification;
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+
   return (
-    <NotificationContext.Provider value={{ showNotification }}>
+    <NotificationContext.Provider value={{ 
+      showNotification, 
+      notifications, 
+      unreadCount, 
+      markAsRead, 
+      removeNotification, 
+      clearAll, 
+      markAllAsRead,
+      settings,
+      toggleBrowserNotifications
+    }}>
       {children}
-      {notification && (
-        <NotificationToast
-          message={notification.message}
-          type={notification.type}
-          onClose={closeNotification}
-        />
-      )}
     </NotificationContext.Provider>
   );
 };

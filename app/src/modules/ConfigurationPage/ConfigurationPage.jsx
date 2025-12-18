@@ -9,7 +9,7 @@ import { usePWA } from '../../usePWA';
 
 const ConfigurationPage = ({ onBack, data, onImport, dashboardConfig, updateDashboardConfig }) => {
   const { language, setLanguage, t } = useLanguage();
-  const { showNotification } = useNotification();
+  const { showNotification, settings, toggleBrowserNotifications } = useNotification();
   const { needRefresh, updateServiceWorker } = usePWA();
 
   const languageOptions = [
@@ -76,12 +76,19 @@ const ConfigurationPage = ({ onBack, data, onImport, dashboardConfig, updateDash
 
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">{t('notifications')}</h3>
-        <button
-            onClick={() => showNotification(t('testNotificationMessage'), 'success')}
-            className="w-full py-3 px-4 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center justify-center gap-2"
-        >
-            {t('testNotification')}
-        </button>
+        <div className="space-y-4">
+            <Switch 
+                label={t('enableBrowserNotifications')} 
+                checked={settings.browserNotifications} 
+                onChange={toggleBrowserNotifications} 
+            />
+            <button
+                onClick={() => showNotification(t('testNotificationMessage'), 'success')}
+                className="w-full py-3 px-4 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center justify-center gap-2"
+            >
+                {t('testNotification')}
+            </button>
+        </div>
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">

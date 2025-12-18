@@ -147,5 +147,7 @@
   "testNotification": "Probar Notificación",
   "testNotificationMessage": "¡Esta es una notificación de prueba!",
   "expenseAdded": "Gasto agregado exitosamente",
-  "expenseUpdated": "Gasto actualizado exitosamente"
+  "expenseUpdated": "Gasto actualizado exitosamente",
+  "markAllAsRead": "Marcar todo como leído",
+  "enableBrowserNotifications": "Habilitar notificaciones del navegador"
 }
