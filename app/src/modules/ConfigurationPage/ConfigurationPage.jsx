@@ -94,7 +94,7 @@ const ConfigurationPage = ({ onBack, data, onImport, dashboardConfig, updateDash
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">{t('appInfo')}</h3>
          <div className="flex flex-col gap-2">
-            <p className="text-gray-600 dark:text-gray-400">{t('version')}: <span className="font-mono font-medium text-gray-900 dark:text-white">dev-0.9.0</span></p>
+            <p className="text-gray-600 dark:text-gray-400">{t('version')}: <span className="font-mono font-medium text-gray-900 dark:text-white">dev-0.9.5</span></p>
             
             <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-100 dark:border-gray-700">
                 <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">{t('devNotes')}</h4>
