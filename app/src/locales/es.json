@@ -120,7 +120,7 @@
   "fund_Investment": "Inversión",
   "fund_Loan": "Préstamo",
   "devNotes": "Notas del Desarrollador",
-  "latestUpdate": "• Estructura del proyecto refactorizada para usar una arquitectura modular.\n• Cada página (Panel, Configuración, Metas, etc.) ahora tiene su propia carpeta de módulo dedicada.\n• Organización y mantenibilidad del código mejoradas.\n• Componentes compartidos movidos a una carpeta común.\n• Agregado Metas a la importación/exportación CSV.\n• UI de Importar/Exportar mejorada con botones dedicados.",
+  "latestUpdate": "• Estructura del proyecto refactorizada para usar una arquitectura modular.\n• Cada página (Panel, Configuración, Metas, etc.) ahora tiene su propia carpeta de módulo dedicada.\n• Organización y mantenibilidad del código mejoradas.\n• Componentes compartidos movidos a una carpeta común.\n• Agregado Metas a la importación/exportación CSV.\n• UI de Importar/Exportar mejorada con botones dedicados.\n• Actualizada la lógica de Metas para rastrear \"Saldo Restante\" en lugar de \"Monto Pagado\".\n• UI de Metas mejorada con terminología más clara (\"Monto Total\", \"Saldo Restante\").\n• Actualizada la exportación/importación CSV para soportar la nueva estructura de Metas.\n• Corregidos problemas de visualización de etiquetas en la lista de Metas.",
   "goals": "Metas",
   "addGoal": "Agregar Meta",
   "editGoal": "Editar Meta",
