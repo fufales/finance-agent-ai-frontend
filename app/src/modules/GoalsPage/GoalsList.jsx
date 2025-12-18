@@ -21,9 +21,9 @@ const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
     }
   };
 
-  const calculateProgress = (saved, total) => {
+  const calculateProgress = (paid, total) => {
     if (!total || total === 0) return 0;
-    return Math.min(Math.round((saved / total) * 100), 100);
+    return Math.min(Math.round((paid / total) * 100), 100);
   };
 
   return (
@@ -51,7 +51,7 @@ const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
         <div className="grid gap-4">
           {goals.map(goal => {
             const { icon: Icon, color, bg } = getCategoryIcon(goal.category);
-            const progress = calculateProgress(goal.savedAmount, goal.totalAmount);
+            const progress = calculateProgress(goal.paidAmount, goal.totalAmount);
             
             return (
               <div key={goal.id} className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 relative overflow-hidden">
@@ -84,7 +84,7 @@ const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm font-medium">
                     <span className="text-gray-600 dark:text-gray-300">
-                      ${goal.savedAmount?.toLocaleString()}
+                      ${goal.paidAmount?.toLocaleString()}
                     </span>
                     <span className="text-gray-900 dark:text-white opacity-70">
                       ${goal.totalAmount?.toLocaleString()}

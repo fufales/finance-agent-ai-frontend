@@ -9,7 +9,7 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
   const [formData, setFormData] = useState({
     name: '',
     totalAmount: '',
-    savedAmount: '',
+    paidAmount: '',
     category: 'Other'
   });
 
@@ -31,7 +31,7 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
       setFormData({
         name: initialData.name || '',
         totalAmount: initialData.totalAmount || '',
-        savedAmount: initialData.savedAmount || '',
+        paidAmount: initialData.paidAmount || '',
         category: initialData.category || 'Other'
       });
     }
@@ -42,7 +42,7 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
     const goalData = {
       name: formData.name,
       totalAmount: parseFloat(formData.totalAmount),
-      savedAmount: parseFloat(formData.savedAmount),
+      paidAmount: parseFloat(formData.paidAmount),
       category: formData.category
     };
 
@@ -106,11 +106,12 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
                         onChange={(e) => setFormData(prev => ({ ...prev, totalAmount: e.target.value }))}
                         className="w-full pl-9 pr-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                         placeholder="0.00"
+                        inputMode="decimal"
                     />
                 </div>
             </div>
             <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('savedAmount')}</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('paidAmount')}</label>
                 <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">₡</span>
                     <input
@@ -118,10 +119,11 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
                         required
                         step="0.01"
                         min="0"
-                        value={formData.savedAmount}
-                        onChange={(e) => setFormData(prev => ({ ...prev, savedAmount: e.target.value }))}
+                        value={formData.paidAmount}
+                        onChange={(e) => setFormData(prev => ({ ...prev, paidAmount: e.target.value }))}
                         className="w-full pl-9 pr-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                         placeholder="0.00"
+                        inputMode="decimal"
                     />
                 </div>
             </div>
