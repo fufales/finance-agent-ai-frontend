@@ -2,15 +2,15 @@ export const exportToCSV = (data) => {
   const rows = [];
   
   // Headers
-  rows.push(['Type', 'ID', 'Name', 'Amount', 'Category/Type', 'Period', 'Date', 'Paid', 'Color', 'RemainingAmount'].join(','));
+  rows.push(['Type', 'ID', 'Name', 'Amount', 'Category/Type', 'Period', 'Date', 'Paid', 'Color', 'RemainingAmount', 'PaymentDay'].join(','));
 
   // Income
   if (data.income) {
     if (data.income.period1) {
-      rows.push(['Income', 'income-p1', 'Period 1 Income', data.income.period1, 'Income', '1', '', '', '', ''].join(','));
+      rows.push(['Income', 'income-p1', 'Period 1 Income', data.income.period1, 'Income', '1', '', '', '', '', ''].join(','));
     }
     if (data.income.period2) {
-      rows.push(['Income', 'income-p2', 'Period 2 Income', data.income.period2, 'Income', '2', '', '', '', ''].join(','));
+      rows.push(['Income', 'income-p2', 'Period 2 Income', data.income.period2, 'Income', '2', '', '', '', '', ''].join(','));
     }
   }
 
@@ -27,7 +27,8 @@ export const exportToCSV = (data) => {
         expense.date,
         expense.paid,
         '',
-        ''
+        '',
+        expense.paymentDay || ''
       ].join(','));
     });
   }
@@ -45,6 +46,7 @@ export const exportToCSV = (data) => {
         '',
         '',
         fund.color,
+        '',
         ''
       ].join(','));
     });
@@ -63,7 +65,8 @@ export const exportToCSV = (data) => {
         '', // Date
         '', // Paid
         '', // Color
-        goal.remainingAmount
+        goal.remainingAmount,
+        ''
       ].join(','));
     });
   }
@@ -89,14 +92,15 @@ export const exportToCSV = (data) => {
         // Col 5 (Period): showIncome (as string "true"/"false") - wait Period is index 5
         // Let's just put a JSON string in the last column or Spread them.
         // Let's try to map to existing columns to keep CSV structure "consistent" (same number of columns).
-        // Type, ID, Name, Amount, Category, Period, Date, Paid, Color, RemainingAmount
-        // DashboardConfig, - , -, -, -, showIncome, showDebtPercentage, showPaid, showDebtAmount, -
+        // Type, ID, Name, Amount, Category, Period, Date, Paid, Color, RemainingAmount, PaymentDay
+        // DashboardConfig, - , -, -, -, showIncome, showDebtPercentage, showPaid, showDebtAmount, -, -
         // Let's use: 
         // Paid (7): showPaid
         // Period (5): showIncome
         // Date (6): showDebtPercentage
         // Color (8): showDebtAmount
-        '' 
+        '',
+        ''
     ].join(','));
   }
 
@@ -148,7 +152,8 @@ export const parseCSV = (csvText) => {
         category: values[4],
         period: parseInt(values[5]),
         date: values[6],
-        paid: values[7] === 'true'
+        paid: values[7] === 'true',
+        paymentDay: values[10] ? parseInt(values[10]) : null
       });
     } else if (type === 'Fund') {
       data.funds.push({
