@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
+import { useNotification } from '../../context/NotificationContext';
 import { Plus, Save } from 'lucide-react';
 import Dropdown from '../../components/Dropdown';
 import { CATEGORIES, getCategoryIcon } from '../../utils/categories';
 
 const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
   const { t } = useLanguage();
+  const { showNotification } = useNotification();
   const [amount, setAmount] = useState('');
   const [name, setName] = useState('');
   const [category, setCategory] = useState(CATEGORIES[0]);
@@ -44,8 +46,10 @@ const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
 
     if (isEditing) {
       onUpdate(expenseData);
+      showNotification(t('expenseUpdated'), 'success');
     } else {
       onAdd(expenseData);
+      showNotification(t('expenseAdded'), 'success');
       setAmount('');
       setName('');
       setCategory(CATEGORIES[0]);

@@ -143,5 +143,9 @@
   "showPaid": "Mostrar Pagado",
   "showIncome": "Mostrar Ingresos",
   "showDebtPercentage": "Mostrar % Deuda",
-  "showDebtAmount": "Mostrar Monto Deuda"
+  "showDebtAmount": "Mostrar Monto Deuda",
+  "testNotification": "Probar Notificación",
+  "testNotificationMessage": "¡Esta es una notificación de prueba!",
+  "expenseAdded": "Gasto agregado exitosamente",
+  "expenseUpdated": "Gasto actualizado exitosamente"
 }

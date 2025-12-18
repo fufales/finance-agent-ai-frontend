@@ -143,5 +143,9 @@
   "showPaid": "Show Paid",
   "showIncome": "Show Income",
   "showDebtPercentage": "Show Debt %",
-  "showDebtAmount": "Show Debt Amount"
+  "showDebtAmount": "Show Debt Amount",
+  "testNotification": "Test Notification",
+  "testNotificationMessage": "This is a test notification!",
+  "expenseAdded": "Expense added successfully",
+  "expenseUpdated": "Expense updated successfully"
 }
