@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../../context/LanguageContext';
+import { formatCurrency } from '../../utils/format';
 import { Edit2, Trash2, Plane, AlertTriangle, HelpCircle, Target, ArrowLeft, CreditCard, Banknote, Smartphone, FileText, Car, Home } from 'lucide-react';
 import ConfirmationModal from '../../components/ConfirmationModal';
 
@@ -85,10 +86,10 @@ const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm font-medium">
                     <span className="text-gray-600 dark:text-gray-300">
-                      {t('remainingAmount')}: ${goal.remainingAmount?.toLocaleString()}
+                      {t('remainingAmount')}: {formatCurrency(goal.remainingAmount || 0)}
                     </span>
                     <span className="text-gray-900 dark:text-white opacity-70">
-                      ${goal.totalAmount?.toLocaleString()}
+                      {formatCurrency(goal.totalAmount || 0)}
                     </span>
                   </div>
                   
