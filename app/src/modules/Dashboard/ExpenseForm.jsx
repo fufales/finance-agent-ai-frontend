@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { Plus, Save } from 'lucide-react';
-import Dropdown from './Dropdown';
-import { CATEGORIES, getCategoryIcon } from '../utils/categories';
+import Dropdown from '../../components/Dropdown';
+import { CATEGORIES, getCategoryIcon } from '../../utils/categories';
 
 const ExpenseForm = ({ onAdd, initialData, isEditing, onUpdate }) => {
   const { t } = useLanguage();

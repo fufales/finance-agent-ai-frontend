@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { Plane, AlertTriangle, HelpCircle, Plus, Save, CreditCard, Banknote, Smartphone, FileText, Car, Home } from 'lucide-react';
-import Dropdown from './Dropdown';
+import Dropdown from '../../components/Dropdown';
 
 const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
   const { t } = useLanguage();

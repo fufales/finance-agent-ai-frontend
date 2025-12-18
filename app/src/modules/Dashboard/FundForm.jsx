@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { Save, Plus, ArrowLeft } from 'lucide-react';
-import Dropdown from './Dropdown';
+import Dropdown from '../../components/Dropdown';
 
 const FUND_TYPES = [
   'Debit Card', 'Credit Card', 'Cash', 'Savings', 'Investment', 'Loan'

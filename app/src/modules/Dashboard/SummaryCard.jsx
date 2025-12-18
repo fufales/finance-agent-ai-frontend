@@ -1,6 +1,6 @@
 import React from 'react';
-import { useLanguage } from '../context/LanguageContext';
-import { formatCurrency, formatPercentage } from '../utils/format';
+import { useLanguage } from '../../context/LanguageContext';
+import { formatCurrency, formatPercentage } from '../../utils/format';
 import { Wallet, TrendingDown, PieChart, AlertTriangle } from 'lucide-react';
 
 const SummaryCard = ({ totals }) => {

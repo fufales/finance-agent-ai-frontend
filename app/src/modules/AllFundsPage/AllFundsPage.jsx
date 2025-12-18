@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { useFinanceData } from '../hooks/useFinanceData';
-import FundCard from './FundCard';
-import { useLanguage } from '../context/LanguageContext';
+import { useFinanceData } from '../../hooks/useFinanceData';
+import FundCard from '../../components/FundCard';
+import { useLanguage } from '../../context/LanguageContext';
 
 const AllFundsPage = () => {
   const { t } = useLanguage();

@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { Download, Upload, FileText } from "lucide-react";
-import Dropdown from "./Dropdown";
-import ConfirmationModal from "./ConfirmationModal";
-import { exportToCSV, parseCSV } from "../utils/csvUtils";
+import Dropdown from "../../components/Dropdown";
+import ConfirmationModal from "../../components/ConfirmationModal";
+import { exportToCSV, parseCSV } from "../../utils/csvUtils";
 
 const DataControls = ({ data, onImport }) => {
   const { t } = useLanguage();

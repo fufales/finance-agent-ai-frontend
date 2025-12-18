@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
-import { useFinanceData } from '../hooks/useFinanceData';
+import { useFinanceData } from '../../hooks/useFinanceData';
 import SummaryCard from './SummaryCard';
 import IncomeInput from './IncomeInput';
 import ExpenseForm from './ExpenseForm';
 import ExpenseList from './ExpenseList';
-import GoalsList from './GoalsList';
-import GoalForm from './GoalForm';
-import FundCard from './FundCard';
+import GoalsList from '../GoalsPage/GoalsList';
+import GoalForm from '../GoalsPage/GoalForm';
+import FundCard from '../../components/FundCard';
 import FundForm from './FundForm';
-import ConfigurationPage from './ConfigurationPage';
+import ConfigurationPage from '../ConfigurationPage/ConfigurationPage';
 import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid, Crown, Bell, RefreshCw, Target } from 'lucide-react';
-import { usePWA } from '../usePWA';
-import ConfirmationModal from './ConfirmationModal';
+import { usePWA } from '../../usePWA';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 const Dashboard = () => {
   const { t } = useLanguage();

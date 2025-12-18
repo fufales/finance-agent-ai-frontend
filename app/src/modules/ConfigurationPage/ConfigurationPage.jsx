@@ -1,9 +1,9 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import DataControls from './DataControls';
-import Dropdown from './Dropdown';
-import { useLanguage } from '../context/LanguageContext';
-import { usePWA } from '../usePWA';
+import Dropdown from '../../components/Dropdown';
+import { useLanguage } from '../../context/LanguageContext';
+import { usePWA } from '../../usePWA';
 
 const ConfigurationPage = ({ onBack, data, onImport }) => {
   const { language, setLanguage, t } = useLanguage();

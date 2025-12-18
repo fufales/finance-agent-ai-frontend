@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { Trash2, Edit2, GripVertical, Check, ListFilter } from 'lucide-react';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragOverlay, defaultDropAnimationSideEffects } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { formatCurrency } from '../utils/format';
-import { getCategoryIcon } from '../utils/categories';
-import Dropdown from './Dropdown';
-import ConfirmationModal from './ConfirmationModal';
+import { formatCurrency } from '../../utils/format';
+import { getCategoryIcon } from '../../utils/categories';
+import Dropdown from '../../components/Dropdown';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 const ExpenseItem = ({ expense, onDelete, onEdit, onTogglePaid, isEditMode, isOverlay = false, dragHandleProps = {} }) => {
   const { t } = useLanguage();

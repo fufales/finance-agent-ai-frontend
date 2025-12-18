@@ -1,7 +1,7 @@
 import React from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 import { Edit2, Trash2, Plane, AlertTriangle, HelpCircle, Target, ArrowLeft, CreditCard, Banknote, Smartphone, FileText, Car, Home } from 'lucide-react';
-import ConfirmationModal from './ConfirmationModal';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 const GoalsList = ({ goals, onEdit, onDelete, onAdd, onBack }) => {
   const { t } = useLanguage();

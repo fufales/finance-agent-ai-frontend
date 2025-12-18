@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
-import Login from './components/Login';
-import AllFundsPage from './components/AllFundsPage';
+import Dashboard from './modules/Dashboard/Dashboard';
+import Login from './modules/Login/Login';
+import AllFundsPage from './modules/AllFundsPage/AllFundsPage';
 
 function App() {
   return (
