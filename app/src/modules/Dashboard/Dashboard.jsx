@@ -38,6 +38,8 @@ const Dashboard = () => {
     addGoal,
     deleteGoal,
     editGoal,
+    dashboardConfig,
+    updateDashboardConfig,
   } = useFinanceData();
 
   const [currentView, setCurrentView] = useState('dashboard');
@@ -127,6 +129,8 @@ const Dashboard = () => {
             onBack={() => setCurrentView('dashboard')}
             data={data}
             onImport={importData}
+            dashboardConfig={dashboardConfig}
+            updateDashboardConfig={updateDashboardConfig}
           />
         );
       case 'income':
@@ -383,7 +387,7 @@ const Dashboard = () => {
               </div>
             </header>
 
-            <SummaryCard totals={totals} />
+            <SummaryCard totals={totals} config={dashboardConfig} />
             
             <div className="mb-8">
               <div className="flex items-center justify-between mb-4 px-1">

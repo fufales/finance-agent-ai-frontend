@@ -138,5 +138,10 @@
   "goal_cat_Home": "Renovación del Hogar",
   "goal_cat_Other": "Otro",
   "confirmDeleteGoalTitle": "Eliminar Meta",
-  "confirmDeleteGoalMessage": "¿Estás seguro de que quieres eliminar esta meta? Esta acción no se puede deshacer."
+  "confirmDeleteGoalMessage": "¿Estás seguro de que quieres eliminar esta meta? Esta acción no se puede deshacer.",
+  "mainDashboardCard": "Tarjeta Principal del Panel",
+  "showPaid": "Mostrar Pagado",
+  "showIncome": "Mostrar Ingresos",
+  "showDebtPercentage": "Mostrar % Deuda",
+  "showDebtAmount": "Mostrar Monto Deuda"
 }

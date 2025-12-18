@@ -68,6 +68,38 @@ export const exportToCSV = (data) => {
     });
   }
 
+  // DashboardConfig
+  if (data.dashboardConfig) {
+    rows.push([
+        'DashboardConfig',
+        '', // ID
+        '', // Name
+        '', // Amount
+        '', // Category
+        '', // Period
+        '', // Date
+        data.dashboardConfig.showPaid, // using 'Paid' column for showPaid boolelan
+        JSON.stringify(data.dashboardConfig), // storing full json in Color column as a backup/easier parsing if needed, but let's map individual fields to be cleaner if possible.
+        // Actually, let's just use a specific row format for config or reuse columns.
+        // Let's use: Type=DashboardConfig, Paid=showPaid, Period=showIncome, Date=showDebtPercentage, Color=showDebtAmount
+        // But wait, boolean string "true"/"false" is fine.
+        // Paid col is index 7.
+        // Let's use:
+        // Col 7 (Paid): showPaid
+        // Col 5 (Period): showIncome (as string "true"/"false") - wait Period is index 5
+        // Let's just put a JSON string in the last column or Spread them.
+        // Let's try to map to existing columns to keep CSV structure "consistent" (same number of columns).
+        // Type, ID, Name, Amount, Category, Period, Date, Paid, Color, RemainingAmount
+        // DashboardConfig, - , -, -, -, showIncome, showDebtPercentage, showPaid, showDebtAmount, -
+        // Let's use: 
+        // Paid (7): showPaid
+        // Period (5): showIncome
+        // Date (6): showDebtPercentage
+        // Color (8): showDebtAmount
+        '' 
+    ].join(','));
+  }
+
   return rows.join('\n');
 };
 
@@ -135,6 +167,13 @@ export const parseCSV = (csvText) => {
         category: values[4],
         remainingAmount: parseFloat(values[9])
       });
+    } else if (type === 'DashboardConfig') {
+        data.dashboardConfig = {
+            showPaid: values[7] === 'true',
+            showIncome: values[5] === 'true',
+            showDebtPercentage: values[6] === 'true',
+            showDebtAmount: values[8] === 'true'
+        };
     }
   }
 

@@ -8,7 +8,14 @@ const INITIAL_DATA = {
     period2: 0,
   },
   expenses: [],
+  funds: [],
   goals: [],
+  dashboardConfig: {
+    showPaid: true,
+    showIncome: true,
+    showDebtPercentage: true,
+    showDebtAmount: true,
+  },
 };
 
 export const useFinanceData = () => {
@@ -111,6 +118,16 @@ export const useFinanceData = () => {
     }));
   };
 
+  const updateDashboardConfig = (newConfig) => {
+    setData(prev => ({
+      ...prev,
+      dashboardConfig: {
+        ...(prev.dashboardConfig || INITIAL_DATA.dashboardConfig),
+        ...newConfig,
+      },
+    }));
+  };
+
   const totalIncome = (data.income?.period1 || 0) + (data.income?.period2 || 0);
   const totalFunds = (data.funds || []).reduce((sum, item) => {
     // Default to true if affectsBalance is undefined (backward compatibility)
@@ -164,5 +181,7 @@ export const useFinanceData = () => {
       debtExpenses,
     },
     reorderExpenses,
+    dashboardConfig: data.dashboardConfig || INITIAL_DATA.dashboardConfig,
+    updateDashboardConfig,
   };
 };

@@ -138,5 +138,10 @@
   "goal_cat_Home": "Home Renovation",
   "goal_cat_Other": "Other",
   "confirmDeleteGoalTitle": "Delete Goal",
-  "confirmDeleteGoalMessage": "Are you sure you want to delete this goal? This action cannot be undone."
+  "confirmDeleteGoalMessage": "Are you sure you want to delete this goal? This action cannot be undone.",
+  "mainDashboardCard": "Main Dashboard Card",
+  "showPaid": "Show Paid",
+  "showIncome": "Show Income",
+  "showDebtPercentage": "Show Debt %",
+  "showDebtAmount": "Show Debt Amount"
 }

@@ -3,7 +3,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { formatCurrency, formatPercentage } from '../../utils/format';
 import { Wallet, TrendingDown, PieChart, AlertTriangle } from 'lucide-react';
 
-const SummaryCard = ({ totals }) => {
+const SummaryCard = ({ totals, config }) => {
   const { t } = useLanguage();
   const { totalIncome, paidExpenses, projectedBalance, debtPercentage, totalFunds, debtExpenses } = totals;
   const isDeficit = projectedBalance < 0;
@@ -33,37 +33,45 @@ const SummaryCard = ({ totals }) => {
         </div>
         
         <div className="grid grid-cols-2 gap-4 border-t border-gray-700 dark:border-gray-600 pt-4">
-          <div>
-            <div className="flex items-center gap-1 text-gray-400 dark:text-gray-300 text-xs mb-1">
-              <TrendingDown className="w-3 h-3" />
-              {t('paid')}
+          {(!config || config.showPaid) && (
+            <div>
+              <div className="flex items-center gap-1 text-gray-400 dark:text-gray-300 text-xs mb-1">
+                <TrendingDown className="w-3 h-3" />
+                {t('paid')}
+              </div>
+              <p className="font-semibold text-white">{formatCurrency(paidExpenses)}</p>
             </div>
-            <p className="font-semibold text-white">{formatCurrency(paidExpenses)}</p>
-          </div>
-          <div>
-            <div className="flex items-center gap-1 text-gray-400 dark:text-gray-300 text-xs mb-1">
-              <Wallet className="w-3 h-3" />
-              {t('income')}
+          )}
+          {(!config || config.showIncome) && (
+            <div>
+              <div className="flex items-center gap-1 text-gray-400 dark:text-gray-300 text-xs mb-1">
+                <Wallet className="w-3 h-3" />
+                {t('income')}
+              </div>
+              <p className="font-semibold text-white">{formatCurrency(totalIncome)}</p>
             </div>
-            <p className="font-semibold text-white">{formatCurrency(totalIncome)}</p>
-          </div>
-          <div>
-            <div className="flex items-center gap-1 text-gray-400 dark:text-gray-300 text-xs mb-1">
-              <PieChart className="w-3 h-3" />
-              {t('debtPercentage')}
+          )}
+          {(!config || config.showDebtPercentage) && (
+            <div>
+              <div className="flex items-center gap-1 text-gray-400 dark:text-gray-300 text-xs mb-1">
+                <PieChart className="w-3 h-3" />
+                {t('debtPercentage')}
+              </div>
+              <div className={`flex items-center gap-1 font-semibold ${debtColor}`}>
+                {formatPercentage(debtPercentage)}
+                {showDebtAlert && <AlertTriangle className="w-4 h-4" />}
+              </div>
             </div>
-            <div className={`flex items-center gap-1 font-semibold ${debtColor}`}>
-              {formatPercentage(debtPercentage)}
-              {showDebtAlert && <AlertTriangle className="w-4 h-4" />}
+          )}
+          {(!config || config.showDebtAmount) && (
+            <div>
+              <div className="flex items-center gap-1 text-gray-400 dark:text-gray-300 text-xs mb-1">
+                <TrendingDown className="w-3 h-3" />
+                {t('debtAmount')}
+              </div>
+              <p className={`font-semibold ${debtColor}`}>{formatCurrency(debtExpenses)}</p>
             </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-1 text-gray-400 dark:text-gray-300 text-xs mb-1">
-              <TrendingDown className="w-3 h-3" />
-              {t('debtAmount')}
-            </div>
-            <p className={`font-semibold ${debtColor}`}>{formatCurrency(debtExpenses)}</p>
-          </div>
+          )}
         </div>
       </div>
     </div>

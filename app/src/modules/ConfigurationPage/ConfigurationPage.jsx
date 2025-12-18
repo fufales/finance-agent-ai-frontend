@@ -2,10 +2,11 @@ import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import DataControls from './DataControls';
 import Dropdown from '../../components/Dropdown';
+import Switch from '../../components/Switch';
 import { useLanguage } from '../../context/LanguageContext';
 import { usePWA } from '../../usePWA';
 
-const ConfigurationPage = ({ onBack, data, onImport }) => {
+const ConfigurationPage = ({ onBack, data, onImport, dashboardConfig, updateDashboardConfig }) => {
   const { language, setLanguage, t } = useLanguage();
   const { needRefresh, updateServiceWorker } = usePWA();
 
@@ -34,6 +35,36 @@ const ConfigurationPage = ({ onBack, data, onImport }) => {
             options={languageOptions}
             placeholder={t('selectLanguage')}
         />
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">{t('mainDashboardCard')}</h3>
+        <div className="space-y-4">
+            {dashboardConfig && (
+                <>
+                    <Switch 
+                        label={t('showPaid')} 
+                        checked={dashboardConfig.showPaid} 
+                        onChange={(checked) => updateDashboardConfig({ showPaid: checked })} 
+                    />
+                    <Switch 
+                        label={t('showIncome')} 
+                        checked={dashboardConfig.showIncome} 
+                        onChange={(checked) => updateDashboardConfig({ showIncome: checked })} 
+                    />
+                    <Switch 
+                        label={t('showDebtPercentage')} 
+                        checked={dashboardConfig.showDebtPercentage} 
+                        onChange={(checked) => updateDashboardConfig({ showDebtPercentage: checked })} 
+                    />
+                    <Switch 
+                        label={t('showDebtAmount')} 
+                        checked={dashboardConfig.showDebtAmount} 
+                        onChange={(checked) => updateDashboardConfig({ showDebtAmount: checked })} 
+                    />
+                </>
+            )}
+        </div>
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
