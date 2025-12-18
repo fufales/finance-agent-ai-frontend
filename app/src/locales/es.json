@@ -120,7 +120,7 @@
   "fund_Investment": "Inversión",
   "fund_Loan": "Préstamo",
   "devNotes": "Notas del Desarrollador",
-  "latestUpdate": "• Estructura del proyecto refactorizada para usar una arquitectura modular.\n• Cada página (Panel, Configuración, Metas, etc.) ahora tiene su propia carpeta de módulo dedicada.\n• Organización y mantenibilidad del código mejoradas.\n• Componentes compartidos movidos a una carpeta común.",
+  "latestUpdate": "• Estructura del proyecto refactorizada para usar una arquitectura modular.\n• Cada página (Panel, Configuración, Metas, etc.) ahora tiene su propia carpeta de módulo dedicada.\n• Organización y mantenibilidad del código mejoradas.\n• Componentes compartidos movidos a una carpeta común.\n• Agregado Metas a la importación/exportación CSV.\n• UI de Importar/Exportar mejorada con botones dedicados.",
   "goals": "Metas",
   "addGoal": "Agregar Meta",
   "editGoal": "Editar Meta",

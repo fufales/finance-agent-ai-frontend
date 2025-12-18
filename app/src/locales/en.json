@@ -120,7 +120,7 @@
   "fund_Investment": "Investment",
   "fund_Loan": "Loan",
   "devNotes": "Dev Notes",
-  "latestUpdate": "• Refactored project structure to use a modular architecture.\n• Each page (Dashboard, Configuration, Goals, etc.) now has its own dedicated module folder.\n• Improved code organization and maintainability.\n• Shared components moved to a common folder.",
+  "latestUpdate": "• Refactored project structure to use a modular architecture.\n• Each page (Dashboard, Configuration, Goals, etc.) now has its own dedicated module folder.\n• Improved code organization and maintainability.\n• Shared components moved to a common folder.\n• Added Goals to CSV export/import.\n• Improved Import/Export UI with dedicated buttons.",
   "goals": "Goals",
   "addGoal": "Add Goal",
   "editGoal": "Edit Goal",

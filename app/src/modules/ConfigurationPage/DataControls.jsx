@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useLanguage } from '../../context/LanguageContext';
-import { Download, Upload, FileText } from "lucide-react";
-import Dropdown from "../../components/Dropdown";
+import { Download, Upload } from "lucide-react";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import { exportToCSV, parseCSV } from "../../utils/csvUtils";
 
@@ -57,12 +56,8 @@ const DataControls = ({ data, onImport }) => {
     reader.readAsText(pendingFile);
   };
 
-  const handleAction = (action) => {
-    if (action === "export") {
-      handleExport();
-    } else if (action === "import") {
-      fileInputRef.current?.click();
-    }
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
@@ -76,20 +71,26 @@ const DataControls = ({ data, onImport }) => {
           accept=".csv"
         />
 
-        <div className="w-full">
-          <Dropdown
-            placeholder={t('exportImportData')}
-            options={[
-              { value: "export", label: t('exportCSV') },
-              { value: "import", label: t('importCSV') },
-            ]}
-            onChange={handleAction}
-            getIcon={(value) => {
-              if (value === "export") return Download;
-              if (value === "import") return Upload;
-              return FileText;
-            }}
-          />
+        <div className="w-full flex flex-col gap-3">
+          <button
+            onClick={handleExport}
+            className="w-full py-4 px-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl transition-colors flex items-center justify-center gap-2 group"
+          >
+            <div className="p-2 bg-white dark:bg-gray-800 rounded-full group-hover:scale-110 transition-transform">
+                <Download className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+            </div>
+            <span className="font-medium text-gray-900 dark:text-white">{t('exportCSV')}</span>
+          </button>
+          
+          <button
+            onClick={handleImportClick}
+            className="w-full py-4 px-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl transition-colors flex items-center justify-center gap-2 group"
+          >
+            <div className="p-2 bg-white dark:bg-gray-800 rounded-full group-hover:scale-110 transition-transform">
+                <Upload className="w-5 h-5 text-gray-700 dark:text-gray-200" />
+            </div>
+             <span className="font-medium text-gray-900 dark:text-white">{t('importCSV')}</span>
+          </button>
         </div>
       </div>
 

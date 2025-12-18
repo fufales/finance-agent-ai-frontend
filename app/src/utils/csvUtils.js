@@ -2,15 +2,15 @@ export const exportToCSV = (data) => {
   const rows = [];
   
   // Headers
-  rows.push(['Type', 'ID', 'Name', 'Amount', 'Category/Type', 'Period', 'Date', 'Paid', 'Color'].join(','));
+  rows.push(['Type', 'ID', 'Name', 'Amount', 'Category/Type', 'Period', 'Date', 'Paid', 'Color', 'SavedAmount'].join(','));
 
   // Income
   if (data.income) {
     if (data.income.period1) {
-      rows.push(['Income', 'income-p1', 'Period 1 Income', data.income.period1, 'Income', '1', '', '', ''].join(','));
+      rows.push(['Income', 'income-p1', 'Period 1 Income', data.income.period1, 'Income', '1', '', '', '', ''].join(','));
     }
     if (data.income.period2) {
-      rows.push(['Income', 'income-p2', 'Period 2 Income', data.income.period2, 'Income', '2', '', '', ''].join(','));
+      rows.push(['Income', 'income-p2', 'Period 2 Income', data.income.period2, 'Income', '2', '', '', '', ''].join(','));
     }
   }
 
@@ -26,6 +26,7 @@ export const exportToCSV = (data) => {
         expense.period,
         expense.date,
         expense.paid,
+        '',
         ''
       ].join(','));
     });
@@ -43,7 +44,26 @@ export const exportToCSV = (data) => {
         fund.period || '',
         '',
         '',
-        fund.color
+        fund.color,
+        ''
+      ].join(','));
+    });
+  }
+
+  // Goals
+  if (data.goals && data.goals.length > 0) {
+    data.goals.forEach(goal => {
+      rows.push([
+        'Goal',
+        goal.id,
+        `"${goal.name.replace(/"/g, '""')}"`,
+        goal.totalAmount, // Map totalAmount to Amount column
+        goal.category,
+        '', // Period
+        '', // Date
+        '', // Paid
+        '', // Color
+        goal.savedAmount
       ].join(','));
     });
   }
@@ -56,7 +76,8 @@ export const parseCSV = (csvText) => {
   const data = {
     income: { period1: 0, period2: 0 },
     expenses: [],
-    funds: []
+    funds: [],
+    goals: []
   };
 
   // Skip header
@@ -105,6 +126,14 @@ export const parseCSV = (csvText) => {
         type: values[4],
         period: values[5] ? parseInt(values[5]) : null,
         color: values[8]
+      });
+    } else if (type === 'Goal') {
+      data.goals.push({
+        id: values[1],
+        name: values[2],
+        totalAmount: parseFloat(values[3]),
+        category: values[4],
+        savedAmount: parseFloat(values[9])
       });
     }
   }
