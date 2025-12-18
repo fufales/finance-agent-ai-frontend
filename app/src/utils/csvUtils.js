@@ -2,7 +2,7 @@ export const exportToCSV = (data) => {
   const rows = [];
   
   // Headers
-  rows.push(['Type', 'ID', 'Name', 'Amount', 'Category/Type', 'Period', 'Date', 'Paid', 'Color', 'PaidAmount'].join(','));
+  rows.push(['Type', 'ID', 'Name', 'Amount', 'Category/Type', 'Period', 'Date', 'Paid', 'Color', 'RemainingAmount'].join(','));
 
   // Income
   if (data.income) {
@@ -63,7 +63,7 @@ export const exportToCSV = (data) => {
         '', // Date
         '', // Paid
         '', // Color
-        goal.paidAmount
+        goal.remainingAmount
       ].join(','));
     });
   }
@@ -133,7 +133,7 @@ export const parseCSV = (csvText) => {
         name: values[2],
         totalAmount: parseFloat(values[3]),
         category: values[4],
-        paidAmount: parseFloat(values[9])
+        remainingAmount: parseFloat(values[9])
       });
     }
   }

@@ -9,7 +9,7 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
   const [formData, setFormData] = useState({
     name: '',
     totalAmount: '',
-    paidAmount: '',
+    remainingAmount: '',
     category: 'Other'
   });
 
@@ -31,7 +31,7 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
       setFormData({
         name: initialData.name || '',
         totalAmount: initialData.totalAmount || '',
-        paidAmount: initialData.paidAmount || '',
+        remainingAmount: initialData.remainingAmount || '',
         category: initialData.category || 'Other'
       });
     }
@@ -42,7 +42,7 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
     const goalData = {
       name: formData.name,
       totalAmount: parseFloat(formData.totalAmount),
-      paidAmount: parseFloat(formData.paidAmount),
+      remainingAmount: parseFloat(formData.remainingAmount),
       category: formData.category
     };
 
@@ -111,7 +111,7 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
                 </div>
             </div>
             <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('paidAmount')}</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('remainingAmount')}</label>
                 <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 font-medium">₡</span>
                     <input
@@ -119,8 +119,8 @@ const GoalForm = ({ onAdd, onUpdate, initialData, isEditing }) => {
                         required
                         step="0.01"
                         min="0"
-                        value={formData.paidAmount}
-                        onChange={(e) => setFormData(prev => ({ ...prev, paidAmount: e.target.value }))}
+                        value={formData.remainingAmount}
+                        onChange={(e) => setFormData(prev => ({ ...prev, remainingAmount: e.target.value }))}
                         className="w-full pl-9 pr-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-money-green focus:border-transparent dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                         placeholder="0.00"
                         inputMode="decimal"
