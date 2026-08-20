@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --color-money-green: #059669;
+  --color-money-green-light: #34D399;
+  --color-money-green-dark: #047857;
+}
+
+body {
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-900);
+  overflow-x: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--color-gray-900);
+    color: var(--color-white);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
