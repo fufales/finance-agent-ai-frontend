@@ -36,7 +36,7 @@ export default defineConfig({
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
-        version: 'dev-0.6.5',
+        version: '0.9.6',
         icons: [
           {
             src: 'web-app-manifest-192x192.png',
@@ -57,5 +57,5 @@ export default defineConfig({
       }
     })
   ],
-  base: "/clients/financeapp/", // <<< IMPORTANT
+  base: "/finances-app/", // <<< IMPORTANT
 });

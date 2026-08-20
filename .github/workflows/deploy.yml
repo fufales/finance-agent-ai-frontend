@@ -1,0 +1,49 @@
+name: Deploy PFinances AI
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: app
+        run: npm ci
+
+      - name: Build Vite App
+        working-directory: app
+        run: npm run build
+
+      - name: Install SSHPass and RSYNC
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass rsync
+
+      - name: Create destination directory if not exists
+        run: |
+          sshpass -p "${{ secrets.SSH_PASS }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} "mkdir -p /home/chris/ondemand/sites/finances-app"
+
+      - name: Deploy files using RSYNC
+        run: |
+          sshpass -p "${{ secrets.SSH_PASS }}" rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            app/dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}:/home/chris/ondemand/sites/finances-app/
+
+      - name: Verify deployment
+        run: |
+          sshpass -p "${{ secrets.SSH_PASS }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} "ls -la /home/chris/ondemand/sites/finances-app/ | head -20"
