@@ -120,7 +120,7 @@
   "fund_Investment": "Investment",
   "fund_Loan": "Loan",
   "devNotes": "Dev Notes",
-  "latestUpdate": "• Refactored project structure to use a modular architecture.\n• Each page (Dashboard, Configuration, Goals, etc.) now has its own dedicated module folder.\n• Improved code organization and maintainability.\n• Shared components moved to a common folder.\n• Added Goals to CSV export/import.\n• Improved Import/Export UI with dedicated buttons.\n• Updated Goals logic to track \"Remaining Balance\" instead of \"Paid Amount\".\n• Improved Goals UI with clearer terminology (\"Total Amount\", \"Remaining Balance\").\n• Updated CSV export/import to support the new Goals structure.\n• Fixed label display issues in the Goals list.",
+  "latestUpdate": "• New: Spending charts by category with toggleable lines (v0.10.0).\n• Refactored project structure to use a modular architecture.\n• Each page (Dashboard, Configuration, Goals, etc.) now has its own dedicated module folder.\n• Improved code organization and maintainability.\n• Shared components moved to a common folder.\n• Added Goals to CSV export/import.\n• Improved Import/Export UI with dedicated buttons.\n• Updated Goals logic to track \"Remaining Balance\" instead of \"Paid Amount\".\n• Improved Goals UI with clearer terminology (\"Total Amount\", \"Remaining Balance\").\n• Updated CSV export/import to support the new Goals structure.\n• Fixed label display issues in the Goals list.",
   "goals": "Goals",
   "addGoal": "Add Goal",
   "editGoal": "Edit Goal",
@@ -149,5 +149,11 @@
   "expenseAdded": "Expense added successfully",
   "expenseUpdated": "Expense updated successfully",
   "markAllAsRead": "Mark all as read",
-  "enableBrowserNotifications": "Enable Browser Notifications"
+  "enableBrowserNotifications": "Enable Browser Notifications",
+  "charts": "Charts",
+  "spendingByCategory": "Spending by Category",
+  "noChartData": "No expenses to chart yet.",
+  "tapToToggle": "Tap a category to show or hide its line",
+  "period1": "Period 1",
+  "period2": "Period 2"
 }
