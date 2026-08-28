@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { defineChart } from '@tanstack/charts';
-import { pie, polar, radialArc } from '@tanstack/charts/polar';
+import { pie, polar, radialArc, radialText } from '@tanstack/charts/polar';
 import { tooltip } from '@tanstack/charts/tooltip';
 import { Chart } from '@tanstack/charts/react';
 import { useLanguage } from '../../context/LanguageContext';
@@ -41,6 +41,8 @@ const ChartsPage = ({ expenses, onBack }) => {
 
   const definition = useMemo(() => {
     const slices = pie(visibleSeries, { value: 'total' });
+    // Only label slices big enough to fit text (>= 4% of total)
+    const labels = slices.filter(s => s.fraction >= 0.04);
     return defineChart({
       marks: [
         polar({
@@ -52,6 +54,17 @@ const ChartsPage = ({ expenses, onBack }) => {
               cornerRadius: 4,
               color: 'category',
               key: 'category',
+            }),
+            radialText(labels, {
+              angle: 'angle',
+              radius: ({ radius }) => radius * 0.79,
+              text: (d) => `${Math.round(d.fraction * 100)}%`,
+              fill: '#ffffff',
+              fontSize: 13,
+              fontWeight: 700,
+              anchor: 'middle',
+              baseline: 'middle',
+              key: (d) => `label-${d.category}`,
             }),
           ],
           scales: {
