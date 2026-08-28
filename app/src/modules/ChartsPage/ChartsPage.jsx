@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { defineChart } from '@tanstack/charts';
 import { pie, polar, radialArc, radialText } from '@tanstack/charts/polar';
+import { scaleLinear } from '@tanstack/charts/scales/linear';
 import { tooltip } from '@tanstack/charts/tooltip';
 import { Chart } from '@tanstack/charts/react';
 import { useLanguage } from '../../context/LanguageContext';
@@ -68,8 +69,8 @@ const ChartsPage = ({ expenses, onBack }) => {
             }),
           ],
           scales: {
-            angle: null,
-            radius: null,
+            angle: { scale: scaleLinear().domain([0, Math.PI * 2]) },
+            radius: { scale: scaleLinear().domain([0, 1]) },
           },
         }),
       ],
