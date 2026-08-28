@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { defineChart, lineY } from '@tanstack/charts';
-import { scaleLinear } from '@tanstack/charts/scales/linear';
-import { scalePoint } from '@tanstack/charts/scales/point';
+import { defineChart } from '@tanstack/charts';
+import { pie, polar, radialArc } from '@tanstack/charts/polar';
 import { tooltip } from '@tanstack/charts/tooltip';
 import { Chart } from '@tanstack/charts/react';
 import { useLanguage } from '../../context/LanguageContext';
@@ -23,70 +22,58 @@ const FALLBACK_COLOR = '#94a3b8';
 
 const formatColones = (value) => `₡${Math.round(value).toLocaleString('es-CR')}`;
 
-const formatTick = (value) => {
-  if (Math.abs(value) >= 1000000) return `₡${(value / 1000000).toFixed(1)}M`;
-  if (Math.abs(value) >= 1000) return `₡${Math.round(value / 1000)}k`;
-  return `₡${value}`;
-};
-
 const ChartsPage = ({ expenses, onBack }) => {
   const { t } = useLanguage();
   const [hiddenCategories, setHiddenCategories] = useState(() => new Set());
 
-  // Aggregate expenses by category and period (biweekly model)
+  // Aggregate expenses by category (monthly totals)
   const series = useMemo(() => {
     const map = {};
     expenses.forEach(e => {
       const cat = e.category || 'Other';
-      if (!map[cat]) map[cat] = { category: cat, period1: 0, period2: 0, total: 0 };
-      if (e.period === 1) map[cat].period1 += e.amount;
-      else if (e.period === 2) map[cat].period2 += e.amount;
+      if (!map[cat]) map[cat] = { category: cat, total: 0 };
       map[cat].total += e.amount;
     });
     return Object.values(map).sort((a, b) => b.total - a.total);
   }, [expenses]);
 
-  const period1Label = t('period1');
-  const period2Label = t('period2');
-
-  const rows = useMemo(() => (
-    series.flatMap(s => [
-      { period: period1Label, category: s.category, amount: s.period1 },
-      { period: period2Label, category: s.category, amount: s.period2 },
-    ])
-  ), [series, period1Label, period2Label]);
-
   const visibleSeries = series.filter(s => !hiddenCategories.has(s.category));
 
   const definition = useMemo(() => {
-    const marks = visibleSeries.map(s => lineY(
-      rows.filter(r => r.category === s.category),
-      {
-        id: `line-${s.category}`,
-        x: 'period',
-        y: 'amount',
-        points: true,
-        stroke: CATEGORY_COLORS[s.category] || FALLBACK_COLOR,
-        strokeWidth: 2.5,
-      }
-    ));
+    const slices = pie(visibleSeries, { value: 'total' });
     return defineChart({
-      marks,
+      marks: [
+        polar({
+          inset: 8,
+          radiusRatio: 0.82,
+          marks: [
+            radialArc(slices, {
+              innerRadius: ({ radius }) => radius * 0.58,
+              cornerRadius: 4,
+              color: 'category',
+              key: 'category',
+            }),
+          ],
+          scales: {
+            angle: null,
+            radius: null,
+          },
+        }),
+      ],
       scales: {
-        x: { scale: () => scalePoint().padding(0.3), axis: { label: '' } },
-        y: {
-          scale: scaleLinear,
-          nice: true,
-          grid: true,
-          axis: { label: '', ticks: { format: formatTick } },
-        },
+        x: null,
+        y: null,
+      },
+      color: {
+        domain: visibleSeries.map(s => s.category),
+        range: visibleSeries.map(s => CATEGORY_COLORS[s.category] || FALLBACK_COLOR),
       },
       tooltip: {
         use: tooltip,
-        format: (point) => `${point.groupLabel}: ${formatColones(point.yValue)}`,
+        format: (point) => `${point.groupLabel}: ${formatColones(point.datum.total)}`,
       },
     }, { svgAnimation: { duration: 300 } });
-  }, [rows, visibleSeries]);
+  }, [visibleSeries]);
 
   const toggleCategory = (category) => {
     setHiddenCategories(prev => {
@@ -118,7 +105,7 @@ const ChartsPage = ({ expenses, onBack }) => {
           <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
             <Chart
               definition={definition}
-              height={260}
+              height={280}
               initialWidth={360}
               ariaLabel={t('spendingByCategory')}
             />

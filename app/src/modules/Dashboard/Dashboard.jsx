@@ -439,7 +439,7 @@ const Dashboard = () => {
       )}
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-2 py-3 pb-safe z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-2 pt-3 pb-7 pb-safe z-50">
         <div className="max-w-md mx-auto grid grid-cols-5 items-end justify-items-center">
           <button
             onClick={() => {
