@@ -29,10 +29,17 @@ jobs:
         working-directory: app
         run: npm run build
 
-      - name: Install SSHPass and RSYNC
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p 2222 127.0.0.1 >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Install RSYNC
         run: |
           sudo apt-get update
-          sudo apt-get install -y sshpass rsync
+          sudo apt-get install -y rsync
 
       - name: Install cloudflared (SSH via Cloudflare Tunnel)
         run: |
@@ -57,14 +64,14 @@ jobs:
 
       - name: Create destination directory if not exists
         run: |
-          sshpass -p "${{ secrets.SSH_PASS }}" ssh -p 2222 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@127.0.0.1 "mkdir -p /home/chris/ondemand/sites/finances-app"
+          ssh -i ~/.ssh/deploy_key -p 2222 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@127.0.0.1 "mkdir -p /home/chris/ondemand/sites/finances-app"
 
       - name: Deploy files using RSYNC (via tunnel)
         run: |
-          sshpass -p "${{ secrets.SSH_PASS }}" rsync -avz --delete \
-            -e "ssh -p 2222 -o StrictHostKeyChecking=no" \
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -p 2222 -o StrictHostKeyChecking=no" \
             app/dist/ ${{ secrets.SSH_USER }}@127.0.0.1:/home/chris/ondemand/sites/finances-app/
 
       - name: Verify deployment
         run: |
-          sshpass -p "${{ secrets.SSH_PASS }}" ssh -p 2222 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@127.0.0.1 "ls -la /home/chris/ondemand/sites/finances-app/ | head -20"
+          ssh -i ~/.ssh/deploy_key -p 2222 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@127.0.0.1 "ls -la /home/chris/ondemand/sites/finances-app/ | head -20"
