@@ -3,7 +3,6 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useFinanceData } from '../../hooks/useFinanceData';
 import SummaryCard from './SummaryCard';
-import IncomeInput from './IncomeInput';
 import ExpenseForm from './ExpenseForm';
 import ExpenseList from './ExpenseList';
 import GoalsList from '../GoalsPage/GoalsList';
@@ -11,7 +10,8 @@ import GoalForm from '../GoalsPage/GoalForm';
 import FundCard from '../../components/FundCard';
 import FundForm from './FundForm';
 import ConfigurationPage from '../ConfigurationPage/ConfigurationPage';
-import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid, Crown, Target } from 'lucide-react';
+import ChartsPage from '../ChartsPage/ChartsPage';
+import { LayoutDashboard, Wallet, PlusCircle, ArrowLeft, CreditCard, User, Settings, LogOut, LayoutGrid, Crown, Target, LineChart } from 'lucide-react';
 import ConfirmationModal from '../../components/ConfirmationModal';
 
 const Dashboard = () => {
@@ -119,22 +119,16 @@ const Dashboard = () => {
             onImport={importData}
             dashboardConfig={dashboardConfig}
             updateDashboardConfig={updateDashboardConfig}
+            income={income}
+            onIncomeUpdate={updateIncome}
           />
         );
-      case 'income':
+      case 'charts':
         return (
-          <div className="space-y-6">
-            <div className="flex items-center gap-4 mb-6">
-              <button 
-                onClick={() => setCurrentView('dashboard')}
-                className="p-2 -ml-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
-              >
-                <ArrowLeft className="w-6 h-6" />
-              </button>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('manageIncome')}</h2>
-            </div>
-            <IncomeInput income={income} onUpdate={updateIncome} />
-          </div>
+          <ChartsPage
+            expenses={expenses}
+            onBack={() => setCurrentView('dashboard')}
+          />
         );
       case 'add-expense':
         return (
@@ -466,16 +460,16 @@ const Dashboard = () => {
           <button
             onClick={() => {
               saveScrollPosition();
-              setCurrentView('income');
+              setCurrentView('charts');
               setEditingExpense(null);
               setEditingFund(null);
               setShowAddMenu(false);
               setShowUserMenu(false);
             }}
-            className={`flex flex-col items-center gap-1 ${currentView === 'income' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
+            className={`flex flex-col items-center gap-1 ${currentView === 'charts' ? 'text-money-green' : 'text-gray-400 dark:text-gray-500'}`}
           >
-            <Wallet className="w-6 h-6" />
-            <span className="text-[10px] font-medium">{t('income')}</span>
+            <LineChart className="w-6 h-6" />
+            <span className="text-[10px] font-medium">{t('charts')}</span>
           </button>
 
           <button
